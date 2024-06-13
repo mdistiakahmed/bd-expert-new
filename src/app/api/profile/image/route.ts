@@ -11,7 +11,6 @@ import {
   doc,
 } from "firebase/firestore";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import {
   ref,
   uploadBytesResumable,
@@ -21,6 +20,7 @@ import {
 } from "firebase/storage";
 import { storage } from "@/firebaseConfig";
 import { v4 as uuidv4 } from "uuid";
+import { authOptions } from "@/utils/AuthOption";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);

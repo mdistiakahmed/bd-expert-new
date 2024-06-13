@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/utils/AuthOption";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);

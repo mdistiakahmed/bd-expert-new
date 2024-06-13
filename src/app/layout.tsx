@@ -3,9 +3,9 @@ import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import SessionProvider from "@/context/SessionProvider";
 import { Inter } from "next/font/google";
+import { authOptions } from "@/utils/AuthOption";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400"] });
 
