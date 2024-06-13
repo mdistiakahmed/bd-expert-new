@@ -9,6 +9,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { useEffect, useState } from "react";
 import AddEducationDialog from "@/components/profile/AddEducationDialog";
 import AddExperienceDialog from "@/components/profile/AddExperienceDialog";
+import { fetchMyProfile, updateProfile } from "@/services/profileService";
+import Loader from "@/utils/Loader";
 
 export interface Experience {
   company_name: string;
@@ -29,6 +31,7 @@ export interface Education {
 }
 
 interface ProfileResponse {
+  email?: string;
   name: string;
   title: string;
   image_url: string;
@@ -37,7 +40,9 @@ interface ProfileResponse {
 }
 
 export default function ProfilePage() {
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [profileData, setProfileData] = useState<any>(null);
   const [addNewExperienceModalOpen, setAddNewExperienceModalOpen] =
     useState(false);
 
@@ -98,71 +103,153 @@ export default function ProfilePage() {
 
   const [profileResponse, setProfileResponse1] = useState(profileResponse1);
 
-  useEffect(() => {}, [profileResponse, profileResponse.education]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const response = await fetchMyProfile();
+        setProfileData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
-  const handleEducationSubmit = (newEducationData: any) => {
-    setProfileResponse1((prevData) => ({
-      ...prevData,
-      education: [...prevData.education, newEducationData],
-    }));
-  };
+  useEffect(() => {
+    async function updateData() {
+      try {
+        if (profileData) {
+          setLoading(true);
+          const res = await updateProfile(profileData);
+          setLoading(false);
+        }
+      } catch (err) {
+        setLoading(false);
+      }
+    }
+    updateData();
+  }, [profileData]);
 
-  const handleExperienceSubmit = (newExperienceData: any) => {
-    console.log(newExperienceData);
-    setProfileResponse1((prevData) => ({
-      ...prevData,
-      experiences: [...prevData.experiences, newExperienceData],
-    }));
-
-    console.log(profileResponse);
-  };
-
-  const handleExperienceUpdate = (updatedExperienceData: any) => {
-    console.log(updatedExperienceData);
+  const handleEducationSubmit = async (newEducationData: any) => {
+    if (profileData) {
+      setProfileData((prevData: any) => ({
+        ...prevData,
+        education: [...prevData.education, newEducationData],
+      }));
+    }
   };
 
   const handleEducationUpdate = (newEducationData: any) => {
-    console.log(newEducationData);
+    const { index, ...restEducationData } = newEducationData;
+    if (profileData && typeof index === "number") {
+      setProfileData((prevData: any) => {
+        const updatedEducation = [...prevData.education];
+        updatedEducation[index] = restEducationData;
+        return {
+          ...prevData,
+          education: updatedEducation,
+        };
+      });
+    }
   };
 
   const handleEducationDelete = (toDeleteData: any) => {
-    const updatedEducationData = profileResponse.education.filter(
-      (e) => e.degree != toDeleteData.degree
-    );
-    setProfileResponse1((prevData) => ({
-      ...prevData,
-      education: updatedEducationData,
-    }));
+    const { index } = toDeleteData;
+    if (profileData && typeof index === "number") {
+      setProfileData((prevData: any) => {
+        const updatedEducation = prevData.education.filter(
+          (_: any, i: number) => i !== index
+        );
+        return {
+          ...prevData,
+          education: updatedEducation,
+        };
+      });
+    }
   };
 
-  const experienceCard = profileResponse.experiences.map((e) => {
+  const handleExperienceSubmit = (newExperienceData: any) => {
+    if (profileData) {
+      setProfileData((prevData: any) => ({
+        ...prevData,
+        experiences: [...prevData.experiences, newExperienceData],
+      }));
+    }
+  };
+
+  const handleExperienceUpdate = (updatedExperienceData: any) => {
+    const { index, ...restExperienceData } = updatedExperienceData;
+    if (profileData && typeof index === "number") {
+      setProfileData((prevData: any) => {
+        const updatedExperiences = [...prevData.experiences];
+        updatedExperiences[index] = updatedExperienceData;
+        return {
+          ...prevData,
+          experiences: updatedExperiences,
+        };
+      });
+    }
+  };
+
+  const handleExperienceDelete = (updatedExperienceData: any) => {
+    const { index } = updatedExperienceData;
+    if (profileData && typeof index === "number") {
+      setProfileData((prevData: any) => {
+        const updatedExperiences = prevData.experiences.filter(
+          (_: any, i: number) => i !== index
+        );
+        return {
+          ...prevData,
+          experiences: updatedExperiences,
+        };
+      });
+    }
+  };
+
+  const handleProfileUpdate = (data: any) => {
+    setProfileData((prevData: any) => {
+      return {
+        ...prevData,
+        ...data,
+      };
+    });
+  };
+
+  const experienceCard = profileData?.experiences.map((e: any, index: any) => {
     return (
       <ExperienceCard
-        key={e.company_name}
+        key={index}
         {...e}
         handleUpdate={handleExperienceUpdate}
+        handleDelete={handleExperienceDelete}
+        index={index}
       />
     );
   });
 
-  const educationCard = profileResponse.education.map((e, index) => {
+  const educationCard = profileData?.education.map((e: any, index: any) => {
     return (
       <EducationCard
         key={index}
         {...e}
         handleDelete={handleEducationDelete}
         handleUpdate={handleEducationUpdate}
+        index={index}
       />
     );
   });
 
   return (
     <>
-      <div className="hidden sm:flex">
+      <div className="hidden sm:flex items-center justify-center bg-gray-200">
         <div className="w-[60vw] flex flex-col gap-5 p-5 bg-gray-200">
           <AvatarCard
-            name={profileResponse.name}
-            title={profileResponse.title}
+            name={profileData?.name || ""}
+            title={profileData?.title || ""}
+            imageUrl={profileData?.image_url || ""}
+            handleUpdate={handleProfileUpdate}
           />
 
           <div className="rounded-lg bg-white p-5">
@@ -215,18 +302,14 @@ export default function ProfilePage() {
             {educationCard}
           </div>
         </div>
-
-        <div className="w-[30vw]">
-          <div className="w-full flex flex-col gap-5 m-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum porro
-            maiores vel voluptatum ex. Nobis et ipsum ullam nihil perspiciatis.
-            Culpa eos adipisci doloremque rem itaque consectetur excepturi
-            necessitatibus omnis!
-          </div>
-        </div>
       </div>
       <div className="sm:hidden flex flex-col gap-5 p-5 bg-gray-200">
-        <AvatarCard name={profileResponse.name} title={profileResponse.title} />
+        <AvatarCard
+          name={profileData?.name || ""}
+          title={profileData?.title || ""}
+          imageUrl={profileData?.image_url || ""}
+          handleUpdate={handleProfileUpdate}
+        />
 
         <div className="rounded-lg bg-white p-5">
           <div className="flex items-center justify-between">
@@ -288,6 +371,7 @@ export default function ProfilePage() {
         setOpen={setAddNewExperienceModalOpen}
         onSubmit={handleExperienceSubmit}
       />
+      <Loader loading={loading} />
     </>
   );
 }

@@ -14,13 +14,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import LoginIcon from "@mui/icons-material/Login";
 
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
-const pages = ["Products", "Blogs", "Talent Pool", "Create New Blog"];
+const pages = ["Home", "Blogs", "Experts", "Write"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const Header = () => {
   const router = useRouter();
+  const session = useSession();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -46,13 +50,21 @@ const Header = () => {
   const handleSettingMenu = (action: string) => {
     if (action == "Profile") {
       router.push(`/profile/1`);
+    } else if (action == "Logout") {
+      signOut();
     }
     setAnchorElUser(null);
   };
 
   const handleMenuButtonClick = (page: string) => {
-    if (page === "Create New Blog") {
-      router.push(`/blogs/new`);
+    if (page === "Write") {
+      if (session?.status !== "authenticated") {
+        router.push(`/login`);
+      } else {
+        router.push(`/blogs/new`);
+      }
+    } else if (page === "Home") {
+      router.push(`/`);
     } else {
       router.push(`/${page.toLowerCase()}`);
     }
@@ -152,38 +164,52 @@ const Header = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+          {session?.status === "authenticated" && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="A" src={session?.data?.user?.image || ""} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleSettingMenu(setting)}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
+
+          {session?.status === "unauthenticated" && (
+            <Button
+              onClick={() => router.push(`/login`)}
+              variant="contained"
+              color="secondary"
+              size="small"
+              endIcon={<LoginIcon />}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => handleSettingMenu(setting)}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              Sign In
+            </Button>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

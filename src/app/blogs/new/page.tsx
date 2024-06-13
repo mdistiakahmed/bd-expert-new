@@ -8,25 +8,13 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { MuiChipsInput } from "mui-chips-input";
 
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/firebaseConfig";
 import "react-quill/dist/quill.snow.css";
-
-async function addToDatabase(title: string, data: string, tags: any) {
-  try {
-    const docRef = await addDoc(collection(db, "test"), {
-      title,
-      data,
-      tags,
-      author: "Istiak Ahmed",
-      created_at: new Date(),
-    });
-
-    console.log(docRef.id);
-  } catch (error) {
-    console.log(error);
-  }
-}
+import { createBlog } from "@/services/blogService";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import SendIcon from "@mui/icons-material/Send";
+import { deleteImage, uploadImage } from "@/services/profileService";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -40,7 +28,7 @@ const modules = {
     [{ indent: "-1" }, { indent: "+1" }],
     [{ script: "sub" }, { script: "super" }],
     ["blockquote", "code-block"],
-    ["link", "image", "video"],
+    ["link", "video"],
     ["clean"],
   ],
 };
@@ -71,8 +59,11 @@ const CreateNewBlog = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("");
   const [tags, setTags] = useState([]);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState("/placeholder.png");
+  const [loading, setLoading] = useState(false);
 
-  const value: any = [];
+  const router = useRouter();
 
   const handleChipChange = (newTags: any) => {
     setTags(newTags);
@@ -82,78 +73,127 @@ const CreateNewBlog = () => {
     setTitle(event.target.value);
   };
 
+  const handleThumbnailChange = (event: any) => {
+    const file = event.target.files[0];
+    setThumbnailFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setThumbnailPreview(reader.result as string);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSubmit = async () => {
-    if (title.length > 0 && blogText.length > 0) {
-      await addToDatabase(title, blogText, tags);
+    try {
+      setLoading(true);
+      let newImageUrl = null;
+      if (thumbnailFile != null) {
+        try {
+          const res = await uploadImage(thumbnailFile);
+          newImageUrl = res.data;
+        } catch (err) {
+          console.log("could not upload image");
+        }
+      }
+      const result = await createBlog(title, blogText, tags, newImageUrl);
       setBlogText("");
       setTitle("");
       setTags([]);
-      setSnackbarMessage("Successfully created blog post!");
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-    } else {
-      setSnackbarMessage("Fill title and body");
+      setThumbnailFile(null);
+      setThumbnailPreview("/placeholder.png");
+
+      setLoading(false);
+
+      router.push(`/blogs/${result.data}`);
+    } catch (err: any) {
+      setLoading(false);
+      setSnackbarMessage(err?.message || "Something went wrong");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
   };
 
   return (
-    <div className="m-10 flex flex-col gap-10">
-      <TextField
-        id="standard-basic"
-        label="Title"
-        variant="standard"
-        value={title}
-        onChange={handleChange}
-      />
-      <ReactQuill
-        value={blogText}
-        onChange={setBlogText}
-        modules={modules}
-        formats={formats}
-      />
+    <div className="flex items-center justify-center relative">
+      <div className="flex flex-col items-center justify-center gap-10 w-2/3 p-10">
+        <TextField
+          id="standard-basic"
+          label="Title"
+          variant="standard"
+          fullWidth
+          value={title}
+          onChange={handleChange}
+        />
+        <ReactQuill
+          value={blogText}
+          onChange={setBlogText}
+          modules={modules}
+          formats={formats}
+          style={{ height: "300px" }}
+          placeholder="Write your blog content here..."
+        />
 
-      <MuiChipsInput
-        value={tags}
-        onChange={handleChipChange}
-        variant="outlined"
-        label="Tags"
-      />
+        <MuiChipsInput
+          value={tags}
+          onChange={handleChipChange}
+          variant="outlined"
+          size="small"
+          fullWidth
+          label="Tags"
+        />
 
-      <div className="flex justify-end">
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ backgroundColor: "#1976d2", width: "200px" }}
-          onClick={onSubmit}
-        >
-          Save
-        </Button>
-      </div>
+        <div className="relative">
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="thumbnail-input"
+            type="file"
+            onChange={handleThumbnailChange}
+          />
+          <span className="font-bold">Thumbnail Image</span>
 
-      <div className="quill">
-        <div className="ql-container ql-snow">
-          <div
-            className="ql-editor"
-            dangerouslySetInnerHTML={{ __html: blogText }}
-          ></div>
+          <label
+            htmlFor="thumbnail-input"
+            className="absolute top-0 right-0 m-4 z-10"
+          >
+            <Button variant="contained" color="primary" component="span">
+              <PhotoCameraIcon />
+            </Button>
+          </label>
+          <div className="flex justify-center items-center">
+            <Image
+              src={thumbnailPreview}
+              alt="Thumbnail Preview"
+              width={600}
+              height={200}
+              style={{ objectFit: "cover", borderRadius: "8px" }}
+            />
+          </div>
         </div>
-      </div>
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          severity={snackbarSeverity as any}
-          variant="filled"
-          sx={{ width: "100%" }}
+        <div className="absolute right-10 top-10">
+          <Button variant="outlined" endIcon={<SendIcon />} onClick={onSubmit}>
+            Publish
+          </Button>
+        </div>
+
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={2000}
+          onClose={() => setSnackbarOpen(false)}
         >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+          <Alert
+            severity={snackbarSeverity as any}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
+      </div>
     </div>
   );
 };

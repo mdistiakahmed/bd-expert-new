@@ -1,35 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Card from "@/components/blog/Card";
-import { db } from "@/firebaseConfig";
 import { compile, convert } from "html-to-text";
+import Pagination from "@mui/material/Pagination";
 
-import {
-  collection,
-  getDocs,
-  query,
-  limit,
-  startAfter,
-  orderBy,
-  Timestamp,
-} from "firebase/firestore";
-
-async function retrieveDocs(offset: number, limit1: number) {
-  try {
-    const q = query(
-      collection(db, "test"),
-      orderBy("created_at", "desc"),
-      startAfter(offset || []),
-      limit(limit1)
-    );
-
-    const snapshot = await getDocs(q);
-    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-    return docs;
-  } catch (error) {
-    console.error("Error retrieving docs:", error);
-  }
-}
+import { Timestamp } from "firebase/firestore";
+import { fetchBlogs } from "@/services/blogService";
+import Loader from "@/utils/Loader";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
@@ -38,9 +16,37 @@ function timestampToDateString(timestamp: Timestamp): string {
   return date.toDateString(); // Get only the date string
 }
 
-const page = async () => {
-  const data: any = await retrieveDocs(0, 10);
-  const cards = data?.map((d: any) => {
+const AllBlogsPage = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(10);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadBlogs = async () => {
+      try {
+        setLoading(true);
+        const result = await fetchBlogs(page, 10);
+
+        setBlogs(result.data);
+        setTotalPages(Math.ceil(result.total / 10));
+        setLoading(false);
+      } catch (err: any) {
+        setLoading(false);
+      }
+    };
+
+    loadBlogs();
+  }, [page]);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  const cards = blogs?.map((d: any) => {
     const options = {
       wordwrap: 130,
     };
@@ -61,15 +67,34 @@ const page = async () => {
 
   return (
     <>
-      <div className="hidden sm:flex">
-        <div className="w-[60vw] flex flex-col gap-5 m-5">{cards}</div>;
-        <div className="w-[30vw]"></div>
+      <div className="hidden sm:flex items-center justify-center">
+        <div className="w-[60vw] flex flex-col gap-5 m-5 items-center">
+          {cards}
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            variant="outlined"
+            color="primary"
+          />
+        </div>
       </div>
       <div className="flex sm:hidden">
-        <div className="w-full flex flex-col gap-5 m-5">{cards}</div>;
+        <div className="w-full flex flex-col gap-5 m-5 items-center">
+          {cards}
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            variant="outlined"
+            color="primary"
+          />
+        </div>
+        ;
       </div>
+      <Loader loading={loading} />
     </>
   );
 };
 
-export default page;
+export default AllBlogsPage;

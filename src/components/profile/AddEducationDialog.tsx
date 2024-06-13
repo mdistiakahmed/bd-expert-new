@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 
 const AddEducationDialog = (props: any) => {
   const { open, setOpen } = props;
-  const { degree, institution, start_date, end_date, isEdit } = props;
+  const { degree, institution, start_date, end_date, isEdit, index } = props;
   const {
     register,
     handleSubmit,
@@ -38,7 +38,7 @@ const AddEducationDialog = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
-    props.onSubmit(data);
+    props.onSubmit(index !== undefined ? { ...data, index } : data);
     setOpen(false);
     reset();
   };

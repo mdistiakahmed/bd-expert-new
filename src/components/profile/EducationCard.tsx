@@ -4,12 +4,10 @@ import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Education } from "@/app/profile/[id]/page";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddEducationDialog from "./AddEducationDialog";
 
@@ -61,6 +59,7 @@ const EducationCard = (props: any) => {
     institution,
     handleDelete,
     handleUpdate,
+    index,
   } = props;
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = React.useState(false);
@@ -112,6 +111,7 @@ const EducationCard = (props: any) => {
         setOpen={setUpdateDialogOpen}
         onSubmit={handleUpdate}
         isEdit={true}
+        index={index}
         {...props}
       />
     </div>

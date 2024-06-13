@@ -1,17 +1,19 @@
-import React from "react";
-import { Avatar, IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import React, { useState } from "react";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateAvatarDialog from "./UpdateAvatarDialog";
 
-const AvatarCard = (props: { name: string; title: string }) => {
-  const { name, title } = props;
+const AvatarCard = (props: any) => {
+  const { name, title, imageUrl, handleUpdate } = props;
+
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
 
   return (
     <div className="flex items-center gap-5 rounded-lg bg-white p-5">
       <div>
         <Avatar
-          alt="Remy Sharp"
-          src="https://picsum.photos/200/200"
+          alt="U"
+          src={imageUrl || "https://picsum.photos/200/200"}
           sx={{ width: 100, height: 100 }}
         />
       </div>
@@ -23,15 +25,23 @@ const AvatarCard = (props: { name: string; title: string }) => {
 
       <div className="flex-grow"></div>
 
-      <div className="flex gap-2 justify-end">
-        <IconButton aria-label="delete">
-          <DeleteIcon />
-        </IconButton>
-
-        <IconButton aria-label="edit">
-          <EditIcon />
-        </IconButton>
+      <div className="flex justify-end">
+        <Tooltip title="Edit" placement="top">
+          <IconButton
+            aria-label="edit"
+            onClick={() => setUpdateDialogOpen(true)}
+          >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
       </div>
+
+      <UpdateAvatarDialog
+        open={updateDialogOpen}
+        setOpen={setUpdateDialogOpen}
+        onSubmit={handleUpdate}
+        {...props}
+      />
     </div>
   );
 };

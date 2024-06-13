@@ -32,6 +32,7 @@ const AddExperienceDialog = (props: any) => {
     skills,
     achievements = [],
     isEdit,
+    index,
   } = props;
   const [newIndustries, setNewIndustries] = useState(industries ?? []);
   const [newSkills, setNewSkills] = useState(skills ?? []);
@@ -95,7 +96,9 @@ const AddExperienceDialog = (props: any) => {
       experienceData.achievements.push(achievement);
     });
 
-    props.onSubmit(experienceData);
+    props.onSubmit(
+      index !== undefined ? { ...experienceData, index } : experienceData
+    );
     setOpen(false);
 
     reset();

@@ -7,7 +7,7 @@ const Card = (props) => {
   const { title, author, publishedDate, tags, content, id } = props;
 
   return (
-    <div className="flex flex-col gap-2  p-5 border rounded-md shadow-md">
+    <div className="flex flex-col gap-2  p-5 border rounded-md shadow-md w-full">
       <Link href={`/blogs/${id}`}>
         <h1 className="text-lg font-bold">{title}</h1>
       </Link>

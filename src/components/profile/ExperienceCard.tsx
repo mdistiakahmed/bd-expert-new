@@ -1,12 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import { IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Experience } from "@/app/profile/[id]/page";
 import AddExperienceDialog from "./AddExperienceDialog";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import AddEducationDialog from "./AddEducationDialog";
 
-const ExperienceCard = (props: Experience) => {
+const AlertDialog = (props: any) => {
+  const { deleteConfirm, setDeleteConfirm, handleDelete, title, company_name } =
+    props;
+
+  const handleClose = () => {
+    setDeleteConfirm(false);
+  };
+
+  const onDeleteConfirm = () => {
+    setDeleteConfirm(false);
+    handleDelete();
+  };
+
+  return (
+    <>
+      <Dialog open={deleteConfirm} onClose={handleClose}>
+        <DialogTitle>{"Delete Confirmation!"}</DialogTitle>
+        <DialogContent>
+          <div>
+            <div>Sure you want to delete this experience?</div>
+            <div>
+              {" "}
+              Title: <strong>{title}</strong>
+            </div>
+            <div>
+              Company Name: <strong>{company_name}</strong>
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={onDeleteConfirm} autoFocus variant="outlined">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+const ExperienceCard = (props: any) => {
   const {
     company_name,
     title,
@@ -16,8 +61,11 @@ const ExperienceCard = (props: Experience) => {
     industries,
     skills,
     handleUpdate,
+    handleDelete,
+    index,
   } = props;
-  const [updateDialogOpen, setUpdateDialogOpen] = React.useState(false);
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   return (
     <div>
@@ -33,7 +81,7 @@ const ExperienceCard = (props: Experience) => {
 
         <div className="flex flex-col gap-2">
           <ul>
-            {achievements.map((a, index) => {
+            {achievements.map((a: any, index: any) => {
               return (
                 <li key={index} className="flex items-center">
                   {" "}
@@ -47,7 +95,7 @@ const ExperienceCard = (props: Experience) => {
           <div className="flex gap-2 items-center ">
             <p className="text-sm italic">Industries:</p>
             <div className="flex gap-1">
-              {industries.map((ee) => {
+              {industries.map((ee: any) => {
                 return (
                   <Chip
                     key={ee}
@@ -69,7 +117,7 @@ const ExperienceCard = (props: Experience) => {
           <div className="flex gap-2 items-center ">
             <p className="text-sm italic">Skills:</p>
             <div className="flex gap-1">
-              {skills.map((ee) => {
+              {skills.map((ee: any) => {
                 return (
                   <Chip
                     key={ee}
@@ -92,7 +140,10 @@ const ExperienceCard = (props: Experience) => {
 
       <div className="flex gap-2 justify-end">
         <Tooltip title="Delete" placement="top">
-          <IconButton aria-label="delete">
+          <IconButton
+            aria-label="delete"
+            onClick={() => setDeleteConfirm(true)}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -109,10 +160,20 @@ const ExperienceCard = (props: Experience) => {
 
       <hr />
 
+      <AlertDialog
+        deleteConfirm={deleteConfirm}
+        setDeleteConfirm={setDeleteConfirm}
+        handleDelete={() => handleDelete(props)}
+        title={title}
+        company_name={company_name}
+      />
+
       <AddExperienceDialog
         open={updateDialogOpen}
         setOpen={setUpdateDialogOpen}
         onSubmit={handleUpdate}
+        isEdit={true}
+        index={index}
         {...props}
       />
     </div>

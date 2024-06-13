@@ -1,57 +1,76 @@
 import React from "react";
-import Card from "@/components/blog/Card";
-import { db } from "@/firebaseConfig";
-import { compile, convert } from "html-to-text";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  collection,
-  getDocs,
-  query,
-  limit,
-  startAfter,
-  orderBy,
-  Timestamp,
-} from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
-import { doc, getDoc } from "firebase/firestore";
 import { Button } from "@mui/material";
+import { fetchBlogById } from "@/services/blogService";
+import "react-quill/dist/quill.snow.css";
+import { fetchProfileByEmail } from "@/services/profileService";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
-    timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+    timestamp?.seconds * 1000 + timestamp?.nanoseconds / 1000000
   );
-  return date.toDateString(); // Get only the date string
+  return date?.toDateString();
 }
 
 const page = async ({ params }: any) => {
   const { id } = params;
-  const docRef = doc(db, "test", id);
-  const docSnap = await getDoc(docRef);
-  let docData: any;
+  const result = await fetchBlogById(id);
+  const docData = result.data;
+  const authorInfo = await fetchProfileByEmail(docData?.author);
+  const authorData = authorInfo.data;
 
-  if (docSnap.exists()) {
-    docData = docSnap.data();
-    console.log(docData);
-    // Document data is available in docData
-  } else {
-    console.log("No data found");
-  }
+  const tags: any = (
+    <div className="flex gap-1">
+      {docData?.tags?.map((t: any, index: any) => (
+        <Link href="/" key={index} className="text-red-500 underline">
+          {t}
+        </Link>
+      ))}
+    </div>
+  );
+
+  const blogHeader = (
+    <div className="flex gap-10 p-5">
+      <div
+        className="w-[100px] h-[100px] relative"
+        style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
+      >
+        <Image
+          src={authorData.image_url}
+          alt=""
+          fill
+          className="absolute border-4 border-red-500 rounded-lg"
+        />
+      </div>
+      <div className="flex flex-col gap-1">
+        <p>
+          <Link href="/" className="font-semibold underline">
+            {authorData.name}
+          </Link>{" "}
+          wrote
+        </p>
+        <h2 className="text-2xl font-bold">{docData?.title}</h2>
+        <p className="flex gap-1">
+          {timestampToDateString(docData?.created_at)} in {tags}
+        </p>
+        <div className="flex self-end gap-2">
+          {docData?.view_count}
+          <VisibilityIcon />
+        </div>
+      </div>
+    </div>
+  );
 
   const blogContent = (
     <div className="flex flex-col gap-5">
-      <h1 className="text-xl font-bold text-center">{docData?.title}</h1>
-      <p className="text-center">
-        <span className="font-semibold text-blue-900 underline dark:text-white decoration-blue-500 decoration-double">
-          {docData?.author}
-        </span>{" "}
-        on{" "}
-        <span className="italic text-sm">
-          {timestampToDateString(docData?.created_at)}
-        </span>
-      </p>
-      <hr className="border-4 rounded-md border-blue-500" />
+      {blogHeader}
+      <hr className="border border-dotted rounded-md border-blue-500" />
+
       <div className="quill">
         <div className="ql-container ql-snow">
           <div
@@ -89,9 +108,8 @@ const page = async ({ params }: any) => {
 
   return (
     <>
-      <div className="hidden sm:flex">
+      <div className="hidden sm:flex items-center justify-center">
         <div className="w-[60vw] m-5">{blogContent}</div>
-        <div className="w-[30vw] m-5 mt-20">{author}</div>
       </div>
       <div className="flex flex-col sm:hidden">
         <div className="m-5">{blogContent}</div>
