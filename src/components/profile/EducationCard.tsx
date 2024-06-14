@@ -69,9 +69,9 @@ const EducationCard = (props: any) => {
   };
 
   return (
-    <div>
+    <div className="text-black">
       <div className="m-2 p-2 flex flex-col rounded-lg transition duration-500 hover:bg-sky-100">
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <p>{degree}</p>
           <p className="text-sm">
             {start_date} - {end_date}

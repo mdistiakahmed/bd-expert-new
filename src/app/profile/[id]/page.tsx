@@ -243,8 +243,8 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div className="hidden sm:flex items-center justify-center bg-gray-200">
-        <div className="w-[60vw] flex flex-col gap-5 p-5 bg-gray-200">
+      <div className="hidden sm:flex items-center justify-center ">
+        <div className="w-[60vw] flex flex-col gap-5 p-5 ">
           <AvatarCard
             name={profileData?.name || ""}
             title={profileData?.title || ""}

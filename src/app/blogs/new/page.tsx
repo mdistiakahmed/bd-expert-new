@@ -117,8 +117,8 @@ const CreateNewBlog = () => {
   };
 
   return (
-    <div className="flex items-center justify-center relative">
-      <div className="flex flex-col items-center justify-center gap-10 w-2/3 p-10">
+    <div className="flex items-center justify-center relative bg-white text-black">
+      <div className="flex flex-col items-center justify-center mt-10 md:mt-0 p-2 gap-10 md:w-2/3 md:p-10">
         <TextField
           id="standard-basic"
           label="Title"
@@ -174,7 +174,7 @@ const CreateNewBlog = () => {
           </div>
         </div>
 
-        <div className="absolute right-10 top-10">
+        <div className="absolute right-4 top-2 md:right-10 md:top-10">
           <Button variant="outlined" endIcon={<SendIcon />} onClick={onSubmit}>
             Publish
           </Button>

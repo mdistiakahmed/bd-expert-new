@@ -1,10 +1,23 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "../ui/button";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { FaArrowDown } from "react-icons/fa";
 
 const links = [
   {
@@ -25,8 +38,41 @@ const links = [
   },
 ];
 
+const ProfileLinks = [
+  {
+    name: "Profile",
+    path: "/profile/1",
+  },
+  {
+    name: "Experts",
+    path: "/experts",
+  },
+  {
+    name: "Blogs",
+    path: "/blogs",
+  },
+  {
+    name: "Write",
+    path: "/blogs/new",
+  },
+];
+
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
 const MobileNav = () => {
   const pathname = usePathname();
+  const session = useSession();
+  const router = useRouter();
+
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+
+  const handleSettingMenu = (action: string) => {
+    if (action == "Profile") {
+      router.push(`/profile/1`);
+    } else if (action == "Logout") {
+      signOut();
+    }
+  };
 
   return (
     <Sheet>
@@ -35,7 +81,7 @@ const MobileNav = () => {
       </SheetTrigger>
 
       <SheetContent className="flex flex-col">
-        <div className="mt-32 mb-40 text-center text-2xl">
+        <div className="mt-32 mb-30 text-center text-2xl">
           <Link href="/">
             <h1 className="text-4xl font-semibold">
               RatGeber<span className="text-accent">.</span>
@@ -57,6 +103,37 @@ const MobileNav = () => {
               </Link>
             );
           })}
+
+          {session?.status === "unauthenticated" && pathname !== "/login" && (
+            <Link href="/login">
+              <Button>Log In</Button>
+            </Link>
+          )}
+
+          {session?.status === "authenticated" && (
+            <div>
+              <Button
+                onClick={() => setOpenUserMenu(!openUserMenu)}
+                className="flex justify-between gap-2"
+                variant={"primary"}
+              >
+                <Avatar alt="A" src={session?.data?.user?.image || ""} />
+                <FaArrowDown />
+              </Button>
+            </div>
+          )}
+
+          {openUserMenu && (
+            <>
+              <Link
+                href="/profile/1"
+                className={`text-xl capitalize hover:text-accent transition-all`}
+              >
+                Profile
+              </Link>
+              <Button onClick={() => signOut()}>Log Out</Button>
+            </>
+          )}
         </nav>
       </SheetContent>
     </Sheet>

@@ -9,7 +9,7 @@ const AvatarCard = (props: any) => {
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-5 rounded-lg bg-white p-5">
+    <div className="flex items-center gap-5 rounded-lg bg-white p-5 text-black">
       <div>
         <Avatar
           alt="U"
@@ -19,8 +19,8 @@ const AvatarCard = (props: any) => {
       </div>
 
       <div>
-        <h2 className="text-lg font-bold">{name}</h2>
-        <h3 className="text-md ">{title}</h3>
+        <h2 className="text-lg font-bold ">{name}</h2>
+        <h3 className="text-md break-words">{title}</h3>
       </div>
 
       <div className="flex-grow"></div>

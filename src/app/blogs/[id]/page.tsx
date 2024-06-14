@@ -35,7 +35,7 @@ const page = async ({ params }: any) => {
   );
 
   const blogHeader = (
-    <div className="flex gap-10 p-5">
+    <div className="flex flex-col md:flex-row gap-10 p-5">
       <div
         className="w-[100px] h-[100px] relative"
         style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
@@ -44,7 +44,7 @@ const page = async ({ params }: any) => {
           src={authorData.image_url}
           alt=""
           fill
-          className="absolute border-4 border-red-500 rounded-lg"
+          className="absolute border-4 border-accent rounded-lg"
         />
       </div>
       <div className="flex flex-col gap-1">
@@ -58,7 +58,7 @@ const page = async ({ params }: any) => {
         <p className="flex gap-1">
           {timestampToDateString(docData?.created_at)} in {tags}
         </p>
-        <div className="flex self-end gap-2">
+        <div className="flex items-center justify-center self-end gap-2">
           {docData?.view_count}
           <VisibilityIcon />
         </div>
@@ -69,7 +69,7 @@ const page = async ({ params }: any) => {
   const blogContent = (
     <div className="flex flex-col gap-5">
       {blogHeader}
-      <hr className="border border-dotted rounded-md border-blue-500" />
+      <hr className="border border-dotted rounded-md border-accent" />
 
       <div className="quill">
         <div className="ql-container ql-snow">

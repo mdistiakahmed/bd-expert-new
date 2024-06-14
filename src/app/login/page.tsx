@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import GoogleIcon from "@mui/icons-material/Google";
-import { Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 const LoginPage = () => {
   const { data, status } = useSession();
@@ -18,25 +18,10 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-300 via-blue-300 to-green-300">
-      <div className="bg-white p-10 rounded-lg shadow-xl">
-        <Button
-          variant="contained"
-          startIcon={<GoogleIcon sx={{ color: "#BA0F30" }} />}
-          onClick={() => signIn("google")}
-          sx={{
-            backgroundColor: "#4285F4",
-            color: "#357ae8",
-            "&:hover": {
-              backgroundColor: "#357ae8",
-              color: "#fff",
-            },
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            textTransform: "none",
-          }}
-        >
+    <div className="flex items-center justify-center h-[55vh]">
+      <div className="p-10 rounded-lg">
+        <Button variant="outline" onClick={() => signIn("google")}>
+          <GoogleIcon sx={{ color: "#BA0F30" }} />
           Sign in with Google
         </Button>
       </div>

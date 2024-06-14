@@ -68,9 +68,9 @@ const ExperienceCard = (props: any) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   return (
-    <div>
+    <div className="text-black">
       <div className="m-2 p-2 flex flex-col gap-2 rounded-lg transition duration-500 hover:bg-sky-100">
-        <div className="flex justify-between">
+        <div className="flex flex-col justify-between md:flex-row">
           <p>{title}</p>
           <p className="text-sm">
             {start_date} - {end_date}
