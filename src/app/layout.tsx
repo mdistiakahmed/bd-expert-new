@@ -6,12 +6,14 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/context/SessionProvider";
 import { Inter } from "next/font/google";
 import { authOptions } from "@/utils/AuthOption";
+import Navbar from "@/components/navbar/Navbar";
+import { JetBrains_Mono } from "next/font/google";
+import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"], weight: ["400"] });
-
-const sourceSans3 = Source_Sans_3({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "100"],
+  variable: "--font-jetbrainsMono",
 });
 
 export const metadata: Metadata = {
@@ -28,10 +30,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={jetBrainsMono.variable}>
         <SessionProvider session={session}>
-          <Header />
+          <Navbar />
           {children}
+          <Footer />
         </SessionProvider>
       </body>
     </html>

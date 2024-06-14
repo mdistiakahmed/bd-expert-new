@@ -1,0 +1,31 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* One column by default */
+  gap: 1rem; /* Default gap */
+}
+
+.link-style {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.link-style:hover {
+  background-color: #00ff99;
+  transform: rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, 1fr)
+    ); /* Two columns for medium screens and above */
+    gap: 1.5rem; /* Larger gap for medium screens and above */
+  }
+}
