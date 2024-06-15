@@ -51,7 +51,7 @@ const ExpertsPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="w-[60vw] flex flex-col gap-5 m-5 items-center justify-center">
+      <div className=" md:w-[60vw] flex flex-col gap-5 m-5 items-center justify-center">
         {cards}
         <Pagination
           count={totalPages}

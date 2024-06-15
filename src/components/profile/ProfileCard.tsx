@@ -7,7 +7,7 @@ const ProfileCard = (props: any) => {
   const { name, title, image_url } = props;
 
   return (
-    <div className="flex justify-between gap-10 p-10 border rounded-md shadow-md w-full">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full">
       <div
         className="w-[100px] h-[100px] relative"
         style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
