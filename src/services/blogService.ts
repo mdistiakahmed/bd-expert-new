@@ -15,8 +15,7 @@ export const fetchBlogs = async (page: number, limit: number) => {
 
 export const fetchBlogById = async (id: string) => {
   try {
-    const isServer = typeof window === "undefined";
-    const baseUrl = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "";
+    const baseUrl = process.env.BASE_URL;
     const response = await fetch(`${baseUrl}/api/blogs/${id}`);
     if (!response.ok) {
       throw new Error(`Error fetching blogs: ${response.statusText}`);
