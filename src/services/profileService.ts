@@ -14,10 +14,9 @@ export const fetchMyProfile = async () => {
 
 export const fetchProfileByEmail = async (email: string) => {
   try {
+    const baseUrl = process.env.BASE_URL;
     const encodedEmail = encodeURIComponent(email);
-    const response = await fetch(
-      `http://localhost:3000/api/profile/${encodedEmail}`
-    );
+    const response = await fetch(`${baseUrl}/api/profile/${encodedEmail}`);
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
     }
