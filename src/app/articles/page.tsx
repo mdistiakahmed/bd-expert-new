@@ -61,6 +61,7 @@ const AllBlogsPage = () => {
         publishedDate={timestampToDateString(d.created_at)}
         tags={d.tags}
         id={d.id}
+        imageUrl={d.imageUrl}
       />
     );
   });
@@ -68,7 +69,7 @@ const AllBlogsPage = () => {
   return (
     <>
       <div className="hidden sm:flex items-center justify-center">
-        <div className="w-[60vw] flex flex-col gap-5 m-5 items-center">
+        <div className="w-[70vw] flex flex-col gap-5 m-5 items-center bg-white p-10 rounded-lg">
           {cards}
           <Pagination
             count={totalPages}
@@ -80,7 +81,7 @@ const AllBlogsPage = () => {
         </div>
       </div>
       <div className="flex sm:hidden">
-        <div className="w-full flex flex-col gap-5 m-5 items-center">
+        <div className="w-full flex flex-col gap-5 m-5 items-center bg-white p-4 rounded-lg">
           {cards}
           <Pagination
             count={totalPages}
@@ -90,7 +91,6 @@ const AllBlogsPage = () => {
             color="primary"
           />
         </div>
-        ;
       </div>
       <Loader loading={loading} />
     </>

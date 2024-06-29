@@ -58,7 +58,7 @@ const page = async ({ params }: any) => {
           wrote
         </p>
         <h2 className="text-2xl font-bold">{docData?.title}</h2>
-        <p className="flex gap-1">
+        <p className="flex flex-wrap gap-1">
           {timestampToDateString(docData?.created_at)} in {tags}
         </p>
         <div className="flex items-center justify-center self-end gap-2">
@@ -87,14 +87,14 @@ const page = async ({ params }: any) => {
   );
 
   return (
-    <>
+    <div className="bg-white text-black">
       <div className="hidden sm:flex items-center justify-center">
-        <div className="w-[60vw] m-5">{blogContent}</div>
+        <div className="w-[70vw] m-5">{blogContent}</div>
       </div>
       <div className="flex flex-col sm:hidden">
         <div className="m-5">{blogContent}</div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -2,15 +2,20 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 const Card = (props) => {
-  const { title, author, publishedDate, tags, content, id } = props;
+  const { title, author, publishedDate, tags, content, id, imageUrl } = props;
 
   console.log("blog id : ", id);
 
   return (
-    <div className="flex flex-col gap-2  p-5 border rounded-md shadow-md w-full">
-      <Link href={`/blogs/${id}`}>
+    <div className=" text-black flex flex-col gap-2  p-5 border rounded-md shadow-md w-full">
+      <Link href={`/articles/${id}`}>
+        <div>
+          <Image src={imageUrl} alt="thumbnail" width={200} height={200} />
+        </div>
+
         <h1 className="text-lg font-bold">{title}</h1>
       </Link>
       <p>
@@ -19,7 +24,7 @@ const Card = (props) => {
         </span>{" "}
         on <span className="italic text-sm">{publishedDate}</span>
       </p>
-      <p>{content}</p>
+      <p>{content}...</p>
       <div className="flex self-end">
         <Link href={`/articles/${id}`}>
           <Button variant="outlined" size="small">
@@ -28,7 +33,7 @@ const Card = (props) => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <span className="text-xs font-semibold text-[#1976d2] italic">
           Tags
         </span>
@@ -37,7 +42,7 @@ const Card = (props) => {
             key={index}
             label={tag}
             variant="outlined"
-            color="secondary"
+            color="primary"
             size="small"
             clickable
           />

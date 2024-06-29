@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const ProfileCard = (props: any) => {
   const { name, title, image_url, id } = props;
@@ -13,9 +13,9 @@ const ProfileCard = (props: any) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full">
+    <div className="bg-white text-black flex flex-col md:flex-row items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full">
       <div
-        className="w-[100px] h-[100px] relative"
+        className="w-[200px] h-[150px] relative min-w-[150px]"
         style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
       >
         <Image
@@ -26,11 +26,13 @@ const ProfileCard = (props: any) => {
         />
       </div>
       <div className="flex flex-col items-center justify-center">
-        <p>{name}</p>
-        <p>{title}</p>
+        <p className=" text-blue-600 ">{name}</p>
+        <p className="text-center">{title}</p>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <Button variant="outlined" onClick={handleClick}>See Full Profile</Button>
+        <Button variant="outlined" onClick={handleClick} className="w-[180px]">
+          See Full Profile
+        </Button>
       </div>
     </div>
   );

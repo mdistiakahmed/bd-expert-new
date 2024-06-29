@@ -53,7 +53,7 @@
 
 .ql-container.ql-snow {
   border: none !important;
-  font-family: var(--font-jetbrainsMono);
+  font-family:  Arial, Georgia, Tahoma;
   font-size: 18px;
 }
 
