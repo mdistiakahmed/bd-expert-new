@@ -22,6 +22,8 @@ const page = async ({ params }: any) => {
   const authorInfo = await fetchProfileByEmail(docData?.author);
   const authorData = authorInfo.data;
 
+  console.log(docData);
+
   const tags: any = (
     <div className="flex gap-1">
       {docData?.tags?.map((t: any, index: any) => (
@@ -73,6 +75,9 @@ const page = async ({ params }: any) => {
     <div className="flex flex-col gap-5">
       {blogHeader}
       <hr className="border border-dotted rounded-md border-accent" />
+      <div className="flex items-center justify-center">
+        <Image src={docData.imageUrl} alt="" height={400} width={400} />
+      </div>
 
       <div className="quill">
         <div className="ql-container ql-snow">

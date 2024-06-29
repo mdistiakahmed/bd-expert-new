@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -14,7 +14,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
-import { deleteImage, uploadImage } from "@/services/profileService";
+import { uploadImage } from "@/services/profileService";
+import { signOut, useSession } from "next-auth/react";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -64,6 +65,14 @@ const CreateNewBlog = () => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    console.log(status);
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status]);
 
   const handleChipChange = (newTags: any) => {
     setTags(newTags);
