@@ -8,13 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import {
-  Avatar,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
+  Avatar
 } from "@mui/material";
 import { useState } from "react";
 import { FaArrowDown } from "react-icons/fa";
@@ -29,35 +23,16 @@ const links = [
     path: "/experts",
   },
   {
-    name: "Blogs",
-    path: "/blogs",
+    name: "Articles",
+    path: "/articles",
   },
   {
     name: "Write",
-    path: "/write",
+    path: "/articles/new",
   },
 ];
 
-const ProfileLinks = [
-  {
-    name: "Profile",
-    path: "/profile/1",
-  },
-  {
-    name: "Experts",
-    path: "/experts",
-  },
-  {
-    name: "Blogs",
-    path: "/blogs",
-  },
-  {
-    name: "Write",
-    path: "/blogs/new",
-  },
-];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const MobileNav = () => {
   const pathname = usePathname();
@@ -68,7 +43,7 @@ const MobileNav = () => {
 
   const handleSettingMenu = (action: string) => {
     if (action == "Profile") {
-      router.push(`/profile/1`);
+      router.push(`/profile/my`);
     } else if (action == "Logout") {
       signOut();
     }
@@ -126,7 +101,7 @@ const MobileNav = () => {
           {openUserMenu && (
             <>
               <Link
-                href="/profile/1"
+                href="/profile/my"
                 className={`text-xl capitalize hover:text-accent transition-all`}
               >
                 Profile

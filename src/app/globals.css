@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-jetbrainsMono: 'JetBrains Mono', monospace;
+}
+
 @layer base {
   body {
     @apply font-primary bg-primary text-white leading-loose;
@@ -49,4 +53,9 @@
 
 .ql-container.ql-snow {
   border: none !important;
+  font-family: var(--font-jetbrainsMono);
+  font-size: 18px;
 }
+
+
+

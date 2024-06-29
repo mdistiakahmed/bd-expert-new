@@ -107,7 +107,7 @@ const CreateNewBlog = () => {
 
       setLoading(false);
 
-      router.push(`/blogs/${result.data}`);
+      router.push(`/articles/${result.data}`);
     } catch (err: any) {
       setLoading(false);
       setSnackbarMessage(err?.message || "Something went wrong");

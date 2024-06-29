@@ -1,10 +1,8 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Timestamp } from "firebase/firestore";
 
-import { Button } from "@mui/material";
 import { fetchBlogById } from "@/services/blogService";
 import "react-quill/dist/quill.snow.css";
 import { fetchProfileByEmail } from "@/services/profileService";
@@ -35,21 +33,26 @@ const page = async ({ params }: any) => {
   );
 
   const blogHeader = (
-    <div className="flex flex-col md:flex-row gap-10 p-5">
+    <div className="flex flex-col justify-center md:flex-row gap-10 p-5">
       <div
         className="w-[100px] h-[100px] relative"
         style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
       >
-        <Image
-          src={authorData.image_url}
-          alt=""
-          fill
-          className="absolute border-4 border-accent rounded-lg"
-        />
+        <Link href={`/profile/${authorData.id}`}>
+          <Image
+            src={authorData.image_url}
+            alt=""
+            fill
+            className="absolute border-4 border-accent rounded-lg"
+          />
+        </Link>
       </div>
       <div className="flex flex-col gap-1">
         <p>
-          <Link href="/" className="font-semibold underline">
+          <Link
+            href={`/profile/${authorData.id}`}
+            className="font-semibold underline"
+          >
             {authorData.name}
           </Link>{" "}
           wrote
@@ -75,34 +78,11 @@ const page = async ({ params }: any) => {
         <div className="ql-container ql-snow">
           <div
             className="ql-editor"
+            style={{ fontFamily: "inherit" }}
             dangerouslySetInnerHTML={{ __html: docData?.data }}
           ></div>
         </div>
       </div>
-    </div>
-  );
-
-  const author = (
-    <div className="flex flex-col gap-2 items-center justify-center border rounded-full p-5 bg-blue-200">
-      <h1 className="text-xl font-bold text-center">Author</h1>
-      <div className="text-center">
-        <Image
-          src={"https://picsum.photos/200/200"}
-          alt="Avatar Image"
-          width={100}
-          height={100}
-          style={{ borderRadius: "20%" }}
-        />
-      </div>
-
-      <p className="text-center text-xl pb-0">{docData?.author}</p>
-      <p className="text-center p-0">Software Engineer</p>
-
-      <Link href={`/blogs/${id}`}>
-        <Button variant="outlined" size="small">
-          More
-        </Button>
-      </Link>
     </div>
   );
 
@@ -113,7 +93,6 @@ const page = async ({ params }: any) => {
       </div>
       <div className="flex flex-col sm:hidden">
         <div className="m-5">{blogContent}</div>
-        <div className="m-5 mt-10">{author}</div>
       </div>
     </>
   );

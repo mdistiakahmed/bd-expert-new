@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import { IconButton, Tooltip } from "@mui/material";
@@ -9,7 +11,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import AddEducationDialog from "./AddEducationDialog";
 
 const AlertDialog = (props: any) => {
   const { deleteConfirm, setDeleteConfirm, handleDelete, title, company_name } =

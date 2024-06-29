@@ -21,7 +21,8 @@ export async function GET(req: NextRequest, { params }: any) {
     const querySnapshot = await getDocs(q);
 
     const profileData = querySnapshot.docs[0].data();
-    return NextResponse.json({ success: true, data: profileData });
+    const profileId = querySnapshot.docs[0].id;
+    return NextResponse.json({ success: true, data: { id: profileId, ...profileData } });
   } catch (error) {
     console.error("Error fetching or creating profile:", error);
     return NextResponse.json(

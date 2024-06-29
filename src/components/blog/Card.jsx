@@ -21,7 +21,7 @@ const Card = (props) => {
       </p>
       <p>{content}</p>
       <div className="flex self-end">
-        <Link href={`/blogs/${id}`}>
+        <Link href={`/articles/${id}`}>
           <Button variant="outlined" size="small">
             Continue Reading...
           </Button>

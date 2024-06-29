@@ -28,6 +28,21 @@ export const fetchProfileByEmail = async (email: string) => {
   }
 };
 
+export const fetchProfileById = async (id: string) => {
+  try {
+    const baseUrl = process.env.BASE_URL;
+    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`);
+    if (!response.ok) {
+      throw new Error(`Error fetching profile: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    throw error;
+  }
+};
+
 export const fetchProfilesByPage = async (page: number, limit: number) => {
   const offset = (page - 1) * limit;
   try {

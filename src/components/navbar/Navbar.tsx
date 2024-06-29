@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const handleSettingMenu = (action: string) => {
     if (action == "Profile") {
-      router.push(`/profile/1`);
+      router.push(`/profile/my`);
     } else if (action == "Logout") {
       signOut();
     }

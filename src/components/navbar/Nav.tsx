@@ -13,12 +13,12 @@ const links = [
     path: "/experts",
   },
   {
-    name: "Blogs",
-    path: "/blogs",
+    name: "Articles",
+    path: "/articles",
   },
   {
     name: "Write",
-    path: "/blogs/new",
+    path: "/articles/new",
   },
 ];
 

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const images = ["/istiak.png", "/iftekhar.png", "/net_1.png", "/net_2.png"];
+const images = ["/net_1.png", "/net_2.png"];
 
 const Photo = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
