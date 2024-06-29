@@ -30,13 +30,12 @@ export interface Education {
   institution: string;
 }
 
-
 export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [profileData, setProfileData] = useState<any>(null);
   const [addNewExperienceModalOpen, setAddNewExperienceModalOpen] =
-    useState(false)
+    useState(false);
 
   const [profileResponse, setProfileResponse1] = useState<any>(null);
 
@@ -263,6 +262,7 @@ export default function ProfilePage() {
                     color: "white",
                   },
                 }}
+                onClick={() => setAddNewExperienceModalOpen(true)}
               >
                 <AddIcon />
               </Fab>
