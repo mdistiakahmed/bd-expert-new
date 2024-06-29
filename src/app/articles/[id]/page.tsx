@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 
 import { Timestamp } from "firebase/firestore";
 
@@ -93,6 +94,17 @@ const page = async ({ params }: any) => {
 
   return (
     <div className="bg-white text-black">
+      <Head>
+        <title>{docData?.title}</title>
+        <meta property="og:title" content={docData?.title} />
+        <meta property="og:image" content={docData?.imageUrl} />
+        <meta property="og:type" content="article" />
+        <meta
+          property="og:url"
+          content={`https://www.bdtaxexpert.com/articles/${id}`}
+        />
+        <meta property="og:site_name" content="RatGeber" />
+      </Head>
       <div className="hidden sm:flex items-center justify-center">
         <div className="w-[70vw] m-5">{blogContent}</div>
       </div>

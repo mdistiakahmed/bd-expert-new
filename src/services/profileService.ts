@@ -31,7 +31,10 @@ export const fetchProfileByEmail = async (email: string) => {
 export const fetchProfileById = async (id: string) => {
   try {
     const baseUrl = process.env.BASE_URL;
-    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`);
+    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`, {
+      headers: {
+        'Cache-Control': 'no-store',
+      }});
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
     }

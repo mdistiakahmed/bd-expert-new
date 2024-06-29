@@ -1,5 +1,5 @@
 import { fetchProfileById } from "@/services/profileService";
-import { Avatar} from "@mui/material";
+import { Avatar } from "@mui/material";
 import Chip from "@mui/material/Chip";
 
 const AvatarCard = (props: any) => {
@@ -8,11 +8,7 @@ const AvatarCard = (props: any) => {
   return (
     <div className="flex items-center gap-5 rounded-lg bg-white p-5 text-black">
       <div>
-        <Avatar
-          alt="U"
-          src={imageUrl}
-          sx={{ width: 100, height: 100 }}
-        />
+        <Avatar alt="U" src={imageUrl} sx={{ width: 100, height: 100 }} />
       </div>
 
       <div>
@@ -40,7 +36,7 @@ const ExperienceCard = (props: any) => {
         <div className="flex flex-col justify-between md:flex-row">
           <p>{title}</p>
           <p className="text-sm">
-            { start_date?.substr(0, 7)} - {end_date?.substr(0, 7)}
+            {start_date?.substr(0, 7)} - {end_date?.substr(0, 7)}
           </p>
         </div>
 
@@ -111,12 +107,7 @@ const ExperienceCard = (props: any) => {
 };
 
 const EducationCard = (props: any) => {
-  const {
-    degree,
-    start_date,
-    end_date,
-    institution,
-  } = props;
+  const { degree, start_date, end_date, institution } = props;
 
   return (
     <div className="text-black">
@@ -135,33 +126,20 @@ const EducationCard = (props: any) => {
   );
 };
 
-
-
-
 const profilePage = async ({ params }: any) => {
   const { id } = params;
   const response = await fetchProfileById(id);
   const profileData = response.data;
 
+  console.log(profileData);
+
   const experienceCard = profileData?.experiences.map((e: any, index: any) => {
-    return (
-      <ExperienceCard
-        key={index}
-        {...e}
-      />
-    );
+    return <ExperienceCard key={index} {...e} />;
   });
 
   const educationCard = profileData?.education.map((e: any, index: any) => {
-    return (
-      <EducationCard
-        key={index}
-        {...e}
-      />
-    );
+    return <EducationCard key={index} {...e} />;
   });
-
-  
 
   return (
     <>
@@ -215,6 +193,6 @@ const profilePage = async ({ params }: any) => {
       </div>
     </>
   );
-}
+};
 
 export default profilePage;
