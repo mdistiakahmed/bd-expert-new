@@ -32,6 +32,7 @@ export async function generateMetadata({
     title: docData?.title,
     openGraph: {
       title: docData?.title,
+      description: "",
       type: "article",
       locale: "en_US",
       url: `https://www.bdtaxexpert.com/articles/${id}`,

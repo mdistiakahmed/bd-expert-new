@@ -1,11 +1,6 @@
 "use client";
 import { FaLinkedinIn, FaFacebook, FaShareAlt } from "react-icons/fa";
 
-const socials = [
-  { icon: <FaFacebook />, path: "", color: "#3b5998" },
-  { icon: <FaLinkedinIn />, path: "", color: "#0e76a8" },
-];
-
 const shareOnFacebook = () => {
   const url = window.location.href;
   console.log(url);
@@ -15,21 +10,31 @@ const shareOnFacebook = () => {
   window.open(facebookShareUrl, "_blank");
 };
 
-const Social = ({ containerStyles, iconStyles }: any) => {
+const shareOnLinkedIn = () => {
+  const url = window.location.href;
+  const linkedInShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+    url
+  )}`;
+  window.open(linkedInShareUrl, "_blank");
+};
+
+const Social = ({ iconStyles }: any) => {
   return (
     <div className="flex gap-4">
-      {socials.map((item, index) => {
-        return (
-          <div
-            key={index}
-            className={iconStyles}
-            style={{ color: item.color, fontSize: "1.5em", cursor: "pointer" }}
-            onClick={shareOnFacebook}
-          >
-            {item.icon}
-          </div>
-        );
-      })}
+      <div
+        className={iconStyles}
+        style={{ color: "#3b5998", fontSize: "1.5em", cursor: "pointer" }}
+        onClick={shareOnFacebook}
+      >
+        <FaFacebook />
+      </div>
+      <div
+        className={iconStyles}
+        style={{ color: "#0e76a8", fontSize: "1.5em", cursor: "pointer" }}
+        onClick={shareOnLinkedIn}
+      >
+        <FaLinkedinIn />
+      </div>
     </div>
   );
 };

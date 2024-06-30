@@ -1,6 +1,8 @@
+import Social from "@/components/Social";
 import { fetchProfileById } from "@/services/profileService";
 import { Avatar } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import { Metadata } from "next";
 
 const AvatarCard = (props: any) => {
   const { name, title, imageUrl } = props;
@@ -126,12 +128,42 @@ const EducationCard = (props: any) => {
   );
 };
 
+export async function generateMetadata({
+  params,
+}: any): Promise<Metadata | undefined> {
+  const { id } = params;
+  const response = await fetchProfileById(id);
+
+  if (!response) {
+    return;
+  }
+  const profileData = response.data;
+
+  return {
+    title: profileData?.name,
+    description: profileData?.title,
+    openGraph: {
+      title: profileData?.name,
+      description: profileData?.title,
+      type: "article",
+      locale: "en_US",
+      url: `https://www.bdtaxexpert.com/profile/${id}`,
+      siteName: "RatGeber",
+      images: [
+        {
+          url: profileData?.image_url,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
+
 const profilePage = async ({ params }: any) => {
   const { id } = params;
   const response = await fetchProfileById(id);
   const profileData = response.data;
-
-  console.log(profileData);
 
   const experienceCard = profileData?.experiences.map((e: any, index: any) => {
     return <ExperienceCard key={index} {...e} />;
@@ -143,8 +175,12 @@ const profilePage = async ({ params }: any) => {
 
   return (
     <>
-      <div className="hidden sm:flex items-center justify-center ">
-        <div className="w-[60vw] flex flex-col gap-5 p-5 ">
+      <div className="hidden sm:flex items-center justify-center arial-font">
+        <div className="w-[70vw] flex flex-col gap-5 p-5 ">
+          <div className="flex gap-2 font-thin ">
+            <p>Share-On</p>
+            <Social />
+          </div>
           <AvatarCard
             name={profileData?.name || ""}
             title={profileData?.title || ""}
@@ -168,7 +204,7 @@ const profilePage = async ({ params }: any) => {
           </div>
         </div>
       </div>
-      <div className="sm:hidden flex flex-col gap-5 p-5 bg-gray-200">
+      <div className="sm:hidden flex flex-col gap-5 p-5 bg-gray-200 arial-font">
         <AvatarCard
           name={profileData?.name || ""}
           title={profileData?.title || ""}
