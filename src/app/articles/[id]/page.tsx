@@ -9,6 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import { fetchProfileByEmail } from "@/services/profileService";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Metadata } from "next";
+import Social from "@/components/Social";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
@@ -53,8 +54,6 @@ const page = async ({ params }: any) => {
   const authorInfo = await fetchProfileByEmail(docData?.author);
   const authorData = authorInfo.data;
 
-  console.log(docData);
-
   const tags: any = (
     <div className="flex gap-1">
       {docData?.tags?.map((t: any, index: any) => (
@@ -94,9 +93,15 @@ const page = async ({ params }: any) => {
         <p className="flex flex-wrap gap-1">
           {timestampToDateString(docData?.created_at)} in {tags}
         </p>
-        <div className="flex items-center justify-center self-end gap-2">
-          {docData?.view_count}
-          <VisibilityIcon />
+        <div className="flex justify-between">
+          <div className="flex gap-2 font-thin">
+            <p>Share</p>
+            <Social />
+          </div>
+          <div className="flex items-center justify-center self-end gap-2">
+            {docData?.view_count}
+            <VisibilityIcon />
+          </div>
         </div>
       </div>
     </div>
