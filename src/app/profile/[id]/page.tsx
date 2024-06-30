@@ -8,14 +8,16 @@ const AvatarCard = (props: any) => {
   const { name, title, imageUrl } = props;
 
   return (
-    <div className="flex items-center gap-5 rounded-lg bg-white p-5 text-black">
+    <div className="flex flex-col md:flex-row items-center gap-5 rounded-lg bg-white p-5 text-black">
       <div>
         <Avatar alt="U" src={imageUrl} sx={{ width: 100, height: 100 }} />
       </div>
 
       <div>
-        <h2 className="text-lg font-bold ">{name}</h2>
-        <h3 className="text-md break-words">{title}</h3>
+        <h2 className="text-lg font-bold text-center md:text-left">{name}</h2>
+        <h3 className="text-md break-words text-center md:text-left">
+          {title}
+        </h3>
       </div>
     </div>
   );
@@ -59,7 +61,7 @@ const ExperienceCard = (props: any) => {
 
           <div className="flex gap-2 items-center ">
             <p className="text-sm italic">Industries:</p>
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1">
               {industries.map((ee: any) => {
                 return (
                   <Chip
@@ -81,7 +83,7 @@ const ExperienceCard = (props: any) => {
 
           <div className="flex gap-2 items-center ">
             <p className="text-sm italic">Skills:</p>
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1">
               {skills.map((ee: any) => {
                 return (
                   <Chip
