@@ -3,13 +3,12 @@ import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
 
 const shareOnFacebook = () => {
   const url = window.location.href;
+  const encodedUrl = encodeURIComponent(url);
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   if (isMobile) {
     try {
-      window.location.href = `fb://sharer/sharer.php?u=${encodeURIComponent(
-        url
-      )}`;
+      window.location.href = `fb://facewebmodal/f?href=${encodedUrl}`;
     } catch (error) {
       const facebookShareUrl = `https://www.facebook.com/sharer.php?u=${encodeURIComponent(
         url
