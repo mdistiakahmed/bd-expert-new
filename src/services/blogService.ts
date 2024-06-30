@@ -16,7 +16,10 @@ export const fetchBlogs = async (page: number, limit: number) => {
 export const fetchBlogById = async (id: string) => {
   try {
     const baseUrl = process.env.BASE_URL;
-    const response = await fetch(`${baseUrl}/api/blogs/${id}`);
+    const response = await fetch(`${baseUrl}/api/blogs/${id}`, {
+      headers: {
+        'Cache-Control': 'no-store',
+      }});
     if (!response.ok) {
       throw new Error(`Error fetching blogs: ${response.statusText}`);
     }
@@ -32,7 +35,9 @@ export const createBlog = async (
   title: string,
   data: string,
   tags: string[],
-  imageUrl: string
+  imageUrl: string,
+  excerpt: string,
+  slug: string
 ) => {
   try {
     const response = await fetch("/api/blogs", {
@@ -45,6 +50,8 @@ export const createBlog = async (
         data,
         tags,
         imageUrl,
+        excerpt,
+        slug
       }),
     });
 

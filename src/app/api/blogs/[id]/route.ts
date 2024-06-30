@@ -1,27 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebaseConfig";
-import { doc, getDoc, updateDoc, increment } from "firebase/firestore";
+import { doc, updateDoc, increment, collection, where, query, getDocs } from "firebase/firestore";
 
 export async function GET(req: NextRequest, { params }: any) {
   try {
     const { id } = params;
-    const docRef = doc(db, "test", id);
-    const docSnap = await getDoc(docRef);
+    const profilesRef = collection(db, "test");
+    const q = query(profilesRef, where("slug", "==", id));
+    const querySnapshot = await getDocs(q);
 
-    if (!docSnap.exists()) {
+    if (querySnapshot.empty) {
       return NextResponse.json(
         { success: false, message: "No data found" },
         { status: 404 }
       );
     }
 
-    // Retrieve document data
-    const docData = docSnap.data();
+    const docSnap = querySnapshot.docs[0];
 
-    // Update viewCount
+    const docRef = doc(db, "test", docSnap.id);
     await updateDoc(docRef, {
       view_count: increment(1),
     });
+
+    const docData = docSnap.data();
 
     return NextResponse.json({ success: true, data: { ...docData, id } });
   } catch (error) {

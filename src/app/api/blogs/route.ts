@@ -7,7 +7,6 @@ import {
   limit,
   startAfter,
   orderBy,
-  Timestamp,
   DocumentSnapshot,
   DocumentData,
   addDoc,
@@ -85,7 +84,7 @@ export async function POST(request: Request) {
   }
 
   const requestData = await request.json();
-  const { title, data, tags, imageUrl } = requestData;
+  const { title, data, tags, imageUrl, excerpt, slug } = requestData;
 
   if (!title || !data || !tags) {
     throw new Error("Title, data, and tags are required.");
@@ -96,6 +95,8 @@ export async function POST(request: Request) {
     data,
     tags,
     imageUrl,
+    excerpt,
+    slug,
     author: session?.user?.email || "",
     created_at: new Date(),
     view_count: 0,

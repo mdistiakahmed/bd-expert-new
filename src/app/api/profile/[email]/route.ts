@@ -3,8 +3,6 @@ import { db } from "@/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 export async function GET(req: NextRequest, { params }: any) {
-  console.log("i am here.........");
-  console.log(params);
   const { email } = params;
 
   if (!email) {

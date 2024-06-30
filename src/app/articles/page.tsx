@@ -62,6 +62,7 @@ const AllBlogsPage = () => {
         tags={d.tags}
         id={d.id}
         imageUrl={d.imageUrl}
+        slug={d.slug}
       />
     );
   });

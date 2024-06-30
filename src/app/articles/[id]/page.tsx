@@ -1,15 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
-
 import { Timestamp } from "firebase/firestore";
-
 import { fetchBlogById } from "@/services/blogService";
 import "react-quill/dist/quill.snow.css";
 import { fetchProfileByEmail } from "@/services/profileService";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Metadata } from "next";
 import Social from "@/components/Social";
+import { Chip } from "@mui/material";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  AwaitedReactNode,
+  Key,
+} from "react";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
@@ -32,7 +38,7 @@ export async function generateMetadata({
     title: docData?.title,
     openGraph: {
       title: docData?.title,
-      description: "",
+      description: docData?.excerpt,
       type: "article",
       locale: "en_US",
       url: `https://www.bdtaxexpert.com/articles/${id}`,
@@ -125,22 +131,30 @@ const page = async ({ params }: any) => {
           ></div>
         </div>
       </div>
+
+      <div className="flex justify-between p-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-semibold text-black italic">Tags</span>
+          {docData?.tags?.map((tag: any, index: any) => (
+            <Chip
+              key={index}
+              label={tag}
+              variant="outlined"
+              color="primary"
+              clickable
+            />
+          ))}
+        </div>
+        <div className="flex gap-2 font-thin">
+          <p>Share</p>
+          <Social />
+        </div>
+      </div>
     </div>
   );
 
   return (
     <>
-      <Head>
-        <title>{docData?.title}</title>
-        <meta property="og:title" content={docData?.title} />
-        <meta property="og:image" content={docData?.imageUrl} />
-        <meta property="og:type" content="article" />
-        <meta
-          property="og:url"
-          content={`https://www.bdtaxexpert.com/articles/${id}`}
-        />
-        <meta property="og:site_name" content="RatGeber" />
-      </Head>
       <div className="bg-white text-black">
         <div className="hidden sm:flex items-center justify-center">
           <div className="w-[70vw] m-5">{blogContent}</div>

@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Card = (props) => {
-  const { title, author, publishedDate, tags, content, id, imageUrl } = props;
+  const { title, author, publishedDate, tags, content, id, imageUrl, slug } =
+    props;
 
-  console.log("blog id : ", id);
+  console.log("blog id : ", slug);
 
   return (
     <div className=" text-black flex flex-col gap-2  p-5 border rounded-md shadow-md w-full">
-      <Link href={`/articles/${id}`}>
+      <Link href={`/articles/${slug}`}>
         <div>
           <Image src={imageUrl} alt="thumbnail" width={200} height={200} />
         </div>
@@ -26,7 +27,7 @@ const Card = (props) => {
       </p>
       <p>{content}...</p>
       <div className="flex self-end">
-        <Link href={`/articles/${id}`}>
+        <Link href={`/articles/${slug}`}>
           <Button variant="outlined" size="small">
             Continue Reading...
           </Button>

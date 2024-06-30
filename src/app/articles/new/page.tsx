@@ -15,7 +15,10 @@ import Image from "next/image";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import { uploadImage } from "@/services/profileService";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Loader from "@/utils/Loader";
+import { convert } from "html-to-text";
+import { v4 as uuidv4 } from "uuid";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -53,6 +56,17 @@ const formats = [
   "video",
   "clean",
 ];
+
+const generateSlug = (title: string) => {
+  const cleanedTitle = title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  const uniqueId = uuidv4().substring(0, 6);
+  return `${cleanedTitle}-${uniqueId}`;
+};
+
 const CreateNewBlog = () => {
   const [blogText, setBlogText] = useState("");
   const [title, setTitle] = useState("");
@@ -96,6 +110,27 @@ const CreateNewBlog = () => {
   };
 
   const onSubmit = async () => {
+    if (
+      title.length === 0 ||
+      blogText.length === 0 ||
+      tags.length === 0 ||
+      !thumbnailFile
+    ) {
+      setSnackbarMessage(
+        "Please add Title, Article content, Tags and Thumbnail image"
+      );
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+
+      return;
+    }
+
+    const options = {
+      wordwrap: 40,
+    };
+    const html = convert(blogText, options);
+    const excerpt = html.trim().substring(0, 50);
+    const slug = generateSlug(title);
     try {
       setLoading(true);
       let newImageUrl = null;
@@ -107,7 +142,14 @@ const CreateNewBlog = () => {
           console.log("could not upload image");
         }
       }
-      const result = await createBlog(title, blogText, tags, newImageUrl);
+      const result = await createBlog(
+        title,
+        blogText,
+        tags,
+        newImageUrl,
+        excerpt,
+        slug
+      );
       setBlogText("");
       setTitle("");
       setTags([]);
@@ -141,7 +183,7 @@ const CreateNewBlog = () => {
           onChange={setBlogText}
           modules={modules}
           formats={formats}
-          style={{ height: "300px" }}
+          style={{ height: "300px", width: "100%" }}
           placeholder="Write your blog content here..."
         />
 
@@ -152,6 +194,7 @@ const CreateNewBlog = () => {
           size="small"
           fullWidth
           label="Tags"
+          className="mt-20"
         />
 
         <div className="relative">
@@ -203,6 +246,7 @@ const CreateNewBlog = () => {
           </Alert>
         </Snackbar>
       </div>
+      <Loader loading={loading} />
     </div>
   );
 };
