@@ -207,6 +207,10 @@ const profilePage = async ({ params }: any) => {
         </div>
       </div>
       <div className="sm:hidden flex flex-col gap-5 p-5 bg-gray-200 arial-font">
+        <div className="flex self-end gap-2 font-thin text-black">
+          <p>Share-On</p>
+          <Social />
+        </div>
         <AvatarCard
           name={profileData?.name || ""}
           title={profileData?.title || ""}
