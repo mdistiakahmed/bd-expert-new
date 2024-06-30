@@ -8,12 +8,42 @@ import { fetchBlogById } from "@/services/blogService";
 import "react-quill/dist/quill.snow.css";
 import { fetchProfileByEmail } from "@/services/profileService";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Metadata } from "next";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
     timestamp?.seconds * 1000 + timestamp?.nanoseconds / 1000000
   );
   return date?.toDateString();
+}
+
+export async function generateMetadata({
+  params,
+}: any): Promise<Metadata | undefined> {
+  const { id } = params;
+  const result = await fetchBlogById(id);
+  if (!result) {
+    return;
+  }
+  const docData = result.data;
+
+  return {
+    title: docData?.title,
+    openGraph: {
+      title: docData?.title,
+      type: "article",
+      locale: "en_US",
+      url: `https://www.bdtaxexpert.com/articles/${id}`,
+      siteName: "RatGeber",
+      images: [
+        {
+          url: docData?.imageUrl,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
 }
 
 const page = async ({ params }: any) => {
@@ -93,7 +123,7 @@ const page = async ({ params }: any) => {
   );
 
   return (
-    <div className="bg-white text-black">
+    <>
       <Head>
         <title>{docData?.title}</title>
         <meta property="og:title" content={docData?.title} />
@@ -105,13 +135,15 @@ const page = async ({ params }: any) => {
         />
         <meta property="og:site_name" content="RatGeber" />
       </Head>
-      <div className="hidden sm:flex items-center justify-center">
-        <div className="w-[70vw] m-5">{blogContent}</div>
+      <div className="bg-white text-black">
+        <div className="hidden sm:flex items-center justify-center">
+          <div className="w-[70vw] m-5">{blogContent}</div>
+        </div>
+        <div className="flex flex-col sm:hidden">
+          <div className="m-5">{blogContent}</div>
+        </div>
       </div>
-      <div className="flex flex-col sm:hidden">
-        <div className="m-5">{blogContent}</div>
-      </div>
-    </div>
+    </>
   );
 };
 

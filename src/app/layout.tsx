@@ -17,8 +17,22 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RatGeber",
-  description: "Master Your Finances",
+  //title: "RatGeber | Master Your Finances",
+  title: {
+    default: "RatGeber | Master Your Finances",
+    template: "%s | RatGeber",
+  },
+  description:
+    "Optimize your finances with expert tax management and smart investment strategies for maximum savings.",
+  openGraph: {
+    title: "RatGeber | Master Your Finances",
+    description:
+      "Optimize your finances with expert tax management and smart investment strategies for maximum savings.",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.bdtaxexpert.com/",
+    siteName: "RatGeber",
+  },
 };
 
 export default async function RootLayout({

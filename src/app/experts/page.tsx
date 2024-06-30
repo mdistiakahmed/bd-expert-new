@@ -4,6 +4,7 @@ import ProfileCard from "@/components/profile/ProfileCard";
 import { fetchProfilesByPage } from "@/services/profileService";
 import Loader from "@/utils/Loader";
 import { Pagination } from "@mui/material";
+import { Metadata } from "next";
 import React, { useEffect, useState } from "react";
 
 const ExpertsPage = () => {
