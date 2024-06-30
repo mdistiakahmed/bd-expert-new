@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/context/SessionProvider";
-import { Inter } from "next/font/google";
 import { authOptions } from "@/utils/AuthOption";
 import Navbar from "@/components/navbar/Navbar";
 import { JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -51,6 +49,7 @@ export default async function RootLayout({
           <Footer />
         </SessionProvider>
       </body>
+      <GoogleAnalytics gaId="G-KC3TES60D3" />
     </html>
   );
 }
