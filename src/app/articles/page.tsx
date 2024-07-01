@@ -13,7 +13,7 @@ function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
     timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
   );
-  return date.toDateString(); // Get only the date string
+  return date.toDateString();
 }
 
 const AllBlogsPage = () => {

@@ -9,7 +9,8 @@ const ProfileCard = (props: any) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/profile/${id}`);
+    const url = `/experts/profile/${id}`;
+    window.open(url, "_blank");
   };
 
   return (

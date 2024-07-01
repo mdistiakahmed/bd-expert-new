@@ -43,6 +43,10 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  if (pathname.includes("/experts/profile/")) {
+    return null;
+  }
+
   return (
     <header className="py-8 xl:py-12 text-white ">
       <div className="container px-[15px] mx-auto flex justify-between items-center">

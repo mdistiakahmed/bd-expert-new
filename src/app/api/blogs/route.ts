@@ -10,14 +10,86 @@ import {
   DocumentSnapshot,
   DocumentData,
   addDoc,
+  where,
 } from "firebase/firestore";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/AuthOption";
+
+async function fetchArticlesByAuthor(author: any, offset: any, queryLimit: any) {
+  
+
+  try {
+    let q = query(
+      collection(db, "test"),
+      where("author", "==", author),
+    );
+  
+    const totalDocsSnapshot = await getDocs(q);
+    const totalDocs = totalDocsSnapshot.size;
+
+
+    if (offset === 0) {
+      q = query(
+        collection(db, "test"),
+        where("author", "==", author),
+        orderBy("created_at", "desc"),
+        limit(queryLimit)
+      );
+
+      const snapshot = await getDocs(q);
+      const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      return NextResponse.json({ success: true, data: docs, total: totalDocs });
+    }
+
+    const offsetSnapshot = await getDocs(
+      query(
+        collection(db, "test"),
+        where("author", "==", author),
+        orderBy("created_at", "desc"),
+        limit(offset)
+      )
+    );
+
+    const lastVisible: DocumentSnapshot<DocumentData> =
+      offsetSnapshot.docs[offset - 1];
+
+    q = query(
+      collection(db, "test"),
+      where("author", "==", author),
+      orderBy("created_at", "desc"),
+      startAfter(lastVisible),
+      limit(queryLimit)
+    );
+
+    const snapshot = await getDocs(q);
+    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+    return NextResponse.json({ success: true, data: docs, total: totalDocs });
+  } catch (err: any) {
+    console.error("Error retrieving docs:", err);
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Error retrieving documents",
+        error: err?.message,
+      },
+      { status: 500 }
+    );
+  }
+
+
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const offset = parseInt(searchParams.get("offset") || "0");
   const queryLimit = parseInt(searchParams.get("limit") || "10");
+  const author = searchParams.get("author");
+
+  if(author) {
+      return fetchArticlesByAuthor(author, offset, queryLimit);
+  }
 
   try {
     const totalDocsSnapshot = await getDocs(collection(db, "test"));
