@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchBlogs, fetchBlogsByAuthor } from "@/services/blogService";
+import { fetchBlogsByAuthor } from "@/services/blogService";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import Image from "next/image";
@@ -15,8 +15,6 @@ function timestampToDateString(timestamp: Timestamp): string {
 }
 
 const ProfileArticles = ({ email }: any) => {
-  console.log(email);
-
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
@@ -47,9 +45,9 @@ const ProfileArticles = ({ email }: any) => {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">My Articles</h3>
+      <h3 className="text-2xl font-bold text-accent">My Articles</h3>
 
-      <ScrollArea className="h-[400px] mt-10">
+      <ScrollArea className="h-[600px] mt-10">
         <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
           {blogs.map((item: any, index) => {
             const formattedDate = timestampToDateString(item.created_at);

@@ -7,6 +7,7 @@ import ProfilePhoto from "@/components/profile/ProfilePhoto";
 import ProfileExperience from "@/components/profile/ProfileExperience";
 import ProfileNavbar from "@/components/navbar/ProfileNavbar";
 import ProfileArticles from "@/components/profile/ProfileArticles";
+import ProfileContact from "@/components/profile/ProfileContact";
 
 const page = async ({ params }: any) => {
   const { id } = params;
@@ -71,18 +72,12 @@ const page = async ({ params }: any) => {
         <ProfileExperience />
       </div>
 
-      <div
-        className="container mx-auto h-[300px] mt-[100px] md:w-[70%]"
-        id="articles"
-      >
+      <div className="container mx-auto  mt-[100px] md:w-[70%]" id="articles">
         <ProfileArticles email={profileData.email} />
       </div>
 
-      <div
-        className="container mx-auto h-[300px] mt-[100px] md:w-[70%]"
-        id="contact"
-      >
-        Hello contact
+      <div className="container mx-auto mt-[100px] md:w-[70%]" id="contact">
+        <ProfileContact />
       </div>
     </section>
   );
