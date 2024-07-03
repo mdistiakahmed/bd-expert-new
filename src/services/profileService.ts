@@ -136,3 +136,57 @@ export const deleteImage = async (imageUrl: string) => {
     throw error;
   }
 };
+
+
+export async function uploadResume(resumeFile: File | null) {
+  if (!resumeFile) {
+    return;
+  }
+  const formData = new FormData();
+  if (resumeFile) {
+    formData.append("resumeFile", resumeFile);
+  }
+
+  try {
+    const response = await fetch("/api/profile/resume", {
+      method: "POST",
+      headers: {},
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Something went wrong");
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw error;
+  }
+}
+
+
+export const deleteResume = async (resumeUrl: string) => {
+  try {
+    const response = await fetch("/api/profile/resume", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ resumeUrl: resumeUrl }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error creating blog: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    throw error;
+  }
+};
+
