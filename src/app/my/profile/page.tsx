@@ -19,7 +19,7 @@ import Loader from "@/utils/Loader";
 import SummarySection from "./SummarySection";
 import ExperienceSection from "./ExperienceSection";
 
-const page = () => {
+const MyProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [profileData, setProfileData] = useState<any>(null);
@@ -99,4 +99,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default MyProfilePage;

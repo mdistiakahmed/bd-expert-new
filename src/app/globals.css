@@ -61,5 +61,9 @@
   font-family:  Arial, Georgia, Tahoma;
 }
 
+.MuiTabs-scroller {
+  overflow: auto !important;
+}
+
 
 
