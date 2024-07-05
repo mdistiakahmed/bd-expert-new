@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -47,10 +47,63 @@ function a11yProps(index: number) {
   };
 }
 
-const ExperienceUpdateDialog = (props: any) => {
-  const { open, setOpen } = props;
-  const { degree, institution, start_date, end_date, isEdit, index } = props;
-  const obj: any = {};
+const ExperienceUpdateDialog = ({
+  open,
+  setOpen,
+  profileData,
+  handleUpdate,
+}: any) => {
+  const [experienceDetails, setExperienceDetails] = useState<string[]>([]);
+  const [educationDetails, setEducationDetails] = useState<string[]>([]);
+  const [skillsDetails, setSkillsDetails] = useState<string[]>([]);
+
+  let indexArray: any = [];
+  let educationIndexArray: any = [];
+  let skillsIndexArray: any = [];
+  let obj: any = {};
+  useEffect(() => {
+    console.log("profileData on modal", profileData?.experienceList);
+    obj = {};
+    indexArray = [];
+    educationIndexArray = [];
+    skillsIndexArray = [];
+    profileData?.experienceList?.map((e: any) => {
+      const index = Math.random().toString(36).substring(2, 7);
+      indexArray.push(index);
+      obj[`company_name_${index}`] = e.companyName;
+      obj[`position_${index}`] = e.position;
+      obj[`start_date_${index}`] = e.startDate;
+      obj[`end_date_${index}`] = e.endDate;
+    });
+
+    profileData?.educatoinList?.map((e: any) => {
+      const index = Math.random().toString(36).substring(2, 7);
+      educationIndexArray.push(index);
+      obj[`degree_${index}`] = e.degree;
+      obj[`institution_${index}`] = e.institution;
+      obj[`start_date_${index}`] = e.startDate;
+      obj[`end_date_${index}`] = e.endDate;
+    });
+
+    profileData?.skillList?.map((e: any) => {
+      const index = Math.random().toString(36).substring(2, 7);
+      skillsIndexArray.push(index);
+      obj[`skill_${index}`] = e;
+    });
+
+    setExperienceDetails(indexArray);
+    setEducationDetails(educationIndexArray);
+    setSkillsDetails(skillsIndexArray);
+
+    reset({
+      phone: profileData?.aboutMe?.phone,
+      email: profileData?.aboutMe?.email,
+      nationality: profileData?.aboutMe?.nationality,
+      languages: profileData?.aboutMe?.languages,
+      ...obj,
+    });
+  }, [profileData]);
+
   const {
     register,
     handleSubmit,
@@ -58,13 +111,15 @@ const ExperienceUpdateDialog = (props: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      degree: degree,
-      institution: institution,
-      start_date: start_date,
-      end_date: end_date,
+      phone: profileData?.aboutMe?.phone,
+      email: profileData?.aboutMe?.email,
+      nationality: profileData?.aboutMe?.nationality,
+      languages: profileData?.aboutMe?.languages,
       ...obj,
     },
   });
+
+  console.log("profile data: about me: ", profileData?.aboutMe);
 
   const handleClose = () => {
     setOpen(false);
@@ -72,10 +127,9 @@ const ExperienceUpdateDialog = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
-
     const experienceList: any = [];
     const educatoinList: any = [];
+    const skillList: any = [];
 
     experienceDetails.forEach((e) => {
       const experienceData: any = {};
@@ -99,12 +153,25 @@ const ExperienceUpdateDialog = (props: any) => {
       educatoinList.push(educationData);
     });
 
-    console.log("experienceList", experienceList);
-    console.log("educatoinList", educatoinList);
+    skillsDetails.forEach((e) => {
+      const skill = data[`skill_${e}`];
+      skillList.push(skill);
+    });
 
-    return;
+    const aboutMe: any = {};
+    aboutMe.phone = data.phone;
+    aboutMe.email = data.email;
+    aboutMe.languages = data.languages;
+    aboutMe.nationality = data.nationality;
 
-    props.onSubmit(index !== undefined ? { ...data, index } : data);
+    const toUpdateData = {
+      experienceList,
+      educatoinList,
+      skillList,
+      aboutMe,
+    };
+
+    handleUpdate(toUpdateData);
     setOpen(false);
     reset();
   };
@@ -114,9 +181,6 @@ const ExperienceUpdateDialog = (props: any) => {
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setValue(newValue);
   };
-
-  const [experienceDetails, setExperienceDetails] = useState<string[]>([]);
-  const [educationDetails, setEducationDetails] = useState<string[]>([]);
 
   const addExperienceField = () => {
     setExperienceDetails((prevFields) => [
@@ -140,6 +204,19 @@ const ExperienceUpdateDialog = (props: any) => {
 
   const removeEducationField = (index: string) => {
     setEducationDetails((prevFields) =>
+      prevFields.filter((item) => item !== index)
+    );
+  };
+
+  const addNewSkill = () => {
+    setSkillsDetails((prevFields) => [
+      ...prevFields,
+      Math.random().toString(36).substring(2, 7),
+    ]);
+  };
+
+  const removeSkill = (index: string) => {
+    setSkillsDetails((prevFields) =>
       prevFields.filter((item) => item !== index)
     );
   };
@@ -212,17 +289,6 @@ const ExperienceUpdateDialog = (props: any) => {
           {...register(`end_date_${index}`, {})}
         />
       </div>
-      <FormControlLabel
-        control={
-          <Checkbox
-            id={`current_company_${index}`}
-            color="primary"
-            {...register(`current_company_${index}`, {})}
-          />
-        }
-        label="Currently Working Here"
-        className="mt-2"
-      />
     </FormControl>
   );
 
@@ -294,17 +360,37 @@ const ExperienceUpdateDialog = (props: any) => {
           {...register(`end_date_${index}`, {})}
         />
       </div>
-      <FormControlLabel
-        control={
-          <Checkbox
-            id={`current_institution_${index}`}
-            color="primary"
-            {...register(`current_institution_${index}`, {})}
-          />
-        }
-        label="Currently Studying Here"
-        className="mt-2"
-      />
+    </FormControl>
+  );
+
+  const createSkillFormControl = (index: string) => (
+    <FormControl
+      fullWidth
+      margin="normal"
+      key={index}
+      className="flex flex-col"
+    >
+      <div className="flex w-full">
+        <TextField
+          id={`skill_${index}`}
+          label="Skill"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          className="w-full"
+          {...register(`skill_${index}`, {
+            required: "Skill is required",
+          })}
+          error={!!errors[`skill_${index}`]}
+        />
+        <IconButton
+          onClick={() => removeSkill(index)}
+          aria-label="delete"
+          className="ml-2 mt-2"
+        >
+          <DeleteIcon />
+        </IconButton>
+      </div>
     </FormControl>
   );
 
@@ -346,10 +432,64 @@ const ExperienceUpdateDialog = (props: any) => {
               </Button>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              Item Three
+              {skillsDetails.map((item, index) => createSkillFormControl(item))}
+              <Button onClick={addNewSkill}>
+                Add New Skill
+                <AddIcon />
+              </Button>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-              Item Four
+              <FormControl fullWidth margin="normal" className="flex flex-col">
+                <div className="flex w-full">
+                  <TextField
+                    id={`phone`}
+                    label="Phone"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    className="w-full"
+                    {...register(`phone`, {})}
+                    error={!!errors[`phone`]}
+                  />
+                </div>
+                <div className="flex w-full">
+                  <TextField
+                    id={`email`}
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    className="w-full"
+                    {...register(`email`, {})}
+                    error={!!errors[`email`]}
+                  />
+                </div>
+                <div className="flex w-full">
+                  <TextField
+                    id={`nationality`}
+                    label="Nationality"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    className="w-full"
+                    {...register(`nationality`, {})}
+                    error={!!errors[`nationality`]}
+                  />
+                </div>
+
+                <div className="flex w-full">
+                  <TextField
+                    id={`languages`}
+                    label="Languages"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    className="w-full"
+                    {...register(`languages`, {})}
+                    error={!!errors[`languages`]}
+                  />
+                </div>
+              </FormControl>
             </CustomTabPanel>
           </form>
         </DialogContent>

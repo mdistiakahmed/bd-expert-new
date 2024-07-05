@@ -5,28 +5,28 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
-const info = [
-  {
-    icon: <FaPhoneAlt />,
-    title: "Phone",
-    description: "(+40) 321 654 876",
-  },
-  {
-    icon: <FaEnvelope />,
-    title: "Email",
-    description: "test@gamil.com",
-  },
-  {
-    icon: <FaMapMarkerAlt />,
-    title: "Address",
-    description: "Kawla bazar, Dhaka 1229",
-  },
-];
+const ProfileContact = ({ profileData }: any) => {
+  const info = [
+    {
+      icon: <FaPhoneAlt />,
+      title: "Phone",
+      description: profileData?.aboutMe?.phone,
+    },
+    {
+      icon: <FaEnvelope />,
+      title: "Email",
+      description: profileData?.aboutMe?.email,
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      title: "Address",
+      description: "",
+    },
+  ];
 
-const ProfileContact = () => {
   return (
     <div>
-      <h3 className="text-2xl font-bold text-accent">Contact</h3>
+      <h3 className="text-2xl font-bold text-accent text-center">Contact</h3>
 
       <div className="py-6">
         <div className="container mx-auto">

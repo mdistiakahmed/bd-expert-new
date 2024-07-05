@@ -45,29 +45,44 @@ const ProfileArticles = ({ email }: any) => {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold text-accent">My Articles</h3>
+      <h3 className="text-2xl font-bold text-accent text-center">
+        My Articles
+      </h3>
 
-      <ScrollArea className="h-[600px] mt-10">
-        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-          {blogs.map((item: any, index) => {
-            const formattedDate = timestampToDateString(item.created_at);
-            return (
-              <li
-                key={index}
-                className="bg-white  py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
-              >
-                <Link href={`/articles/${item.slug}`}>
-                  <Image src={item.imageUrl} alt="U" height={300} width={300} />
-                  <span className="text-black">{item.title}</span>
-                  <span className="text-black">
-                    Published On : {formattedDate}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </ScrollArea>
+      {blogs.length > 0 && (
+        <ScrollArea className="h-[600px] mt-10">
+          <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
+            {blogs.map((item: any, index) => {
+              const formattedDate = timestampToDateString(item.created_at);
+              return (
+                <li
+                  key={index}
+                  className="bg-white  py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
+                >
+                  <Link href={`/articles/${item.slug}`}>
+                    <Image
+                      src={item.imageUrl}
+                      alt="U"
+                      height={300}
+                      width={300}
+                    />
+                    <span className="text-black">{item.title}</span>
+                    <span className="text-black">
+                      Published On : {formattedDate}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </ScrollArea>
+      )}
+
+      {blogs.length === 0 && (
+        <div className="w-full flex items-center justify-center my-[200px]">
+          <h3 className="text-center text-xl">No Articles published yet</h3>
+        </div>
+      )}
     </div>
   );
 };

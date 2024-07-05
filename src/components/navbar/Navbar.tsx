@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Logout"];
 
 const Navbar = () => {
   const session = useSession();
@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const handleSettingMenu = (action: string) => {
     if (action == "Profile") {
-      router.push(`/profile/my`);
+      router.push(`/my/profile`);
     } else if (action == "Logout") {
       signOut();
     }

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import Loader from "@/utils/Loader";
 import SummarySection from "./SummarySection";
 import ExperienceSection from "./ExperienceSection";
+import ProfileStats from "@/components/profile/ProfileStats";
 
 const MyProfilePage = () => {
   const [loading, setLoading] = useState(false);
@@ -54,8 +55,6 @@ const MyProfilePage = () => {
     updateData();
   }, [dateUpdated]);
 
-  console.log(profileData);
-
   const handleSummaryUpdate = async (newSummaryData: any) => {
     if (profileData) {
       setProfileData((prevData: any) => ({
@@ -77,14 +76,17 @@ const MyProfilePage = () => {
       />
 
       <div className="container mx-auto h-full md:w-[70%] ">
-        <Stats />
+        <ProfileStats profileData={profileData} />
       </div>
 
       <div
         className="container mx-auto h-full mt-[100px] md:w-[70%]"
         id="qualification"
       >
-        <ExperienceSection />
+        <ExperienceSection
+          profileData={profileData}
+          handleUpdate={handleSummaryUpdate}
+        />
       </div>
 
       <div className="container mx-auto  mt-[100px] md:w-[70%]" id="articles">
@@ -92,7 +94,7 @@ const MyProfilePage = () => {
       </div>
 
       <div className="container mx-auto mt-[100px] md:w-[70%]" id="contact">
-        <ProfileContact />
+        <ProfileContact profileData={profileData} />
       </div>
       <Loader loading={loading} />
     </section>
