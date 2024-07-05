@@ -8,14 +8,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Metadata } from "next";
 import Social from "@/components/Social";
 import { Chip } from "@mui/material";
-import {
-  ReactElement,
-  JSXElementConstructor,
-  ReactNode,
-  ReactPortal,
-  AwaitedReactNode,
-  Key,
-} from "react";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(

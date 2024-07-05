@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const ProfilePhoto = ({ imgUrl }: any) => {
-  console.log("image url...");
-  console.log(imgUrl);
   return (
     <div className="w-full h-full relative">
       {/* image */}
@@ -25,14 +23,16 @@ const ProfilePhoto = ({ imgUrl }: any) => {
           exit={{ opacity: 0 }}
           className="w-[298px] h-[298px]  mix-blend-lighten absolute rounded-full overflow-hidden"
         >
-          <Image
-            src={imgUrl}
-            alt="A"
-            priority
-            quality={100}
-            fill
-            className="object-contain "
-          />
+          {imgUrl && (
+            <Image
+              src={imgUrl}
+              alt="A"
+              priority
+              quality={100}
+              fill
+              className="object-contain "
+            />
+          )}
         </motion.div>
       </motion.div>
 

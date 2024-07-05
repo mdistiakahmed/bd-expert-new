@@ -86,8 +86,8 @@ export async function PUT(req: NextRequest) {
 
   const requestData = await req.json();
   const { name, title, description, image_url, resume_url, facebookUrl, linkedInUrl,
-    logoText, yearOfExperience,numberOfClientsServed, projectsCompleted,  experiences, education, 
-    experienceList, educatoinList, skillList, aboutMe} = requestData;
+    logoText, yearOfExperience,numberOfClientsServed, projectsCompleted,
+    experienceList, educatoinList, skillList, aboutMe, slug} = requestData;
 
   try {
     const profilesRef = collection(db, "profile");
@@ -118,16 +118,12 @@ export async function PUT(req: NextRequest) {
         numberOfClientsServed: numberOfClientsServed ?? profileDoc.data().numberOfClientsServed,
         projectsCompleted: projectsCompleted ?? profileDoc.data().projectsCompleted,
 
-        experiences: experiences ?? profileDoc.data().experiences,
-        education: education ?? profileDoc.data().education,
-
-        
         experienceList:  experienceList ?? profileDoc.data().experienceList,
         educatoinList: educatoinList ?? profileDoc.data().educatoinList,
         skillList: skillList ?? profileDoc.data().skillList,
         aboutMe: aboutMe ?? profileDoc.data().aboutMe,
+        slug: slug,
         
-
         updated_at: new Date(),
       };
 

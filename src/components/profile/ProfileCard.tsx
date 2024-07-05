@@ -4,12 +4,12 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 const ProfileCard = (props: any) => {
-  const { name, title, image_url, id } = props;
+  const { name, title, image_url, id, slug } = props;
 
   const router = useRouter();
 
   const handleClick = () => {
-    const url = `/experts/profile/${id}`;
+    const url = `/experts/profile/${slug}`;
     window.open(url, "_blank");
   };
 

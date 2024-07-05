@@ -6,7 +6,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import ExperienceUpdateDialog from "./ExperienceUpdateDialog";
 
-const ExperienceSection = ({ profileData, handleUpdate }: any) => {
+const getYearFromDate = (dateString: string): string => {
+  if (!dateString) {
+    return "present";
+  }
+  const date = new Date(dateString);
+  return date.getFullYear().toString();
+};
+
+const ExperienceSection = ({
+  profileData,
+  handleUpdate,
+  disableUpdate,
+}: any) => {
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const aboutMe = [
     {
@@ -38,16 +50,18 @@ const ExperienceSection = ({ profileData, handleUpdate }: any) => {
   return (
     <div className=" flex items-center justify-center py-12 xl:py-0">
       <div className="container mx-auto">
-        <div className="flex mx-auto w-[100px] justify-center border border-accent rounded-md m-5">
-          <IconButton
-            aria-label="edit"
-            className="border border-red-500"
-            onClick={() => setUpdateDialogOpen(true)}
-          >
-            <p className="text-white pr-2 text-sm">Edit</p>
-            <EditIcon className="text-accent" />
-          </IconButton>
-        </div>
+        {!disableUpdate && (
+          <div className="flex mx-auto w-[100px] justify-center border border-accent rounded-md m-5">
+            <IconButton
+              aria-label="edit"
+              className="border border-red-500"
+              onClick={() => setUpdateDialogOpen(true)}
+            >
+              <p className="text-white pr-2 text-sm">Edit</p>
+              <EditIcon className="text-accent" />
+            </IconButton>
+          </div>
+        )}
         <Tabs
           defaultValue="experience"
           className="flex flex-col xl:flex-row gap-[60px]"
@@ -74,7 +88,8 @@ const ExperienceSection = ({ profileData, handleUpdate }: any) => {
                             className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
                           >
                             <span className="text-accent text-sm">
-                              {item.startDate} - {item.endDate}
+                              {getYearFromDate(item.startDate)} -{" "}
+                              {getYearFromDate(item.endDate)}
                             </span>
                             <h3 className="text-sm max-w-[260px] min-h-[40px] text-center lg:text-left">
                               {item.position}
@@ -108,7 +123,8 @@ const ExperienceSection = ({ profileData, handleUpdate }: any) => {
                             className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
                           >
                             <span className="text-accent">
-                              {item.startDate}
+                              {getYearFromDate(item.startDate)} -{" "}
+                              {getYearFromDate(item.endDate)}
                             </span>
                             <h3 className="max-w-[260px] min-h-[40px] text-center lg:text-left">
                               {item.degree}

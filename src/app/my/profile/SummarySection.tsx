@@ -21,22 +21,25 @@ import {
   IconButton,
   InputLabel,
   OutlinedInput,
+  Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { PhotoCamera } from "@mui/icons-material";
 import {
   deleteImage,
+  deleteResume,
   uploadImage,
   uploadResume,
 } from "@/services/profileService";
 import TextField from "@mui/material/TextField";
 import Loader from "@/utils/Loader";
+import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
 
 const UpdateAvatarDialog = (props: any) => {
-  const { open, setOpen } = props;
-  const { name, title, imageUrl } = props;
+  const { open, setOpen, profileData } = props;
+
   const [loading, setLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(imageUrl);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeFileName, setResumeFileName] = useState<any>(null);
@@ -52,34 +55,37 @@ const UpdateAvatarDialog = (props: any) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      logoText: "",
-      title: "",
-      name: name,
-      description: "",
-      facebookUrl: "",
-      linkedInUrl: "",
-      yearOfExperience: 0,
-      projectsCompleted: 0,
-      numberOfClientsServed: 0,
+      logoText: profileData?.logoText,
+      title: profileData?.title,
+      name: profileData?.name,
+      description: profileData?.description,
+      facebookUrl: profileData?.facebookUrl,
+      linkedInUrl: profileData?.linkedInUrl,
+      yearOfExperience: profileData?.yearOfExperience,
+      projectsCompleted: profileData?.projectsCompleted,
+      numberOfClientsServed: profileData?.numberOfClientsServed,
     },
   });
 
   useEffect(() => {
-    setSelectedImage(imageUrl);
+    setSelectedImage(null);
     reset({
-      logoText: "",
-      title: "",
-      name: name,
-      description: "",
-      facebookUrl: "",
-      linkedInUrl: "",
-      yearOfExperience: 0,
-      projectsCompleted: 0,
-      numberOfClientsServed: 0,
+      logoText: profileData?.logoText,
+      title: profileData?.title,
+      name: profileData?.name,
+      description: profileData?.description,
+      facebookUrl: profileData?.facebookUrl,
+      linkedInUrl: profileData?.linkedInUrl,
+      yearOfExperience: profileData?.yearOfExperience,
+      projectsCompleted: profileData?.projectsCompleted,
+      numberOfClientsServed: profileData?.numberOfClientsServed,
     });
-  }, [name, title, imageUrl, reset]);
+  }, [profileData]);
 
   const handleClose = () => {
+    setSelectedImage(null);
+    setImageFile(null);
+    setResumeFile(null);
     setOpen(false);
     reset();
   };
@@ -88,23 +94,21 @@ const UpdateAvatarDialog = (props: any) => {
     setLoading(true);
     let newResumeUrl = null;
     if (resumeFile != null) {
-      // try {
-      //   await deleteImage(imageUrl);
-      // } catch (err) {
-      //   console.log("could not delete previous image");
-      // }
+      if (profileData.resume_url) {
+        try {
+          await deleteResume(profileData.resume_url);
+        } catch (err) {
+          console.log("could not delete previous resume");
+        }
+      }
 
       try {
         const res = await uploadResume(resumeFile);
         newResumeUrl = res.data;
-        console.log("newResumeUrl", newResumeUrl);
         setSnackbarMessage("Successfully uploaded resume");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
-
-        console.log(newResumeUrl);
       } catch (err: any) {
-        console.log("could not upload resume");
         setSnackbarMessage(err?.message || "Could not upload resume");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
@@ -113,23 +117,22 @@ const UpdateAvatarDialog = (props: any) => {
 
     let newImageUrl = null;
     if (imageFile != null) {
-      // try {
-      //   await deleteImage(imageUrl);
-      // } catch (err) {
-      //   console.log("could not delete previous image");
-      // }
+      if (profileData.image_url) {
+        try {
+          await deleteImage(profileData.image_url);
+        } catch (err) {
+          console.log("could not delete previous image");
+        }
+      }
 
       try {
         const res = await uploadImage(imageFile);
         newImageUrl = res.data;
 
-        console.log("newImageUrl", newImageUrl);
-
         setSnackbarMessage("Successfully uploaded image");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
       } catch (err: any) {
-        console.log("could not upload image");
         setSnackbarMessage(err?.message || "Could not upload image");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
@@ -182,13 +185,16 @@ const UpdateAvatarDialog = (props: any) => {
               marginBottom: "16px",
             }}
           >
-            <Image
-              alt="Selected Image"
-              src={selectedImage}
-              height={100}
-              width={100}
-              objectFit="cover"
-            />
+            {selectedImage && (
+              <Image
+                alt="Selected Image"
+                src={selectedImage}
+                height={100}
+                width={100}
+                objectFit="cover"
+              />
+            )}
+
             <input
               accept="image/*"
               style={{ display: "none" }}
@@ -207,6 +213,20 @@ const UpdateAvatarDialog = (props: any) => {
               </IconButton>
             </label>
           </div>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            className="text-center"
+          >
+            Remove background color for better look, e.g.,{" "}
+            <a
+              href="https://www.remove.bg/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.remove.bg/
+            </a>
+          </Typography>
 
           <div
             style={{
@@ -351,6 +371,34 @@ const UpdateAvatarDialog = (props: any) => {
   );
 };
 
+const handleClick = (slug: any) => {
+  const url = `/experts/profile/${slug}`;
+  window.open(url, "_blank");
+};
+
+const SocialIcons = ({ iconStyles, facebookUrl, linkedInUrl }: any) => {
+  return (
+    <div className="flex gap-4">
+      <a
+        className={iconStyles}
+        style={{ color: "#3b5998", fontSize: "1.5em", cursor: "pointer" }}
+        href={facebookUrl}
+        target="_blank"
+      >
+        <FaFacebook />
+      </a>
+      <a
+        className={iconStyles}
+        style={{ color: "#0e76a8", fontSize: "1.5em", cursor: "pointer" }}
+        href={linkedInUrl}
+        target="_blank"
+      >
+        <FaLinkedinIn />
+      </a>
+    </div>
+  );
+};
+
 const SummarySection = ({ profileData, handleSummaryUpdate }: any) => {
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
 
@@ -386,11 +434,12 @@ const SummarySection = ({ profileData, handleSummaryUpdate }: any) => {
             </a>
 
             <div className="mb-8 xl:mb-0">
-              <Social
-                containerStyles="flex gap-6"
+              <SocialIcons
                 iconStyles="w-9 h-9 border border-accent rounded-full
                 flex justify-center items-center text-accent text-base hover:bg-accent hover:text-primary
                 hover:transition-all duration-500"
+                facebookUrl={profileData?.facebookUrl}
+                linkedInUrl={profileData?.linkedInUrl}
               />
             </div>
           </div>
@@ -413,7 +462,11 @@ const SummarySection = ({ profileData, handleSummaryUpdate }: any) => {
             </IconButton>
           </div>
           <div className="flex justify-center border border-accent rounded-md m-5">
-            <IconButton aria-label="edit" className="border border-red-500">
+            <IconButton
+              aria-label="edit"
+              className="border border-red-500"
+              onClick={() => handleClick(profileData?.slug)}
+            >
               <p className="text-white pr-2 text text-sm">Preview</p>
               <VisibilityIcon className="text-accent" />
             </IconButton>
@@ -425,6 +478,7 @@ const SummarySection = ({ profileData, handleSummaryUpdate }: any) => {
         open={updateDialogOpen}
         setOpen={setUpdateDialogOpen}
         onSubmit={handleSummaryUpdate}
+        profileData={profileData}
       />
     </div>
   );

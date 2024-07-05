@@ -14,9 +14,18 @@ export async function GET(req: NextRequest, { params }: any) {
   }
 
   try {
-    const docRef = doc(db, "profile", id);
-    const docSnap = await getDoc(docRef);
+    const profilesRef = collection(db, "profile");
+    const q = query(profilesRef, where("slug", "==", id));
+    const querySnapshot = await getDocs(q);
 
+    if (querySnapshot.empty) {
+      return NextResponse.json(
+        { success: false, message: "No data found" },
+        { status: 404 }
+      );
+    }
+
+    const docSnap = querySnapshot.docs[0];
     if (docSnap.exists()) {
       const profileData = docSnap.data();
       return NextResponse.json({ success: true, data: profileData });

@@ -34,7 +34,7 @@ const ProfileArticles = ({ email }: any) => {
     };
 
     loadBlogs();
-  }, [page]);
+  }, [email]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,

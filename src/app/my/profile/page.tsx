@@ -1,17 +1,6 @@
 "use client";
 
-import {
-  fetchMyProfile,
-  fetchProfileById,
-  updateProfile,
-} from "@/services/profileService";
-import { Button } from "@/components/ui/button";
-import { FiDownload } from "react-icons/fi";
-import Social from "@/components/Social";
-import Stats from "@/components/Stats";
-import ProfilePhoto from "@/components/profile/ProfilePhoto";
-import ProfileExperience from "@/components/profile/ProfileExperience";
-import ProfileNavbar from "@/components/navbar/ProfileNavbar";
+import { fetchMyProfile, updateProfile } from "@/services/profileService";
 import ProfileArticles from "@/components/profile/ProfileArticles";
 import ProfileContact from "@/components/profile/ProfileContact";
 import { useEffect, useState } from "react";
@@ -19,10 +8,20 @@ import Loader from "@/utils/Loader";
 import SummarySection from "./SummarySection";
 import ExperienceSection from "./ExperienceSection";
 import ProfileStats from "@/components/profile/ProfileStats";
+import { v4 as uuidv4 } from "uuid";
+
+const generateSlug = (title: string) => {
+  const cleanedTitle = title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  const uniqueId = uuidv4().substring(0, 6);
+  return `${cleanedTitle}-${uniqueId}`;
+};
 
 const MyProfilePage = () => {
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [profileData, setProfileData] = useState<any>(null);
   const [dateUpdated, setDateUpdated] = useState<any>(false);
 
@@ -55,24 +54,29 @@ const MyProfilePage = () => {
     updateData();
   }, [dateUpdated]);
 
-  const handleSummaryUpdate = async (newSummaryData: any) => {
+  const handleUpdate = async (newData: any) => {
     if (profileData) {
+      if (
+        !profileData.slug ||
+        (newData.name && newData.name != profileData.name)
+      ) {
+        newData.slug = generateSlug(newData.name ?? profileData.name);
+      }
+
       setProfileData((prevData: any) => ({
         ...prevData,
-        ...newSummaryData,
+        ...newData,
       }));
 
       setDateUpdated(!dateUpdated);
     }
-
-    console.log("new data", profileData);
   };
 
   return (
     <section className="h-full ">
       <SummarySection
         profileData={profileData}
-        handleSummaryUpdate={handleSummaryUpdate}
+        handleSummaryUpdate={handleUpdate}
       />
 
       <div className="container mx-auto h-full md:w-[70%] ">
@@ -85,7 +89,7 @@ const MyProfilePage = () => {
       >
         <ExperienceSection
           profileData={profileData}
-          handleUpdate={handleSummaryUpdate}
+          handleUpdate={handleUpdate}
         />
       </div>
 

@@ -38,6 +38,7 @@ const ExpertsPage = () => {
         title={d.title}
         image_url={d.image_url}
         id={d.id}
+        slug={d.slug}
       />
     );
   });
