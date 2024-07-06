@@ -11,6 +11,18 @@ import {
 } from "firebase/firestore";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/AuthOption";
+import { v4 as uuidv4 } from "uuid";
+
+const generateSlug = (title: string) => {
+  const cleanedTitle = title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  const uniqueId = uuidv4().substring(0, 6);
+  return `${cleanedTitle}-${uniqueId}`;
+};
+
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -61,6 +73,7 @@ export async function GET(req: NextRequest) {
         numberOfClientsServed: 1,
         projectsCompleted: 1,
         yearOfExperience: 1,
+        slug: generateSlug(session?.user?.name || "The Spectral Spotter"),
 
         created_at: new Date(),
       };
