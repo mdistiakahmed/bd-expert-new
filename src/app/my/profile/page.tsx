@@ -52,7 +52,7 @@ const MyProfilePage = () => {
       }
     }
     updateData();
-  }, [dateUpdated]);
+  }, [profileData]);
 
   const handleUpdate = async (newData: any) => {
     if (profileData) {
@@ -67,8 +67,6 @@ const MyProfilePage = () => {
         ...prevData,
         ...newData,
       }));
-
-      setDateUpdated(!dateUpdated);
     }
   };
 
