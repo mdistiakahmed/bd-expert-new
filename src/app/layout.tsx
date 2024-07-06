@@ -15,7 +15,6 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  //title: "RatGeber | Master Your Finances",
   title: {
     default: "RatGeber | Master Your Finances",
     template: "%s | RatGeber",

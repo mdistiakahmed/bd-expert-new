@@ -42,9 +42,26 @@ export async function GET(req: NextRequest) {
         name: session?.user?.name,
         email: email,
         image_url: session?.user?.image,
+        resume_url: null,
         title: "The Spectral Spotter",
-        experiences: [],
-        education: [],
+        aboutMe: {
+          email: email,
+          languages: "",
+          nationality: "",
+          phone: "",
+        },
+        description: "",
+        educatoinList: [],
+        experienceList: [],
+        skillList: [],
+        facebookUrl: "",
+        linkedInUrl: "",
+
+        logoText: null,
+        numberOfClientsServed: 1,
+        projectsCompleted: 1,
+        yearOfExperience: 1,
+
         created_at: new Date(),
       };
       const docRef = await addDoc(profilesRef, newProfile);
