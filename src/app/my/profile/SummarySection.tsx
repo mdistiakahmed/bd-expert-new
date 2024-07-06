@@ -12,7 +12,6 @@ import Alert from "@mui/material/Alert";
 
 import React, { useEffect, useState } from "react";
 import {
-  Avatar,
   Dialog,
   DialogActions,
   DialogContent,

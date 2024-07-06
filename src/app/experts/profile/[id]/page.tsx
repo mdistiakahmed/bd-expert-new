@@ -70,7 +70,7 @@ const page = async ({ params }: any) => {
 
   return (
     <section className="h-full ">
-      <ProfileNavbar />
+      <ProfileNavbar logoText={profileData?.logoText} />
       <div className="container mx-auto h-full md:w-[70%] " id="summary">
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* text */}
