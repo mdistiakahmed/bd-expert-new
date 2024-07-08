@@ -46,6 +46,23 @@ export const fetchBlogById = async (id: string) => {
   }
 };
 
+export const fetchBlogByIdClient = async (id: string) => {
+  try {
+    const response = await fetch(`/api/blogs/${id}`, {
+      headers: {
+        'Cache-Control': 'no-store',
+      }});
+    if (!response.ok) {
+      throw new Error(`Error fetching blogs: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    throw error;
+  }
+};
+
 export const createBlog = async (
   title: string,
   data: string,
@@ -81,3 +98,23 @@ export const createBlog = async (
     throw error;
   }
 };
+
+export const deleteBlogById = async (id: string) => {
+  try {
+    const response = await fetch(`/api/blogs/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Cache-Control': 'no-store',
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Error deleting blog: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    throw error;
+  }
+};
+

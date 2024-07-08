@@ -6,8 +6,9 @@ import { compile, convert } from "html-to-text";
 import Pagination from "@mui/material/Pagination";
 
 import { Timestamp } from "firebase/firestore";
-import { fetchBlogs } from "@/services/blogService";
+import { deleteBlogById, fetchBlogs } from "@/services/blogService";
 import Loader from "@/utils/Loader";
+import { useRouter } from "next/navigation";
 
 function timestampToDateString(timestamp: Timestamp): string {
   const date = new Date(
@@ -21,6 +22,8 @@ const AllBlogsPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const loadBlogs = async () => {
@@ -46,6 +49,22 @@ const AllBlogsPage = () => {
     setPage(value);
   };
 
+  const handleDelete = async (slug: any) => {
+    try {
+      setLoading(true);
+      await deleteBlogById(slug);
+      const result = await fetchBlogs(page, 10);
+      setBlogs(result.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdate = async (slug: any) => {
+    router.push(`/articles/${slug}/edit`);
+  };
+
   const cards = blogs?.map((d: any) => {
     const options = {
       wordwrap: 130,
@@ -63,6 +82,8 @@ const AllBlogsPage = () => {
         id={d.id}
         imageUrl={d.imageUrl}
         slug={d.slug}
+        handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
       />
     );
   });
