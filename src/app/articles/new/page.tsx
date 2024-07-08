@@ -183,7 +183,7 @@ const CreateNewBlog = () => {
           onChange={setBlogText}
           modules={modules}
           formats={formats}
-          style={{ height: "300px", width: "100%" }}
+          style={{ minHeight: "300px", width: "100%" }}
           placeholder="Write your blog content here..."
         />
 

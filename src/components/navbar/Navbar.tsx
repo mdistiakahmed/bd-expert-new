@@ -15,7 +15,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchMyProfile } from "@/services/profileService";
 
 const settings = ["Profile", "Logout"];
 
@@ -23,6 +24,19 @@ const Navbar = () => {
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
+  const [profileData, setProfileData] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetchMyProfile();
+        setProfileData(response.data);
+      } catch (err) {}
+    }
+    if (session?.status === "authenticated") {
+      fetchData();
+    }
+  }, [session?.status]);
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -68,7 +82,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="A" src={session?.data?.user?.image || ""} />
+                  <Avatar alt="A" src={profileData?.image_url || ""} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -102,7 +116,7 @@ const Navbar = () => {
 
         {/* mobile nav */}
         <div className="xl:hidden">
-          <MobileNav />
+          <MobileNav profileData={profileData} />
         </div>
       </div>
     </header>

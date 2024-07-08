@@ -174,5 +174,5 @@ export async function POST(request: Request) {
     view_count: 0,
   });
 
-  return NextResponse.json({ success: true, data: docRef.id });
+  return NextResponse.json({ success: true, data: slug  });
 }

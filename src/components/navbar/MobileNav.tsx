@@ -7,9 +7,7 @@ import { CiMenuFries } from "react-icons/ci";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
-import {
-  Avatar
-} from "@mui/material";
+import { Avatar } from "@mui/material";
 import { useState } from "react";
 import { FaArrowDown } from "react-icons/fa";
 
@@ -32,9 +30,7 @@ const links = [
   },
 ];
 
-
-
-const MobileNav = () => {
+const MobileNav = ({ profileData }: any) => {
   const pathname = usePathname();
   const session = useSession();
   const router = useRouter();
@@ -92,7 +88,7 @@ const MobileNav = () => {
                 className="flex justify-between gap-2"
                 variant={"primary"}
               >
-                <Avatar alt="A" src={session?.data?.user?.image || ""} />
+                <Avatar alt="A" src={profileData?.image_url || ""} />
                 <FaArrowDown />
               </Button>
             </div>
