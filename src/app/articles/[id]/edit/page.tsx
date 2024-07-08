@@ -11,8 +11,10 @@ import { MuiChipsInput } from "mui-chips-input";
 import "react-quill/dist/quill.snow.css";
 import {
   createBlog,
+  deleteBlogThumbnailById,
   fetchBlogById,
   fetchBlogByIdClient,
+  updateBlog,
 } from "@/services/blogService";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -74,7 +76,7 @@ const generateSlug = (title: string) => {
 const UpdateBlog = ({ params }: any) => {
   const { id } = params;
 
-  const [blogData, setBlogData] = useState(null);
+  const [blogData, setBlogData] = useState<any>(null);
 
   const [blogText, setBlogText] = useState("");
   const [title, setTitle] = useState("");
@@ -104,7 +106,8 @@ const UpdateBlog = ({ params }: any) => {
         setTags(result.data.tags);
         setThumbnailPreview(result.data.imageUrl || "/placeholder.png");
 
-        console.log(result.data);
+        console.log(blogData);
+
         setLoading(false);
       } catch (err: any) {
         setLoading(false);
@@ -136,15 +139,8 @@ const UpdateBlog = ({ params }: any) => {
   };
 
   const onSubmit = async () => {
-    if (
-      title.length === 0 ||
-      blogText.length === 0 ||
-      tags.length === 0 ||
-      !thumbnailFile
-    ) {
-      setSnackbarMessage(
-        "Please add Title, Article content, Tags and Thumbnail image"
-      );
+    if (title.length === 0 || blogText.length === 0 || tags.length === 0) {
+      setSnackbarMessage("Title, Article content, Tags can not be empty");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
 
@@ -156,24 +152,27 @@ const UpdateBlog = ({ params }: any) => {
     };
     const html = convert(blogText, options);
     const excerpt = html.trim().substring(0, 50);
-    const slug = generateSlug(title);
+    const slug =
+      title !== blogData?.title ? generateSlug(title) : blogData?.slug;
     try {
       setLoading(true);
       let newImageUrl = null;
       if (thumbnailFile != null) {
         try {
+          await deleteBlogThumbnailById(blogData?.slug);
           const res = await uploadImage(thumbnailFile);
           newImageUrl = res.data;
         } catch (err) {
           console.log("could not upload image");
         }
       }
-      const result = await createBlog(
+      const result = await updateBlog(
         title,
         blogText,
         tags,
         newImageUrl,
         excerpt,
+        blogData?.slug,
         slug
       );
       setBlogText("");
@@ -254,7 +253,7 @@ const UpdateBlog = ({ params }: any) => {
 
         <div className="absolute right-4 top-2 md:right-10 md:top-10">
           <Button variant="outlined" endIcon={<SendIcon />} onClick={onSubmit}>
-            Publish
+            Update
           </Button>
         </div>
 

@@ -14,11 +14,10 @@ import {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const offset = parseInt(searchParams.get("offset") || "0");
-  const queryLimit = parseInt(searchParams.get("limit") || "10");
+  const queryLimit = parseInt(searchParams.get("limit") || "5");
 
   try {
-    const totalDocsSnapshot = await getDocs(collection(db, "profile"));
-    const totalDocs = totalDocsSnapshot.size;
+    const totalDocs = 15;
 
     // If offset is 0, we start from the beginning
     if (offset === 0) {

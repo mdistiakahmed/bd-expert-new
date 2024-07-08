@@ -20,7 +20,7 @@ function timestampToDateString(timestamp: Timestamp): string {
 const AllBlogsPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10);
+  const [totalPages, setTotalPages] = useState(5);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -29,10 +29,10 @@ const AllBlogsPage = () => {
     const loadBlogs = async () => {
       try {
         setLoading(true);
-        const result = await fetchBlogs(page, 10);
+        const result = await fetchBlogs(page, 5);
 
         setBlogs(result.data);
-        setTotalPages(Math.ceil(result.total / 10));
+        setTotalPages(Math.ceil(result.total / 5));
         setLoading(false);
       } catch (err: any) {
         setLoading(false);
@@ -53,7 +53,7 @@ const AllBlogsPage = () => {
     try {
       setLoading(true);
       await deleteBlogById(slug);
-      const result = await fetchBlogs(page, 10);
+      const result = await fetchBlogs(page, 5);
       setBlogs(result.data);
       setLoading(false);
     } catch (error) {

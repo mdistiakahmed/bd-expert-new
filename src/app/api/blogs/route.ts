@@ -16,16 +16,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/AuthOption";
 
 async function fetchArticlesByAuthor(author: any, offset: any, queryLimit: any) {
-  
-
   try {
-    let q = query(
-      collection(db, "test"),
-      where("author", "==", author),
-    );
+    let q = null;
   
-    const totalDocsSnapshot = await getDocs(q);
-    const totalDocs = totalDocsSnapshot.size;
+    const totalDocs = 15;
 
 
     if (offset === 0) {
@@ -84,7 +78,7 @@ async function fetchArticlesByAuthor(author: any, offset: any, queryLimit: any) 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const offset = parseInt(searchParams.get("offset") || "0");
-  const queryLimit = parseInt(searchParams.get("limit") || "10");
+  const queryLimit = parseInt(searchParams.get("limit") || "5");
   const author = searchParams.get("author");
 
   if(author) {
@@ -92,8 +86,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const totalDocsSnapshot = await getDocs(collection(db, "test"));
-    const totalDocs = totalDocsSnapshot.size;
+    const totalDocs = 15
 
     // If offset is 0, we start from the beginning
     if (offset === 0) {

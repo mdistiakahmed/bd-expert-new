@@ -10,17 +10,17 @@ import React, { useEffect, useState } from "react";
 const ExpertsPage = () => {
   const [profiles, setProfiles] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10);
+  const [totalPages, setTotalPages] = useState(5);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadAccounts = async () => {
       try {
         setLoading(true);
-        const result = await fetchProfilesByPage(page, 10);
+        const result = await fetchProfilesByPage(page, 5);
 
         setProfiles(result.data);
-        setTotalPages(Math.ceil(result.total / 10));
+        setTotalPages(Math.ceil(result.total / 5));
         setLoading(false);
       } catch (err: any) {
         setLoading(false);

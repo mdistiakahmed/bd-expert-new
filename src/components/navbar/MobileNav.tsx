@@ -30,7 +30,7 @@ const links = [
   },
 ];
 
-const MobileNav = ({ profileData }: any) => {
+const MobileNav = () => {
   const pathname = usePathname();
   const session = useSession();
   const router = useRouter();
@@ -94,7 +94,7 @@ const MobileNav = ({ profileData }: any) => {
                 className="flex justify-between gap-2"
                 variant={"primary"}
               >
-                <Avatar alt="A" src={profileData?.image_url || ""} />
+                <Avatar alt="A" src={session?.data?.user?.image || ""} />
                 <FaArrowDown />
               </Button>
             </div>

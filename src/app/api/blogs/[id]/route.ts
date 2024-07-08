@@ -75,7 +75,7 @@ export async function DELETE(req: NextRequest, { params }: any) {
     const docRef = doc(db, "test", docSnap.id);
     const docData = docSnap.data();
 
-    if(docData.author !== email) {
+    if(docData.author !== email || email !== "ratgeber.ltd@gmail.com") {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
         { status: 401 }
@@ -94,6 +94,81 @@ export async function DELETE(req: NextRequest, { params }: any) {
     return NextResponse.json({ success: true, message: "Document and associated image deleted successfully" });
   } catch (error) {
     console.error("Error deleting document or image:", error);
+    return NextResponse.json(
+      { success: false, message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+
+export async function PUT(req: Request, { params }: any) {
+  const { id } = params;
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized session" },
+      { status: 401 }
+    );
+  }
+
+  const email = session?.user?.email;
+
+  if (!email) {
+    return NextResponse.json(
+      { success: false, message: "No email found in session" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const requestData = await req.json();
+    const { slug, title, data, tags, imageUrl, excerpt } = requestData;
+
+    if (!slug || !title || !data || !tags) {
+      return NextResponse.json(
+        { success: false, message: "Slug, title, data, and tags are required." },
+        { status: 400 }
+      );
+    }
+
+    const profilesRef = collection(db, "test");
+    const q = query(profilesRef, where("slug", "==", id));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return NextResponse.json(
+        { success: false, message: "No data found" },
+        { status: 404 }
+      );
+    }
+
+    const docSnap = querySnapshot.docs[0];
+    const docRef = doc(db, "test", docSnap.id);
+    const docData = docSnap.data();
+
+    if (docData.author !== email || email !== "ratgeber.ltd@gmail.com") {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+
+    await updateDoc(docRef, {
+      title,
+      data,
+      tags,
+      imageUrl,
+      excerpt,
+      slug,
+      updated_at: new Date(),
+    });
+
+    return NextResponse.json({ success: true, message: "Document updated successfully" });
+  } catch (error) {
+    console.error("Error updating document:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }

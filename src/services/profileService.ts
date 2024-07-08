@@ -1,6 +1,11 @@
 export const fetchMyProfile = async () => {
   try {
-    const response = await fetch(`/api/profile`);
+    const response = await fetch(`/api/profile`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 10, 
+      },
+    });
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
     }
@@ -16,7 +21,12 @@ export const fetchProfileByEmail = async (email: string) => {
   try {
     const baseUrl = process.env.BASE_URL;
     const encodedEmail = encodeURIComponent(email);
-    const response = await fetch(`${baseUrl}/api/profile/${encodedEmail}`);
+    const response = await fetch(`${baseUrl}/api/profile/${encodedEmail}`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 10, // Revalidate the cache every 10 * 60 seconds
+      },
+    });
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
     }
@@ -31,7 +41,12 @@ export const fetchProfileByEmail = async (email: string) => {
 export const fetchProfileById = async (id: string) => {
   try {
     const baseUrl = process.env.BASE_URL;
-    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`);
+    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 10, // Revalidate the cache every 10 * 60 seconds
+      },
+    });
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
     }
@@ -47,7 +62,12 @@ export const fetchProfilesByPage = async (page: number, limit: number) => {
   const offset = (page - 1) * limit;
   try {
     const response = await fetch(
-      `/api/profile/all?offset=${offset}&limit=${limit}`
+      `/api/profile/all?offset=${offset}&limit=${limit}`, {
+        cache: "force-cache",
+        next: {
+          revalidate: 60 * 10, // Revalidate the cache every 10 * 60 seconds
+        },
+      }
     );
     if (!response.ok) {
       throw new Error(`Error fetching blogs: ${response.statusText}`);
@@ -61,7 +81,6 @@ export const fetchProfilesByPage = async (page: number, limit: number) => {
 };
 
 export const updateProfile = async (data: any) => {
-  console.log("Calling api ", data);
   try {
     const response = await fetch("/api/profile", {
       method: "PUT",
