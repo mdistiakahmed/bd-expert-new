@@ -8,8 +8,6 @@ const Card = (props) => {
   const { title, author, publishedDate, tags, content, id, imageUrl, slug } =
     props;
 
-  console.log("blog id : ", slug);
-
   return (
     <div className=" text-black flex flex-col gap-2  p-5 border rounded-md shadow-md w-full">
       <Link href={`/articles/${slug}`}>

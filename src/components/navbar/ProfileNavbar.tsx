@@ -162,6 +162,7 @@ const Nav = () => {
 const ProfileMobileNav = ({ logoText }: any) => {
   const [openShareDialog, setOpenShareDialog] = useState(false);
   const [activeTab, setActiveTab] = useState("");
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   let summarySection: any = null;
 
   useEffect(() => {
@@ -195,6 +196,7 @@ const ProfileMobileNav = ({ logoText }: any) => {
     event: React.MouseEvent<HTMLAnchorElement>,
     path: string
   ) => {
+    setIsSheetOpen(false);
     event.preventDefault();
     if (path.startsWith("#")) {
       const targetElement = document.querySelector(path);
@@ -219,7 +221,7 @@ const ProfileMobileNav = ({ logoText }: any) => {
   };
 
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger className="flex justify-center items-center">
         <CiMenuFries className="text-[32px] text-accent" />
       </SheetTrigger>

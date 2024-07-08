@@ -36,6 +36,7 @@ const MobileNav = ({ profileData }: any) => {
   const router = useRouter();
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleSettingMenu = (action: string) => {
     if (action == "Profile") {
@@ -45,8 +46,13 @@ const MobileNav = ({ profileData }: any) => {
     }
   };
 
+  const handleLinkClick = (path: string) => {
+    router.push(path);
+    setIsSheetOpen(false);
+  };
+
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger className="flex justify-center items-center">
         <CiMenuFries className="text-[32px] text-accent" />
       </SheetTrigger>
@@ -62,16 +68,16 @@ const MobileNav = ({ profileData }: any) => {
         <nav className="flex flex-col justify-center items-center gap-8">
           {links.map((link, index) => {
             return (
-              <Link
-                href={link.path}
+              <button
                 key={index}
+                onClick={() => handleLinkClick(link.path)}
                 className={`${
                   link.path === pathname &&
                   "text-accent border-b-2 border-accent"
                 } text-xl capitalize hover:text-accent transition-all`}
               >
                 {link.name}
-              </Link>
+              </button>
             );
           })}
 
