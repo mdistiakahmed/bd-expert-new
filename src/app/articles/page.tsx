@@ -1,122 +1,69 @@
-"use client";
+import { client } from "@/sanity/lib/client";
+import { urlForImage } from "@/sanity/lib/image";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
-import Card from "@/components/blog/Card";
-import { compile, convert } from "html-to-text";
-import Pagination from "@mui/material/Pagination";
+async function getPosts() {
+  const query = `
+    *[_type == "post"] {
+      title,
+      slug,
+      heroImage
+    }
+  `;
 
-import { Timestamp } from "firebase/firestore";
-import { deleteBlogById, fetchBlogs } from "@/services/blogService";
-import Loader from "@/utils/Loader";
-import { useRouter } from "next/navigation";
-
-function timestampToDateString(timestamp: Timestamp): string {
-  const date = new Date(
-    timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-  );
-  return date.toDateString();
+  const data = await client.fetch(query);
+  return data;
 }
 
-const AllBlogsPage = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(5);
-  const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const loadBlogs = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchBlogs(page, 5);
-
-        setBlogs(result.data);
-        setTotalPages(Math.ceil(result.total / 5));
-        setLoading(false);
-      } catch (err: any) {
-        setLoading(false);
-      }
-    };
-
-    loadBlogs();
-  }, [page]);
-
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value);
-  };
-
-  const handleDelete = async (slug: any) => {
-    try {
-      setLoading(true);
-      await deleteBlogById(slug);
-      const result = await fetchBlogs(page, 5);
-      setBlogs(result.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  const handleUpdate = async (slug: any) => {
-    router.push(`/articles/${slug}/edit`);
-  };
-
-  const cards = blogs?.map((d: any) => {
-    const options = {
-      wordwrap: 130,
-    };
-    const html = convert(d.data, options);
-
-    return (
-      <Card
-        key={d.id}
-        title={d.title}
-        content={html.trim().substring(0, 100)}
-        author={d.author}
-        publishedDate={timestampToDateString(d.created_at)}
-        tags={d.tags}
-        id={d.id}
-        imageUrl={d.imageUrl}
-        slug={d.slug}
-        handleDelete={handleDelete}
-        handleUpdate={handleUpdate}
-      />
-    );
-  });
+const ArticleHomePage = async () => {
+  const posts: any[] = await getPosts();
 
   return (
-    <>
-      <div className="hidden sm:flex items-center justify-center">
-        <div className="w-[70vw] flex flex-col gap-5 m-5 items-center bg-white p-10 rounded-lg">
-          {cards}
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            variant="outlined"
-            color="primary"
-          />
+    <div className="flex items-center justify-center w-full">
+      <div className=" w-[95vw] md:w-[70vw] py-[20px] text-black">
+        <div className="flex flex-col items-center justify-center  py-8 ">
+          <h3 className="text-2xl font-semibold mb-6 text-white">Articles</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
+            {posts.map((article, index) => {
+              const { heroImage } = article;
+              return (
+                <Link
+                  href={`/articles/${article?.slug?.current}`}
+                  key={index}
+                  className="bg-white shadow-md rounded-lg overflow-hidden transform transition duration-500 hover:scale-105 cursor-pointer"
+                >
+                  <Image
+                    src={urlForImage(heroImage)}
+                    height={200}
+                    width={200}
+                    className="h-[200px] w-full object-cover"
+                    alt={heroImage.alt || "post"}
+                  />
+                  <div className="p-4 pb-0">
+                    <h4 className="text-lg font-medium mb-2">
+                      {article.title}
+                    </h4>
+                  </div>
+
+                  <div className="flex items-center justify-center pb-2">
+                    <Image
+                      src="/button-arrow.svg"
+                      height={20}
+                      width={80}
+                      alt="see more"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
-      <div className="flex sm:hidden">
-        <div className="w-full flex flex-col gap-5 m-5 items-center bg-white p-4 rounded-lg">
-          {cards}
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            variant="outlined"
-            color="primary"
-          />
-        </div>
-      </div>
-      <Loader loading={loading} />
-    </>
+    </div>
   );
 };
 
-export default AllBlogsPage;
+export default ArticleHomePage;

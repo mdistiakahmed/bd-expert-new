@@ -18,7 +18,7 @@ const links = [
   },
   {
     name: "Write",
-    path: "/articles/new",
+    path: "/studio",
   },
 ];
 
