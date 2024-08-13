@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply font-primary bg-primary text-white leading-loose;
+    @apply font-primary leading-loose;
   }
 
   .h1 {

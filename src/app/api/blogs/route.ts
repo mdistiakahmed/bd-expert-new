@@ -1,141 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebaseConfig";
-import {
-  collection,
-  getDocs,
-  query,
-  limit,
-  startAfter,
-  orderBy,
-  DocumentSnapshot,
-  DocumentData,
-  addDoc,
-  where,
-} from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/AuthOption";
+import { client } from "@/sanity/lib/client";
 
-async function fetchArticlesByAuthor(author: any, offset: any, queryLimit: any) {
-  try {
-    let q = null;
-  
-    const totalDocs = 15;
-
-
-    if (offset === 0) {
-      q = query(
-        collection(db, "test"),
-        where("author", "==", author),
-        orderBy("created_at", "desc"),
-        limit(queryLimit)
-      );
-
-      const snapshot = await getDocs(q);
-      const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-      return NextResponse.json({ success: true, data: docs, total: totalDocs });
+export async function GET(req: NextRequest, res: NextResponse) {
+  const query = `
+    *[_type == "post"] {
+      title,
+      slug,
+      heroImage
     }
+  `;
 
-    const offsetSnapshot = await getDocs(
-      query(
-        collection(db, "test"),
-        where("author", "==", author),
-        orderBy("created_at", "desc"),
-        limit(offset)
-      )
-    );
+  const data = await client.fetch(query);
 
-    const lastVisible: DocumentSnapshot<DocumentData> =
-      offsetSnapshot.docs[offset - 1];
+  const response = NextResponse.json({ success: true, data });
 
-    q = query(
-      collection(db, "test"),
-      where("author", "==", author),
-      orderBy("created_at", "desc"),
-      startAfter(lastVisible),
-      limit(queryLimit)
-    );
-
-    const snapshot = await getDocs(q);
-    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-    return NextResponse.json({ success: true, data: docs, total: totalDocs });
-  } catch (err: any) {
-    console.error("Error retrieving docs:", err);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Error retrieving documents",
-        error: err?.message,
-      },
-      { status: 500 }
-    );
-  }
-
-
-}
-
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const offset = parseInt(searchParams.get("offset") || "0");
-  const queryLimit = parseInt(searchParams.get("limit") || "5");
-  const author = searchParams.get("author");
-
-  if(author) {
-      return fetchArticlesByAuthor(author, offset, queryLimit);
-  }
-
-  try {
-    const totalDocs = 15
-
-    // If offset is 0, we start from the beginning
-    if (offset === 0) {
-      const q = query(
-        collection(db, "test"),
-        orderBy("created_at", "desc"),
-        limit(queryLimit)
-      );
-
-      const snapshot = await getDocs(q);
-      const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-      return NextResponse.json({ success: true, data: docs, total: totalDocs });
-    }
-
-    // Fetch the offset document to use in startAfter
-    const offsetSnapshot = await getDocs(
-      query(
-        collection(db, "test"),
-        orderBy("created_at", "desc"),
-        limit(offset)
-      )
-    );
-
-    const lastVisible: DocumentSnapshot<DocumentData> =
-      offsetSnapshot.docs[offset - 1];
-
-    const q = query(
-      collection(db, "test"),
-      orderBy("created_at", "desc"),
-      startAfter(lastVisible),
-      limit(queryLimit)
-    );
-
-    const snapshot = await getDocs(q);
-    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-    return NextResponse.json({ success: true, data: docs, total: totalDocs });
-  } catch (err: any) {
-    console.error("Error retrieving docs:", err);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Error retrieving documents",
-        error: err?.message,
-      },
-      { status: 500 }
-    );
-  }
+  return response;
 }
 
 export async function POST(request: Request) {
@@ -167,5 +50,5 @@ export async function POST(request: Request) {
     view_count: 0,
   });
 
-  return NextResponse.json({ success: true, data: slug  });
+  return NextResponse.json({ success: true, data: slug });
 }

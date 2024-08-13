@@ -1,20 +1,28 @@
-import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 async function getPosts() {
-  const query = `
-    *[_type == "post"] {
-      title,
-      slug,
-      heroImage
-    }
-  `;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/blogs`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 5, // Revalidate the cache every 5 * 60 seconds
+      },
+    });
 
-  const data = await client.fetch(query);
-  return data;
+    if (!res.ok) {
+      throw new Error(`Failed to fetch posts: ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 }
 
 const ArticleHomePage = async () => {
@@ -23,8 +31,8 @@ const ArticleHomePage = async () => {
   return (
     <div className="flex items-center justify-center w-full">
       <div className=" w-[95vw] md:w-[70vw] py-[20px] text-black">
-        <div className="flex flex-col items-center justify-center  py-8 ">
-          <h3 className="text-2xl font-semibold mb-6 text-white">Articles</h3>
+        <div className="flex flex-col items-center min-h-[70vh] py-8">
+          <h3 className="text-2xl font-semibold mb-6 ">Articles</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
             {posts.map((article, index) => {

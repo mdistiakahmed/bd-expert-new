@@ -53,13 +53,15 @@ const ProfileArticles = ({ email }: any) => {
         <ScrollArea className="h-[600px] mt-10">
           <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
             {blogs.map((item: any, index) => {
-              const formattedDate = timestampToDateString(item.created_at);
+              // const formattedDate = timestampToDateString(
+              //   item.created_at | Date.now()
+              // );
               return (
                 <li
                   key={index}
                   className="bg-white  py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
                 >
-                  <Link href={`/articles/${item.slug}`}>
+                  <Link href={`/articles/`}>
                     <Image
                       src={item.imageUrl}
                       alt="U"
@@ -68,7 +70,7 @@ const ProfileArticles = ({ email }: any) => {
                     />
                     <span className="text-black">{item.title}</span>
                     <span className="text-black">
-                      Published On : {formattedDate}
+                      {/* Published On : {formattedDate} */}
                     </span>
                   </Link>
                 </li>

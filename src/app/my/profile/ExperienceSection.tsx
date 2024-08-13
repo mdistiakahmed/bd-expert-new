@@ -4,7 +4,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
-import ExperienceUpdateDialog from "./ExperienceUpdateDialog";
 
 const getYearFromDate = (dateString: string): string => {
   if (!dateString) {
@@ -190,12 +189,6 @@ const ExperienceSection = ({
           </div>
         </Tabs>
       </div>
-      <ExperienceUpdateDialog
-        open={updateDialogOpen}
-        setOpen={setUpdateDialogOpen}
-        profileData={profileData}
-        handleUpdate={handleUpdate}
-      />
     </div>
   );
 };

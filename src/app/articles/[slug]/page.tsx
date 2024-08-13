@@ -81,9 +81,9 @@ const SingleArticlePage = async ({ params }: any) => {
                 <Image
                   src={urlForImage(heroImage)}
                   alt={heroImage.alt || "post"}
-                  width={dimensions.width}
-                  height={dimensions.height}
-                  className="text-center h-auto w-auto"
+                  width={400}
+                  height={400}
+                  className="text-center"
                 />
               )}
             </div>
@@ -114,6 +114,7 @@ const CodeBlock = ({ children }: any) => {
 const MyPortableTextImage = ({ value }: any) => {
   const { asset, alt } = value;
   const dimensions = extractImageDimensions(asset._ref);
+  const h = Math.min(dimensions.height, 400);
 
   return (
     <div className="w-full flex  justify-center">
@@ -122,7 +123,7 @@ const MyPortableTextImage = ({ value }: any) => {
         alt={alt || "image"}
         width={dimensions.width}
         height={dimensions.height}
-        className="text-center h-auto w-auto"
+        className="text-center h-auto w-auto max-h-[400px]"
       />
     </div>
   );

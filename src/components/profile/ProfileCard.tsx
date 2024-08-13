@@ -1,29 +1,20 @@
-import { Button } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { urlForImage } from "@/sanity/lib/image";
 
 const ProfileCard = (props: any) => {
-  const { name, title, image_url, id, slug } = props;
-
-  const router = useRouter();
-
-  const handleClick = () => {
-    const url = `/experts/profile/${slug}`;
-    window.open(url, "_blank");
-  };
+  const { name, title, image, slug } = props;
+  const url = `/experts/profile/${slug.current}`;
 
   return (
-    <div className="bg-white text-black flex flex-col md:flex-row items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full">
-      <div
-        className="w-[200px] h-[150px] relative min-w-[150px]"
-        style={{ transform: "scale(1.2) rotateZ(calc(-11 * 1deg))" }}
-      >
+    <div className=" flex flex-col items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full bg-slate-200">
+      <div className="w-[200px] h-[200px] relative min-w-[150px]">
         <Image
-          src={image_url}
-          alt=""
+          src={urlForImage(image)}
+          alt={name}
           fill
-          className="absolute border-4 border-accent rounded-lg"
+          className="absolute border-4 border-white rounded-full"
         />
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -31,9 +22,12 @@ const ProfileCard = (props: any) => {
         <p className="text-center">{title}</p>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <Button variant="outlined" onClick={handleClick} className="w-[180px]">
+        <Link
+          href={url}
+          className="w-[180px] bg-blue-600 p-2 rounded-lg text-white text-center"
+        >
           See Full Profile
-        </Button>
+        </Link>
       </div>
     </div>
   );

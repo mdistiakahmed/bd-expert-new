@@ -2,7 +2,7 @@ import { fetchProfileById } from "@/services/profileService";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
 import ProfilePhoto from "@/components/profile/ProfilePhoto";
-import ProfileNavbar from "@/components/navbar/ProfileNavbar";
+//import ProfileNavbar from "@/components/navbar/ProfileNavbar";
 import ProfileArticles from "@/components/profile/ProfileArticles";
 import ProfileContact from "@/components/profile/ProfileContact";
 import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
@@ -69,8 +69,8 @@ const page = async ({ params }: any) => {
   const profileData = response.data;
 
   return (
-    <section className="h-full ">
-      <ProfileNavbar logoText={profileData?.logoText} />
+    <section className="h-full bg-primary text-white">
+      {/* <ProfileNavbar logoText={profileData?.logoText} /> */}
       <div className="container mx-auto h-full md:w-[70%] " id="summary">
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* text */}
