@@ -5,7 +5,7 @@ import ProfilePhoto from "@/components/profile/ProfilePhoto";
 import ProfileContact from "@/components/profile/ProfileContact";
 import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
 import ProfileStats from "@/components/profile/ProfileStats";
-import ExperienceSection from "@/app/my/profile/ExperienceSection";
+import ExperienceSection from "@/components/profile/ExperienceSection";
 import { Metadata } from "next";
 import { urlForImage } from "@/sanity/lib/image";
 import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";

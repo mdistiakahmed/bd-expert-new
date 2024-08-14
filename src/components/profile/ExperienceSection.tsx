@@ -1,9 +1,6 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
 
 const getYearFromDate = (dateString: string): string => {
   if (!dateString) {
