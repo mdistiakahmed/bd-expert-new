@@ -9,6 +9,14 @@ const links = [
     path: "/",
   },
   {
+    name: "Tax Types",
+    path: "/tax-types",
+  },
+  {
+    name: "Regulations",
+    path: "/regulations",
+  },
+  {
     name: "Experts",
     path: "/experts",
   },

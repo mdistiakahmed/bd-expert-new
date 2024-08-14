@@ -5,11 +5,20 @@ import Link from "next/link";
 import { CiMenuFries } from "react-icons/ci";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { useState } from "react";
+import { Button } from "../ui/button";
 
 const links = [
   {
     name: "home",
     path: "/",
+  },
+  {
+    name: "Tax Types",
+    path: "/tax-types",
+  },
+  {
+    name: "Regulations",
+    path: "/regulations",
   },
   {
     name: "Experts",
@@ -62,6 +71,10 @@ const MobileNav = () => {
               </button>
             );
           })}
+
+          <Link href="/contact">
+            <Button>Contact Us</Button>
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>
