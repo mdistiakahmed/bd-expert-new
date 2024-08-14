@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,6 +33,9 @@ const ArticleHomePage = async () => {
     <div className="flex items-center justify-center w-full">
       <div className=" w-[95vw] md:w-[70vw] py-[20px] text-black">
         <div className="flex flex-col items-center min-h-[70vh] py-8">
+          <div className="container">
+            <Breadcrumb />
+          </div>
           <h3 className="text-2xl font-semibold mb-6 ">Articles</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">

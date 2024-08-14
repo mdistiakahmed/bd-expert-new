@@ -5,7 +5,7 @@ import { urlForImage } from "@/sanity/lib/image";
 
 const ProfileCard = (props: any) => {
   const { name, title, image, slug } = props;
-  const url = `/experts/profile/${slug.current}`;
+  const url = `/experts/${slug.current}`;
 
   return (
     <div className=" flex flex-col items-center justify-between gap-10 p-10 border rounded-md shadow-md w-full bg-slate-200">

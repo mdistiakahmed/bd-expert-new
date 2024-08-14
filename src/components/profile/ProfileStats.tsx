@@ -5,7 +5,7 @@ import CountUp from "react-countup";
 const ProfileStats = ({ profileData }: any) => {
   const stats = [
     {
-      num: profileData?.yearOfExperience || 2,
+      num: profileData?.yearsOfExperience || 2,
       text: "Years of experience",
     },
     {
@@ -13,7 +13,7 @@ const ProfileStats = ({ profileData }: any) => {
       text: "Projects completed",
     },
     {
-      num: profileData?.numberOfClientsServed || 2,
+      num: profileData?.clientsServed || 2,
       text: "Clients Served",
     },
   ];

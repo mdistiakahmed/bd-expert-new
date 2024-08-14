@@ -1,3 +1,5 @@
+import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
+import ShareWidget from "@/components/share/ShareWidget";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
 import { Metadata } from "next";
@@ -46,7 +48,7 @@ export async function generateMetadata({
       description: `${post?.excerpt}`,
       type: "article",
       locale: "en_US",
-      url: `http://ratgeberltd.com/articles/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/articles/${slug}`,
       siteName: "Ratgeber",
       images: [
         {
@@ -63,15 +65,15 @@ export async function generateMetadata({
 const SingleArticlePage = async ({ params }: any) => {
   const { slug } = params;
   const post = await getPost(slug);
-
   const { heroImage } = post;
-
-  const dimensions = extractImageDimensions(heroImage.asset._ref);
   return (
     <div>
       <div className="flex items-center justify-center w-full bg-white">
         <div className=" w-[95vw] md:w-[70vw] p-[10px] text-black">
           <div className="flex flex-col gap-6 text-center md:text-left">
+            <div className="container">
+              <Breadcrumb />
+            </div>
             <h1 className="text-2xl font-bold text-center leading-relaxed">
               {post?.title}
             </h1>
@@ -87,6 +89,7 @@ const SingleArticlePage = async ({ params }: any) => {
                 />
               )}
             </div>
+            <ShareWidget />
 
             <div className="prose prose-lg text-justify min-w-full">
               <PortableText

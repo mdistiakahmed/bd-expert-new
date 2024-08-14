@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       "Optimize your finances with expert tax management and smart investment strategies for maximum savings.",
     type: "website",
     locale: "en_US",
-    url: "https://www.bdtaxexpert.com/",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     siteName: "RatGeber",
   },
 };
@@ -37,20 +37,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html lang="en">
       <body className={jetBrainsMono.variable}>
         <Navbar />
 
-        <div className="w-full">
-          <div className="container">
-            <Breadcrumb />
-          </div>
-
-          {children}
-        </div>
+        <div className="w-full">{children}</div>
 
         <Footer />
       </body>

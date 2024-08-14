@@ -36,9 +36,8 @@ const Footer = () => {
             <FaTwitter />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/company/ratgeber-limited/"
             target="_blank"
-            rel="noopener noreferrer"
             className="text-lg hover:text-gray-400"
           >
             <FaLinkedin />

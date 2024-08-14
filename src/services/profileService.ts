@@ -3,7 +3,7 @@ export const fetchMyProfile = async () => {
     const response = await fetch(`/api/profile`, {
       cache: "force-cache",
       next: {
-        revalidate: 60 * 10, 
+        revalidate: 60 * 10,
       },
     });
     if (!response.ok) {
@@ -38,14 +38,11 @@ export const fetchProfileByEmail = async (email: string) => {
   }
 };
 
-export const fetchProfileById = async (id: string) => {
+export const fetchProfileBySlug = async (slug: string) => {
   try {
     const baseUrl = process.env.BASE_URL;
-    const response = await fetch(`${baseUrl}/api/profile/byid/${id}`, {
-      cache: "force-cache",
-      next: {
-        revalidate: 60 * 10, // Revalidate the cache every 10 * 60 seconds
-      },
+    const response = await fetch(`${baseUrl}/api/profile/${slug}`, {
+      cache: "no-cache",
     });
     if (!response.ok) {
       throw new Error(`Error fetching profile: ${response.statusText}`);
@@ -62,7 +59,8 @@ export const fetchProfilesByPage = async (page: number, limit: number) => {
   const offset = (page - 1) * limit;
   try {
     const response = await fetch(
-      `/api/profile/all?offset=${offset}&limit=${limit}`, {
+      `/api/profile/all?offset=${offset}&limit=${limit}`,
+      {
         cache: "force-cache",
         next: {
           revalidate: 60 * 10, // Revalidate the cache every 10 * 60 seconds
@@ -153,7 +151,6 @@ export const deleteImage = async (imageUrl: string) => {
   }
 };
 
-
 export async function uploadResume(resumeFile: File | null) {
   if (!resumeFile) {
     return;
@@ -183,7 +180,6 @@ export async function uploadResume(resumeFile: File | null) {
   }
 }
 
-
 export const deleteResume = async (resumeUrl: string) => {
   try {
     const response = await fetch("/api/profile/resume", {
@@ -205,4 +201,3 @@ export const deleteResume = async (resumeUrl: string) => {
     throw error;
   }
 };
-

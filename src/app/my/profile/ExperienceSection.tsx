@@ -13,12 +13,7 @@ const getYearFromDate = (dateString: string): string => {
   return date.getFullYear().toString();
 };
 
-const ExperienceSection = ({
-  profileData,
-  handleUpdate,
-  disableUpdate,
-}: any) => {
-  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+const ExperienceSection = ({ profileData }: any) => {
   const aboutMe = [
     {
       fieldName: "Name",
@@ -26,41 +21,29 @@ const ExperienceSection = ({
     },
     {
       fieldName: "Phone",
-      fieldValue: profileData?.aboutMe?.phone,
+      fieldValue: profileData?.phone,
     },
     {
       fieldName: "Experience",
-      fieldValue: profileData?.yearOfExperience,
+      fieldValue: profileData?.yearsOfExperience,
     },
     {
       fieldName: "Nationality",
-      fieldValue: profileData?.aboutMe?.nationality,
+      fieldValue: profileData?.nationality,
     },
     {
       fieldName: "Email",
-      fieldValue: profileData?.aboutMe?.email,
+      fieldValue: profileData?.email,
     },
     {
       fieldName: "Languages",
-      fieldValue: profileData?.aboutMe?.languages,
+      fieldValue: profileData?.languages,
     },
   ];
 
   return (
     <div className=" flex items-center justify-center py-12 xl:py-0">
       <div className="container mx-auto">
-        {!disableUpdate && (
-          <div className="flex mx-auto w-[100px] justify-center border border-accent rounded-md m-5">
-            <IconButton
-              aria-label="edit"
-              className="border border-red-500"
-              onClick={() => setUpdateDialogOpen(true)}
-            >
-              <p className="text-white pr-2 text-sm">Edit</p>
-              <EditIcon className="text-accent" />
-            </IconButton>
-          </div>
-        )}
         <Tabs
           defaultValue="experience"
           className="flex flex-col xl:flex-row gap-[60px]"
@@ -79,30 +62,28 @@ const ExperienceSection = ({
 
                 <ScrollArea className="h-[400px]">
                   <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-                    {profileData?.experienceList.map(
-                      (item: any, index: any) => {
-                        return (
-                          <li
-                            key={index}
-                            className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
-                          >
-                            <span className="text-accent text-sm">
-                              {getYearFromDate(item.startDate)} -{" "}
-                              {getYearFromDate(item.endDate)}
-                            </span>
-                            <h3 className="text-sm max-w-[260px] min-h-[40px] text-center lg:text-left">
-                              {item.position}
-                            </h3>
-                            <div className="flex items-center gap-3">
-                              <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
-                              <p className="text-white/60 text-sm">
-                                {item.companyName}
-                              </p>
-                            </div>
-                          </li>
-                        );
-                      }
-                    )}
+                    {profileData?.experiences.map((item: any, index: any) => {
+                      return (
+                        <li
+                          key={index}
+                          className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
+                        >
+                          <span className="text-accent text-sm">
+                            {getYearFromDate(item.startDate)} -{" "}
+                            {getYearFromDate(item.endDate)}
+                          </span>
+                          <h3 className="text-sm max-w-[260px] min-h-[40px] text-center lg:text-left">
+                            {item.designation}
+                          </h3>
+                          <div className="flex items-center gap-3">
+                            <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
+                            <p className="text-white/60 text-sm">
+                              {item.companyName}
+                            </p>
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </ScrollArea>
               </div>
@@ -114,30 +95,26 @@ const ExperienceSection = ({
 
                 <ScrollArea className="h-[400px]">
                   <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-                    {profileData?.educatoinList?.map(
-                      (item: any, index: any) => {
-                        return (
-                          <li
-                            key={index}
-                            className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
-                          >
-                            <span className="text-accent">
-                              {getYearFromDate(item.startDate)} -{" "}
-                              {getYearFromDate(item.endDate)}
-                            </span>
-                            <h3 className="max-w-[260px] min-h-[40px] text-center lg:text-left">
-                              {item.degree}
-                            </h3>
-                            <div className="flex items-center gap-3">
-                              <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
-                              <p className="text-white/60">
-                                {item.institution}
-                              </p>
-                            </div>
-                          </li>
-                        );
-                      }
-                    )}
+                    {profileData?.education?.map((item: any, index: any) => {
+                      return (
+                        <li
+                          key={index}
+                          className="bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1 text-sm"
+                        >
+                          <span className="text-accent">
+                            {getYearFromDate(item.startDate)} -{" "}
+                            {getYearFromDate(item.endDate)}
+                          </span>
+                          <h3 className="max-w-[260px] min-h-[40px] text-center lg:text-left">
+                            {item.degree}
+                          </h3>
+                          <div className="flex items-center gap-3">
+                            <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
+                            <p className="text-white/60">{item.institution}</p>
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </ScrollArea>
               </div>
@@ -150,7 +127,7 @@ const ExperienceSection = ({
                 </div>
 
                 <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 xl:gap-[30px]">
-                  {profileData?.skillList?.map((skill: any, index: any) => {
+                  {profileData?.skills?.map((skill: any, index: any) => {
                     return (
                       <li key={index}>
                         <div className="w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group">

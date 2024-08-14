@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
 import ProfileCard from "@/components/profile/ProfileCard";
 
 async function getProfiles() {
@@ -38,6 +39,9 @@ const ExpertsPage = async () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
+      <div className="container">
+        <Breadcrumb />
+      </div>
       <div className="container grid grid-cols-1 md:grid-cols-3 gap-10 m-5 items-center justify-center">
         {cards}
       </div>

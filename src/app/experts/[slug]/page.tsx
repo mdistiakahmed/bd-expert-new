@@ -1,14 +1,15 @@
-import { fetchProfileById } from "@/services/profileService";
+import { fetchProfileBySlug } from "@/services/profileService";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
 import ProfilePhoto from "@/components/profile/ProfilePhoto";
-//import ProfileNavbar from "@/components/navbar/ProfileNavbar";
-import ProfileArticles from "@/components/profile/ProfileArticles";
 import ProfileContact from "@/components/profile/ProfileContact";
 import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
 import ProfileStats from "@/components/profile/ProfileStats";
 import ExperienceSection from "@/app/my/profile/ExperienceSection";
 import { Metadata } from "next";
+import { urlForImage } from "@/sanity/lib/image";
+import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
+import ShareWidget from "@/components/share/ShareWidget";
 
 const SocialIcons = ({ iconStyles, facebookUrl, linkedInUrl }: any) => {
   return (
@@ -36,8 +37,8 @@ const SocialIcons = ({ iconStyles, facebookUrl, linkedInUrl }: any) => {
 export async function generateMetadata({
   params,
 }: any): Promise<Metadata | undefined> {
-  const { id } = params;
-  const response = await fetchProfileById(id);
+  const { slug } = params;
+  const response = await fetchProfileBySlug(slug);
   if (!response) {
     return;
   }
@@ -50,11 +51,11 @@ export async function generateMetadata({
       description: profileData?.description,
       type: "article",
       locale: "en_US",
-      url: `https://www.bdtaxexpert.com/experts/profile/${id}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/experts/${slug}`,
       siteName: "RatGeber",
       images: [
         {
-          url: profileData?.image_url,
+          url: urlForImage(profileData.image),
           width: 1200,
           height: 630,
         },
@@ -64,12 +65,16 @@ export async function generateMetadata({
 }
 
 const page = async ({ params }: any) => {
-  const { id } = params;
-  const response = await fetchProfileById(id);
+  const { slug } = params;
+  const response = await fetchProfileBySlug(slug);
   const profileData = response.data;
 
   return (
     <section className="h-full bg-primary text-white">
+      <div className="container">
+        <Breadcrumb />
+        <ShareWidget />
+      </div>
       {/* <ProfileNavbar logoText={profileData?.logoText} /> */}
       <div className="container mx-auto h-full md:w-[70%] " id="summary">
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
@@ -87,7 +92,7 @@ const page = async ({ params }: any) => {
             {/* btn and socials*/}
             <div className="flex flex-col xl:flex-row items-center gap-8">
               <a
-                href={profileData?.resume_url}
+                href={profileData?.resume.asset.url}
                 download="resume.pdf"
                 target="_blank"
               >
@@ -115,7 +120,7 @@ const page = async ({ params }: any) => {
 
           {/* photo */}
           <div className="order-1 xl:order-none mb-8 xl:mb-0">
-            <ProfilePhoto imgUrl={profileData.image_url} />
+            <ProfilePhoto imgUrl={profileData.image} />
           </div>
         </div>
       </div>
@@ -125,17 +130,16 @@ const page = async ({ params }: any) => {
       </div>
 
       <div
-        className="container mx-auto h-full mt-[100px] md:w-[70%]"
+        className="container mx-auto h-full mt-[150px] md:w-[70%]"
         id="qualification"
       >
-        <ExperienceSection profileData={profileData} disableUpdate={true} />
+        <ExperienceSection profileData={profileData} />
       </div>
 
-      <div className="container mx-auto  mt-[100px] md:w-[70%]" id="articles">
-        <ProfileArticles email={profileData.email} />
-      </div>
-
-      <div className="container mx-auto mt-[100px] md:w-[70%]" id="contact">
+      <div
+        className="container mx-auto mt-[20px] pb-[100px]  md:w-[70%]"
+        id="contact"
+      >
         <ProfileContact profileData={profileData} />
       </div>
     </section>

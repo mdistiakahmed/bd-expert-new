@@ -10,12 +10,12 @@ const ProfileContact = ({ profileData }: any) => {
     {
       icon: <FaPhoneAlt />,
       title: "Phone",
-      description: profileData?.aboutMe?.phone,
+      description: profileData?.phone,
     },
     {
       icon: <FaEnvelope />,
       title: "Email",
-      description: profileData?.aboutMe?.email,
+      description: profileData?.email,
     },
     {
       icon: <FaMapMarkerAlt />,

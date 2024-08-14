@@ -1,5 +1,6 @@
 "use client";
 
+import { urlForImage } from "@/sanity/lib/image";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -18,14 +19,14 @@ const ProfilePhoto = ({ imgUrl }: any) => {
           initial={{ opacity: 0 }}
           animate={{
             opacity: 1,
-            transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
+            transition: { delay: 1.4, duration: 0.4, ease: "easeInOut" },
           }}
           exit={{ opacity: 0 }}
           className="w-[298px] h-[298px]  mix-blend-lighten absolute rounded-full overflow-hidden"
         >
           {imgUrl && (
             <Image
-              src={imgUrl}
+              src={urlForImage(imgUrl)}
               alt="A"
               priority
               quality={100}
