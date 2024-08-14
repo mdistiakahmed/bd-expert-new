@@ -3,24 +3,9 @@
 import Link from "next/link";
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { Button } from "../ui/button";
 
 const Navbar = () => {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   return (
     <header className="py-4 text-white bg-gray-800">
       <div className="container px-[15px] mx-auto flex justify-between items-center">
