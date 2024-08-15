@@ -62,7 +62,7 @@ const Nav = () => {
                           </div>
                         </div>
                       ) : (
-                        <div>{subLink.name}</div>
+                        <Link href={subLink.path}>{subLink.name}</Link>
                       )}
                     </li>
                   ))}

@@ -98,6 +98,7 @@ export const links = [
           },
         ],
       },
+
       {
         name: "Acts",
         nestedSubLinks: [
@@ -140,6 +141,10 @@ export const links = [
             external: "https://nbr.gov.bd/regulations/rules/excise-rules/eng",
           },
         ],
+      },
+      {
+        name: "Write",
+        path: "/studio",
       },
     ],
   },
