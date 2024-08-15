@@ -34,10 +34,10 @@ const OurProjects = () => {
       </p>
       <div className="container mx-auto my-10">
         <div>
-          {projectList.map((project) => {
+          {projectList.map((project, index) => {
             return (
-              <div>
-                <div className="flex items-center justify-between">
+              <div key={index}>
+                <div className="flex items-center justify-between px-10">
                   <h3 className="text-2xl text-accent">{project.name}</h3>
                   <Link
                     href={project.url}
@@ -48,14 +48,14 @@ const OurProjects = () => {
                   </Link>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-between gap-5 py-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-between gap-5 py-10">
                   <p className="text-lg text-center">{project.description}</p>
                   <Link href={project.url} target="_blank">
                     <Image
                       src={project.imageUrl}
                       alt={project.name}
-                      height={300}
-                      width={400}
+                      height={400}
+                      width={500}
                     />
                   </Link>
                 </div>
