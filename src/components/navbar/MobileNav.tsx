@@ -27,7 +27,7 @@ const NestedSubLInks = ({ name, nestedSubLinks }: any) => {
       </span>
 
       <div className={`${isOpen ? "block" : "hidden"}`}>
-        <ul>
+        <ul className="ml-10">
           {nestedSubLinks.map((nLink: any, index: any) => (
             <li key={index} className="px-6 py-2 hover:underline">
               {" "}
@@ -62,7 +62,7 @@ const SubLinks = ({ name, sublinks }: any) => {
         )}
       </span>
       <div className={`${isOpen ? "block" : "hidden"}`}>
-        <ul>
+        <ul className="ml-20">
           {sublinks.map((subLink: any, index: any) => (
             <li
               key={index}
