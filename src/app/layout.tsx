@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   },
   description:
     "Optimize your finances with expert tax management and smart investment strategies for maximum savings.",
+  verification: {
+    google: "9MGaioG0rXp5fn3LfxB-Pe90sm7_jB3QPBuJ3Oh7HRg",
+  },
   openGraph: {
     title: "RatGeber | Master Your Finances",
     description:
