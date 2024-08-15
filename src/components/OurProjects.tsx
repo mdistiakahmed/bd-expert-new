@@ -26,7 +26,16 @@ const OurProjects = () => {
 
   return (
     <section className="flex flex-col justify-center py-12 mt-10">
-      <h2 className="text-3xl text-center py-10">Our Products</h2>
+      <h2
+        className=" text-center py-10"
+        style={{
+          fontSize: "42px",
+          fontWeight: "bold",
+          color: "#00ff99",
+        }}
+      >
+        Our Products
+      </h2>
       <p className="text-center p-5 text-xl">
         {`RatGeber offers a suite of innovative software solutions designed to streamline operations, enhance productivity, drive growth.
              Our products are tailored to meet the specific needs of business by providing Software Development, Maintenance and Growth.
@@ -37,7 +46,7 @@ const OurProjects = () => {
           {projectList.map((project, index) => {
             return (
               <div key={index}>
-                <div className="flex items-center justify-between px-10">
+                <div className="flex items-center justify-between md:px-10">
                   <h3 className="text-2xl text-accent">{project.name}</h3>
                   <Link
                     href={project.url}
