@@ -1,6 +1,5 @@
 import Breadcrumb from "@/components/breadcrumbs/Breadcrumb";
 import ShareWidget from "@/components/share/ShareWidget";
-import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
 import { Metadata } from "next";
 import { PortableText } from "next-sanity";
@@ -8,19 +7,22 @@ import Image from "next/image";
 import React from "react";
 
 async function getPost(slug: string) {
-  const query = `
-    *[_type == "post" && slug.current == "${slug}"][0] {
-        title,
-        heroImage,
-        slug,
-        publishedAt,
-        excerpt,
-        body,
-    }
-    `;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/blogs/${slug}`, {
+      cache: "no-cache",
+    });
 
-  const post = await client.fetch(query);
-  return post;
+    if (!res.ok) {
+      throw new Error(`Failed to fetch posts: ${res.statusText}`);
+    }
+
+    const result = await res.json();
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 }
 
 function extractImageDimensions(ref: any) {

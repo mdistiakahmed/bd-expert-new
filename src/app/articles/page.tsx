@@ -8,10 +8,7 @@ async function getPosts() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/blogs`, {
-      cache: "force-cache",
-      next: {
-        revalidate: 60 * 5, // Revalidate the cache every 5 * 60 seconds
-      },
+      cache: "no-cache",
     });
 
     if (!res.ok) {

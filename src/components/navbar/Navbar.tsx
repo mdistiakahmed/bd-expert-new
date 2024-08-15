@@ -18,7 +18,7 @@ const Navbar = () => {
         {/* desktop nav */}
         <div className="hidden xl:flex items-center gap-8">
           <Nav />
-          <Link href="/contact">
+          <Link href="/contact-us">
             <Button>Contact Us</Button>
           </Link>
         </div>

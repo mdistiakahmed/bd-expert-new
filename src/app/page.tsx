@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { FiArrowRight } from "react-icons/fi";
 import Services from "@/components/Services";
 import OurProjects from "@/components/OurProjects";
+import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
+import HomeSocial from "@/components/HomeSocial";
 
 const HomeContent = () => {
   return (
@@ -37,7 +39,7 @@ const HomeContent = () => {
                 </Button>
 
                 <div className="mb-8 xl:mb-0">
-                  <Social
+                  <HomeSocial
                     containerStyles="flex gap-6"
                     iconStyles="w-9 h-9 border border-accent rounded-full
                 flex justify-center items-center text-accent text-base hover:bg-accent hover:text-primary

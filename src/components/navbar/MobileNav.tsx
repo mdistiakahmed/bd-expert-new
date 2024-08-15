@@ -131,7 +131,7 @@ const MobileNav = () => {
             }
           })}
 
-          <Link href="/contact">
+          <Link href="/contact-us" onClick={() => setIsSheetOpen(false)}>
             <Button>Contact Us</Button>
           </Link>
         </nav>
