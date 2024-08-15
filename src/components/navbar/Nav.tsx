@@ -27,14 +27,14 @@ const Nav = () => {
                   {link.sublinks.map((subLink: any, index2: any) => (
                     <li
                       key={index2}
-                      className="hover:bg-gray-900 hover:underline px-6 py-2 whitespace-nowrap"
+                      className="hover:bg-gray-900 hover:underline px-6 py-2 group/second whitespace-nowrap"
                     >
                       {" "}
                       {subLink.nestedSubLinks ? (
-                        <div className="flex items-center gap-2 justify-between relative group/second w-[150px]">
+                        <div className="flex items-center gap-2 justify-between relative  w-[150px]">
                           <span>{subLink.name}</span>
                           <RiArrowRightSLine className="text-2xl" />
-                          <div className="absolute bg-gray-800 left-36 top-0 z-50 hidden group-hover/second:md:block hover:md:block">
+                          <div className="absolute bg-gray-800 left-[175px] top-0 z-50 hidden group-hover/second:md:block hover:md:block">
                             <ul>
                               {subLink.nestedSubLinks.map(
                                 (nLink: any, index3: any) => (
