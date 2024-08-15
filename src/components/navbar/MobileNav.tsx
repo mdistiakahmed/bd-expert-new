@@ -8,17 +8,86 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { links } from "./links";
 import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+
+const NestedSubLInks = ({ name, nestedSubLinks }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="flex flex-col items-center gap-2 justify-between group/second w-[150px]">
+      <span
+        className="flex items-center gap-2"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {name}
+        {isOpen ? (
+          <IoIosArrowUp className="hover:text-accent" />
+        ) : (
+          <IoIosArrowDown className="hover:text-accent" />
+        )}
+      </span>
+
+      <div className={`${isOpen ? "block" : "hidden"}`}>
+        <ul>
+          {nestedSubLinks.map((nLink: any, index: any) => (
+            <li key={index} className="px-6 py-2 hover:underline">
+              {" "}
+              {nLink.external ? (
+                <Link href={nLink.external} target="_blank">
+                  {nLink.name}
+                </Link>
+              ) : (
+                <Link href={nLink.path}>{nLink.name}</Link>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const SubLinks = ({ name, sublinks }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="capitalize font-medium  transition-all cursor-pointer group/first flex flex-col items-center justify-center text-white">
+      <span
+        className="hover:text-accent flex items-center gap-2"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {name}
+        {isOpen ? (
+          <IoIosArrowUp className="hover:text-accent" />
+        ) : (
+          <IoIosArrowDown className="hover:text-accent" />
+        )}
+      </span>
+      <div className={`${isOpen ? "block" : "hidden"}`}>
+        <ul>
+          {sublinks.map((subLink: any, index: any) => (
+            <li
+              key={index}
+              className="hover:underline px-6 py-2 whitespace-nowrap"
+            >
+              {" "}
+              {subLink.nestedSubLinks ? (
+                <NestedSubLInks
+                  name={subLink.name}
+                  nestedSubLinks={subLink.nestedSubLinks}
+                />
+              ) : (
+                <div>{subLink.name}</div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 const MobileNav = () => {
   const pathname = usePathname();
-  const router = useRouter();
-
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-
-  const handleLinkClick = (path: string) => {
-    router.push(path);
-    setIsSheetOpen(false);
-  };
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -38,64 +107,11 @@ const MobileNav = () => {
           {links.map((link, index) => {
             if (link.sublinks) {
               return (
-                <div
+                <SubLinks
+                  name={link.name}
+                  sublinks={link.sublinks}
                   key={index}
-                  className="capitalize font-medium  transition-all cursor-pointer group/first flex flex-col items-center justify-center text-white"
-                >
-                  <span className="hover:text-accent flex items-center gap-2">
-                    {link.name}
-                    <IoIosArrowDown className="hover:text-accent" />
-                  </span>
-                  <div className=" hidden group-hover/first:block hover:block">
-                    <ul>
-                      {link.sublinks.map((subLink: any, index2: any) => (
-                        <li
-                          key={index2}
-                          className="hover:underline px-6 py-2 whitespace-nowrap"
-                        >
-                          {" "}
-                          {subLink.nestedSubLinks ? (
-                            <div className="flex flex-col items-center gap-2 justify-between group/second w-[150px]">
-                              <span className="flex items-center gap-2">
-                                {subLink.name}
-                                <IoIosArrowDown className="hover:text-accent" />
-                              </span>
-
-                              <div className="hidden group-hover/second:block hover:block">
-                                <ul>
-                                  {subLink.nestedSubLinks.map(
-                                    (nLink: any, index3: any) => (
-                                      <li
-                                        key={index3}
-                                        className="px-6 py-2 hover:underline"
-                                      >
-                                        {" "}
-                                        {nLink.external ? (
-                                          <Link
-                                            href={nLink.external}
-                                            target="_blank"
-                                          >
-                                            {nLink.name}
-                                          </Link>
-                                        ) : (
-                                          <Link href={nLink.path}>
-                                            {nLink.name}
-                                          </Link>
-                                        )}
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </div>
-                            </div>
-                          ) : (
-                            <div>{subLink.name}</div>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                />
               );
             } else {
               return (
@@ -113,18 +129,6 @@ const MobileNav = () => {
                 </div>
               );
             }
-            // return (
-            //   <button
-            //     key={index}
-            //     onClick={() => handleLinkClick(link.path)}
-            //     className={`${
-            //       link.path === pathname &&
-            //       "text-accent border-b-2 border-accent"
-            //     } text-white text-xl capitalize hover:text-accent transition-all`}
-            //   >
-            //     {link.name}
-            //   </button>
-            // );
           })}
 
           <Link href="/contact">
