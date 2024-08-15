@@ -4,6 +4,7 @@ import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiArrowRight } from "react-icons/fi";
 import Services from "@/components/Services";
+import OurProjects from "@/components/OurProjects";
 
 const HomeContent = () => {
   return (
@@ -56,6 +57,10 @@ const HomeContent = () => {
 
         <div className="h-[50px]"></div>
         <Services />
+
+        <div className="h-[50px]"></div>
+
+        <OurProjects />
       </div>
     </div>
   );
