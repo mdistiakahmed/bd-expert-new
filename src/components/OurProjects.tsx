@@ -65,6 +65,7 @@ const OurProjects = () => {
                       alt={project.name}
                       height={400}
                       width={500}
+                      className="transform transition duration-500 hover:scale-105"
                     />
                   </Link>
                 </div>

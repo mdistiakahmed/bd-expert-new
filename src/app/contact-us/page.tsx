@@ -10,7 +10,7 @@ const ContactUs = () => {
         <meta name="description" content="Contact Us page" />
       </Head>
       <h1 className="text-3xl font-bold mb-8 text-center">Contact Us</h1>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="flex items-center justify-center">
           <Image
             src="/contact-us.PNG"

@@ -1,11 +1,9 @@
 import Photo from "@/components/Photo";
-import Social from "@/components/Social";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiArrowRight } from "react-icons/fi";
 import Services from "@/components/Services";
 import OurProjects from "@/components/OurProjects";
-import { FaLinkedinIn, FaFacebook } from "react-icons/fa";
 import HomeSocial from "@/components/HomeSocial";
 
 const HomeContent = () => {
@@ -13,14 +11,15 @@ const HomeContent = () => {
     <div className=" w-full bg-primary">
       <div className="h-full  text-white container">
         <div className="mx-auto h-full">
-          <div className="flex flex-col xl:flex-row items-center justify-between pt-8 xl:pb-24">
+          <div className="flex flex-col xl:flex-row items-center justify-between pt-8 xl:pb-24 md:px-10">
             {/* text */}
             <div className="text-center xl:text-left order-2 xl:order-none">
               <span className="text-xl"> Master Your Finances</span>
               <h1 className="h2 mb-6">
                 Expert Money and
-                <br />{" "}
-                <span className="text-accent">Tax Management Counseling</span>
+                <br /> <span className="text-accent">Tax Management</span>
+                <br />
+                <span className="text-accent"> Counseling</span>
               </h1>
               <p className="max-w-[500px] mb-9 text-white/80">
                 Optimize your finances with expert tax management and smart
@@ -55,7 +54,9 @@ const HomeContent = () => {
             </div>
           </div>
         </div>
-        <Stats />
+        <div className="flex items-center justify-center">
+          <Stats />
+        </div>
 
         <div className="h-[50px]"></div>
         <Services />

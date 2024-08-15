@@ -12,7 +12,7 @@ const ProfilePhoto = ({ imgUrl }: any) => {
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          transition: { delay: 2, duration: 0.4, ease: "easeIn" },
+          transition: { delay: 1, duration: 0.4, ease: "easeIn" },
         }}
       >
         <motion.div

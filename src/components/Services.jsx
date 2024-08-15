@@ -8,37 +8,74 @@ import styles from "./styles.module.css";
 const services = [
   {
     num: "01",
-    title: "Tax Consultancy",
-    description:
-      "Maximize savings with expert tax consultancy. Our professionals offer personalized tax planning, compliance, and advisory services, ensuring accurate filings and minimized liabilities. Navigate complex tax laws confidently and efficiently with us.",
+    title: "Business Development & Advisory",
+    description: `We identify growth opportunities and craft strategic plans. Our services include market analysis, strategy formulation, operational improvements, and expert advisory to enhance business performance.`,
     href: "/",
   },
   {
     num: "02",
-    title: "Financial Guide",
+    title: "Accounting & Internal Audit",
     description:
-      "Achieve financial success with our expert financial guide. We offer personalized planning, investment strategies, and budgeting advice. Navigate your financial journey confidently and make informed decisions to secure your future.",
+      "We ensure accurate financial reporting and regulatory compliance with expert financial management, risk assessment, and internal control evaluations.",
     href: "/",
   },
   {
     num: "03",
-    title: "Investment Road",
+    title: "Taxation",
     description:
-      "Navigate the investment road with confidence. Our expert guidance offers tailored strategies, risk management, and market insights to help you achieve your financial goals effectively and securely.",
+      "We offer tax planning, compliance, and legal counsel to navigate complex taxation and legal frameworks, ensuring optimal business operations including  company  & Personal tax filing and litigation.",
     href: "/",
   },
   {
     num: "04",
-    title: "Web Development",
+    title: "License And Registrations",
     description:
-      "Web development transforms ideas into functional websites. Our services include custom design, responsive development, and optimization, ensuring seamless user experiences and effective digital presence for businesses of all sizes.",
+      "We handle the acquisition of licenses and registrations, streamlining administrative processes to ensure legal and efficient business operations.",
+    href: "/",
+  },
+  {
+    num: "05",
+    title: "Software Development and ITES",
+    description:
+      "We provide custom software solutions and IT-enabled services (ITES) to enhance efficiency and drive innovation through technology consulting and support.",
+    href: "/",
+  },
+  {
+    num: "06",
+    title: "FreeLancing",
+    description:
+      "We connect businesses with freelancers for specialized projects and offer import outsourcing solutions to optimize business operation management.",
+    href: "/",
+  },
+  {
+    num: "07",
+    title: "Legal Advice and Company Secretarial Work ",
+    description:
+      "We provide legal guidance and company secretarial services, including corporate documentation, board management, and compliance with governance requirements.",
+    href: "/",
+  },
+  {
+    num: "08",
+    title: "Import Solutions",
+    description:
+      "We manage supplier coordination, documentation, and import procedures to enhance efficiency and minimize costs.",
     href: "/",
   },
 ];
 
 const Services = () => {
   return (
-    <section className="flex flex-col justify-center py-12 mt-10">
+    <section className="flex flex-col justify-center mt-10">
+      <h2
+        className=" text-center mb-8"
+        style={{
+          fontSize: "42px",
+          fontWeight: "bold",
+          color: "#00ff99",
+        }}
+      >
+        Our Services
+      </h2>
       <div className="container mx-auto">
         <div className={`${styles["grid-container"]} px-4 md:px-8`}>
           {services.map((services, index) => {
@@ -49,21 +86,15 @@ const Services = () => {
               >
                 {/* top */}
                 <div className="w-full flex justify-between items-center">
-                  <div className="text-4xl font-bold hover:text-accent transition-all duration-500">
+                  <div className="text-2xl font-bold hover:text-accent transition-all duration-500">
                     {services.num}
                   </div>
-                  <Link
-                    href={services.href}
-                    className={`${styles["link-style"]}`}
-                  >
-                    <BsArrowDownRight className="text-primary text-3xl" />
-                  </Link>
                 </div>
 
                 {/* heading*/}
                 <h2
                   style={{
-                    fontSize: "42px",
+                    fontSize: "24px",
                     fontWeight: "bold",
                     color: "#00ff99",
                   }}
