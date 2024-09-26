@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { PortableText } from "next-sanity";
 import Image from "next/image";
 import React from "react";
+import { FiFile } from "react-icons/fi";
 
 async function getPost(slug: string) {
   try {
@@ -79,6 +80,21 @@ const SingleArticlePage = async ({ params }: any) => {
             <h1 className="text-2xl font-bold text-center leading-relaxed">
               {post?.title}
             </h1>
+            {post.fileUrl ? (
+              <a
+                href={post.fileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-end"
+              >
+                <button className="flex items-center space-x-2 bg-gray-200 hover:bg-gray-300 p-2 rounded">
+                  <FiFile className="text-gray-600" size={20} />
+                  <span>Attachment</span>
+                </button>
+              </a>
+            ) : (
+              <div></div> // Placeholder if fileUrl is null
+            )}
 
             <div className="w-full flex justify-center">
               {heroImage && heroImage.asset && (

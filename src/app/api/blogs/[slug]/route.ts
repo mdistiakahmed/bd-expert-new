@@ -11,6 +11,8 @@ export async function GET(req: NextRequest, { params }: any) {
         publishedAt,
         excerpt,
         body,
+        "fileUrl": fileUpload.asset->url,
+        
     }
     `;
 

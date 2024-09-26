@@ -62,5 +62,10 @@ export const post = {
         },
       ],
     },
+    {
+      name: "fileUpload",
+      title: "File Upload",
+      type: "file",
+    },
   ],
 };
