@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import Link from "next/link";
 
-const generateBreadcrumbs = (pathname: string) => {
-  const pathSegments = pathname.split("/").filter((segment) => segment);
+const generateBreadcrumbs = (pathname: any) => {
+  const pathSegments = pathname.split("/").filter((segment: any) => segment);
 
-  return pathSegments.map((segment, index) => {
+  return pathSegments.map((segment: any, index: any) => {
     const href = "/" + pathSegments.slice(0, index + 1).join("/");
     const displayName = segment.charAt(0).toUpperCase() + segment.slice(1);
 
@@ -24,16 +24,18 @@ const Breadcrumb = () => {
   }
 
   return (
-    <Breadcrumbs className="py-4">
-      <BreadcrumbItem key={1000}>
-        <Link href="/">Home</Link>
-      </BreadcrumbItem>
-      {breadcrumbs.map((breadcrumb, index) => (
-        <BreadcrumbItem key={index}>
-          <Link href={breadcrumb.href}>{breadcrumb.displayName}</Link>
+    <div className="overflow-x-auto max-w-full">
+      <Breadcrumbs className="py-4 whitespace-nowrap">
+        <BreadcrumbItem key={1000}>
+          <Link href="/">Home</Link>
         </BreadcrumbItem>
-      ))}
-    </Breadcrumbs>
+        {breadcrumbs.map((breadcrumb: any, index: any) => (
+          <BreadcrumbItem key={index}>
+            <Link href={breadcrumb.href}>{breadcrumb.displayName}</Link>
+          </BreadcrumbItem>
+        ))}
+      </Breadcrumbs>
+    </div>
   );
 };
 
