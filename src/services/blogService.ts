@@ -87,7 +87,9 @@ export const fetchBlogByIdClient = async (id: string) => {
 export const fetchRecent4Blogs = async () => {
   const baseUrl = process.env.BASE_URL;
   try {
-    const response = await fetch(`${baseUrl}/api/blogs/recent`);
+    const response = await fetch(`${baseUrl}/api/blogs/recent`, {
+      cache: "no-cache",
+    });
     if (!response.ok) {
       throw new Error(`Error fetching blogs: ${response.statusText}`);
     }
