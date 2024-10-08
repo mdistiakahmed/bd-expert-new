@@ -150,11 +150,56 @@ const MyPortableTextImage = ({ value }: any) => {
   );
 };
 
+const MyPortableTextVideo = ({ value }: any) => {
+  const { url, title } = value;
+
+  return (
+    <div className="w-full flex justify-center my-8">
+      <iframe
+        width="560"
+        height="315"
+        src={url.replace("watch?v=", "embed/")}
+        title={title || "Embedded Video"}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="rounded-lg"
+      ></iframe>
+    </div>
+  );
+};
+
 const myPortableTextComponents = {
   types: {
     image: MyPortableTextImage,
+    videoEmbed: MyPortableTextVideo,
   },
   marks: {
     code: ({ children }: any) => <CodeBlock>{children}</CodeBlock>,
+    link: ({ value, children }: any) => (
+      <a href={value.href} className="text-pink-600 underline">
+        {children}
+      </a>
+    ),
+  },
+  block: {
+    h1: ({ children }: any) => (
+      <h1 className="text-3xl font-bold text-gray-900 my-4">{children}</h1>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="text-2xl font-semibold text-gray-800 my-4">{children}</h2>
+    ),
+    h3: ({ children }: any) => (
+      <h2 className="text-xl font-semibold text-gray-800 my-4">{children}</h2>
+    ),
+    h4: ({ children }: any) => (
+      <h2 className="text-lg font-semibold text-gray-800 my-4">{children}</h2>
+    ),
+    normal: ({ children }: any) => <p className="my-4">{children}</p>,
+  },
+  list: {
+    bullet: ({ children }: any) => (
+      <ul className="list-disc pl-6">{children}</ul>
+    ),
   },
 };

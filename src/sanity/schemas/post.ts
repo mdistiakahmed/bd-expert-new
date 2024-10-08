@@ -1,4 +1,5 @@
-import { Rule } from "sanity";
+import { defineArrayMember, Rule } from "sanity";
+import { PlayIcon } from "@sanity/icons";
 
 export const post = {
   name: "post",
@@ -60,6 +61,32 @@ export const post = {
           type: "image",
           fields: [{ type: "text", name: "alt", title: "Alt" }],
         },
+        // Video block
+        defineArrayMember({
+          type: "object",
+          name: "videoEmbed",
+          title: "Video Embed",
+          icon: PlayIcon, // Optional icon for the video block
+          fields: [
+            {
+              name: "url",
+              type: "url",
+              title: "Video URL",
+              description: "Enter the YouTube or Vimeo URL",
+              validation: (Rule) =>
+                Rule.uri({
+                  allowRelative: false,
+                  scheme: ["http", "https"],
+                }).error("Please enter a valid URL"),
+            },
+            {
+              name: "title",
+              type: "string",
+              title: "Video Title",
+              description: "Add a title to describe the video",
+            },
+          ],
+        }),
       ],
     },
     {

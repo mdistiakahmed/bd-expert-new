@@ -8,7 +8,17 @@ const RecentBlogs = async () => {
 
   return (
     <div className="p-6 my-10">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Recent Blogs</h2>
+      <h2
+        className=" text-center py-10"
+        style={{
+          fontSize: "42px",
+          fontWeight: "bold",
+          color: "#00ff99",
+        }}
+      >
+        Latest Articles
+      </h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {blogs?.map((blog: any, index: any) => (
           <div
@@ -28,6 +38,7 @@ const RecentBlogs = async () => {
                   alt={blog.title}
                   width={400}
                   height={200}
+                  className="border-2"
                 />
 
                 <div className="flex items-center justify-center pb-2">
