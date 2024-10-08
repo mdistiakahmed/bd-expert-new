@@ -15,7 +15,7 @@ const RecentBlogs = async () => {
             key={index}
             className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
           >
-            <Link href={`/blog/${blog.slug.current}`}>
+            <Link href={`/articles/${blog.slug.current}`}>
               <div className="cursor-pointer flex flex-col items-center justify-center">
                 <h3 className="text-lg font-bold p-4 text-black">
                   {blog.title}
