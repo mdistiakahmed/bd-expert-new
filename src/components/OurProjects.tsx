@@ -22,6 +22,20 @@ const OurProjects = () => {
         Your go-to source for inspiration and entertainment.`,
       imageUrl: "/justforquotes.png",
     },
+    {
+      name: "Islamic Tablig",
+      url: "https://www.islamictablig.com/",
+      description: `Discover the essence of Islamic life through comprehensive guides on Salat, Sawm, Hajj, and Zakat, grounded in the teachings of the Quran and Hadith. 
+      Learn the importance of each pillar, find accurate prayer times, and explore a collection of powerful Duas for every occasion, directly from the Quran and Hadith.`,
+      imageUrl: "/islamic-tablig.PNG",
+    },
+    {
+      name: "The Girlish Talk",
+      url: "https://www.thegirlishtalk.com/",
+      description: `Your go-to platform for everything empowering, fashionable, and fun. 
+      Join our community of strong, inspiring women who uplift and support one another.`,
+      imageUrl: "/the-girlish-talk.PNG",
+    },
   ];
 
   return (

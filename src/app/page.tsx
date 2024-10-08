@@ -5,6 +5,7 @@ import { FiArrowRight } from "react-icons/fi";
 import Services from "@/components/Services";
 import OurProjects from "@/components/OurProjects";
 import HomeSocial from "@/components/HomeSocial";
+import RecentBlogs from "@/components/blog/RecentBlogs";
 
 const HomeContent = () => {
   return (
@@ -57,6 +58,8 @@ const HomeContent = () => {
         <div className="flex items-center justify-center">
           <Stats />
         </div>
+
+        <RecentBlogs />
 
         <div className="h-[50px]"></div>
         <Services />
