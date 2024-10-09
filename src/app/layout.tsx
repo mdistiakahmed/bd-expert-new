@@ -55,8 +55,6 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-
         <div className="w-full">{children}</div>
 
         <Footer />
