@@ -15,10 +15,9 @@ import { fetchRecent4Blogs } from "@/services/blogService";
 import Link from "next/link";
 import CustomCarosel from "@/components/carosel/CustomCarosel";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import UpdatedNavbar from "@/components/navbar/UpdatedNavbar";
 
 const HomeContent = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const slides = [
     {
       image: "/meeting.jpg",
@@ -166,97 +165,7 @@ const HomeContent = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
         {/* Navbar */}
-        <header className="relative z-20">
-          <nav className="flex justify-between items-center p-6 md:px-12 text-white bg-transparent">
-            {/* Logo */}
-            <div className="text-2xl font-bold">
-              <a href="#">RatGeber</a>
-            </div>
-
-            {/* Desktop Menu */}
-            <ul className="hidden md:flex space-x-8 font-semibold">
-              <li className="relative group">
-                <a href="#" className="hover:text-gray-300">
-                  Solutions
-                </a>
-                <ul className="absolute hidden group-hover:block mt-2 bg-white text-black shadow-lg py-2 space-y-2">
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                      Restructuring
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                      Risk Management
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                      Crisis Response
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-gray-300">
-                  Contact
-                </a>
-              </li>
-            </ul>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                className="text-white focus:outline-none"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </nav>
-
-          {/* Mobile Dropdown Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-white text-black py-4 space-y-4 shadow-lg">
-              <a href="#" className="block px-4 py-2">
-                Solutions
-              </a>
-              <a href="#" className="block px-4 py-2">
-                Services
-              </a>
-              <a href="#" className="block px-4 py-2">
-                About Us
-              </a>
-              <a href="#" className="block px-4 py-2">
-                Contact
-              </a>
-            </div>
-          )}
-        </header>
-
+        <UpdatedNavbar />
         {/* Hero Content */}
         <div
           className={`relative z-10 flex flex-col items-center justify-center h-full text-center text-white ${isTextAnimating ? "hero-text-exit" : "hero-text-enter"}`}
@@ -327,6 +236,10 @@ const HomeContent = () => {
         </div>
       </section>
 
+      <section>
+        <CustomCarosel />
+      </section>
+
       {/* Recent Articles*/}
 
       <section className="py-16 bg-white">
@@ -394,10 +307,6 @@ const HomeContent = () => {
             ))}
           </div>
         </div>
-      </section>
-
-      <section>
-        <CustomCarosel />
       </section>
     </div>
   );

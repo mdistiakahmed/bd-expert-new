@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import { JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import UpdatedNavbar from "@/components/navbar/UpdatedNavbar";
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
