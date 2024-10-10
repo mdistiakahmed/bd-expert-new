@@ -3,7 +3,7 @@ import { client } from "@/sanity/lib/client";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const query = `
-     *[_type == "post"] | order(publishedAt desc) [0...4] {
+     *[_type == "post"] | order(publishedAt desc) [0...3] {
         title,
         "heroImage": heroImage.asset->url,
         slug,
