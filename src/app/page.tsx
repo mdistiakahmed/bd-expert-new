@@ -168,7 +168,7 @@ const HomeContent = () => {
         <UpdatedNavbar />
         {/* Hero Content */}
         <div
-          className={`relative z-10 flex flex-col items-center justify-center h-full text-center text-white ${isTextAnimating ? "hero-text-exit" : "hero-text-enter"}`}
+          className={`relative z-10 flex flex-col items-center justify-center mt-5 md:mt-0 md:h-full text-center text-white ${isTextAnimating ? "hero-text-exit" : "hero-text-enter"}`}
         >
           <h1 className="text-5xl font-bold mb-4 md:w-[600px]">
             {" "}
@@ -293,7 +293,7 @@ const HomeContent = () => {
           <h2 className="text-2xl mb-8 text-center">Our Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projectList.map((project: any, index: any) => (
-              <Link key={index} href={project.url}>
+              <Link key={index} href={project.url} target="_blank">
                 <div className="overflow-hidden rounded-lg shadow-lg">
                   <Image
                     src={project.imageUrl}
