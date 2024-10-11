@@ -74,7 +74,7 @@ const HomeContent = () => {
       url: ``,
     },
     {
-      title: `FreeLancing`,
+      title: `BPO Service`,
       description: `We connect businesses with freelancers for specialized projects.`,
       image: `/images/freelance.jpg`,
       url: ``,

@@ -5,14 +5,10 @@ import Link from "next/link";
 import { FiChevronDown, FiPlus, FiX } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 
-const UpdatedNavbar = () => {
+const UpdatedNavbar2 = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null); // For desktop menu
   const [activeMobileMenu, setActiveMobileMenu] = useState(null); // For mobile sub-menu
-
-  const pathname = usePathname();
-
-  console.log(pathname);
 
   const toggleMenu = (menu: any) => {
     setActiveMenu(activeMenu === menu ? null : menu);
@@ -61,9 +57,7 @@ const UpdatedNavbar = () => {
     <header className={`relative z-20 `}>
       <nav className="flex justify-between items-center p-6 md:px-12 text-white bg-transparent">
         {/* Logo */}
-        <div
-          className={`text-2xl font-bold ${pathname != "/" ? "text-black" : ""}`}
-        >
+        <div className={`text-2xl font-bold `}>
           <Link href="/">RatGeber</Link>
         </div>
 
@@ -78,12 +72,8 @@ const UpdatedNavbar = () => {
                     className="flex items-center cursor-pointer hover:text-gray-300"
                     onClick={() => toggleMenu(menu.item)}
                   >
-                    <a className={`${pathname != "/" ? "text-black" : ""}`}>
-                      {menu.item}
-                    </a>
-                    <FiChevronDown
-                      className={`ml-1 w-4 h-4 ${pathname != "/" ? "text-black" : ""}`}
-                    />
+                    <a className={``}>{menu.item}</a>
+                    <FiChevronDown className={`ml-1 w-4 h-4 `} />
                   </div>
                   {activeMenu === menu.item && (
                     <div className="absolute left-0 top-full w-screen bg-white text-black py-6 shadow-lg z-10">
@@ -116,7 +106,7 @@ const UpdatedNavbar = () => {
                 // Menu item without sub-menu
                 <Link
                   href={menu.path}
-                  className={`hover:text-gray-300 cursor-pointer ${pathname != "/" ? "text-black" : ""}`}
+                  className={`hover:text-gray-300 cursor-pointer `}
                 >
                   {menu.item}
                 </Link>
@@ -132,16 +122,14 @@ const UpdatedNavbar = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
-              <FiX
-                className={`w-8 h-8 ${pathname != "/" ? "text-black" : ""}`}
-              />
+              <FiX className={`w-8 h-8 `} />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                className={`w-8 h-8 ${pathname != "/" ? "text-black" : ""}`}
+                className={`w-8 h-8 `}
               >
                 <path
                   strokeLinecap="round"
@@ -194,4 +182,4 @@ const UpdatedNavbar = () => {
   );
 };
 
-export default UpdatedNavbar;
+export default UpdatedNavbar2;
