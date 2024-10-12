@@ -1,8 +1,10 @@
 "use client";
+import VerticalThreeSidedCarosel from "@/components/carosel/VerticalThreeSidedCarosel";
 import UpdatedNavbar from "@/components/navbar/UpdatedNavbar";
 import UpdatedNavbar2 from "@/components/navbar/UpdatedNavbar2";
 import React, { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { FiArrowRight } from "react-icons/fi";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -106,39 +108,60 @@ const Page = () => {
       </div>
 
       {/* Section 3: Overview */}
-      <div id="overview" className="container mx-auto px-4 py-8 scroll-mt-16">
+
+      <div id="overview" className="mx-auto px-4 py-8 scroll-mt-16">
         <h3 className="text-3xl font-bold mb-4">Overview</h3>
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-2/3">
+          <div className="md:w-2/3 flex flex-col gap-5">
+            <h4 className="text-2xl font-semibold mb-2">
+              Blockchain technology is increasingly used in various industries,
+              such as finance, luxury brands and regulated sectors, to create
+              new revenue streams and facilitate collaborations while reducing
+              risk and volatility.
+            </h4>
+            <div className="w-16 h-1 bg-orange-500 mb-4"></div>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              We identify growth opportunities and craft strategic plans. Our
+              services include market analysis, strategy formulation,
+              operational improvements, and expert advisory to enhance business
+              performance.We identify growth opportunities and craft strategic
+              plans. Our services include market analysis, strategy formulation,
+              operational improvements, and expert advisory to enhance business
+              performance.We identify growth opportunities and craft strategic
+              plans. Our services include market analysis, strategy formulation,
+              operational improvements, and expert advisory to enhance business
+              performance.
+            </p>
+
+            <p>
+              We identify growth opportunities and craft strategic plans. Our
+              services include market analysis, strategy formulation,
+              operational improvements, and expert advisory to enhance business
+              performance.We identify growth opportunities and craft strategic
+              plans.
             </p>
           </div>
           <div className="md:w-1/3 md:pl-8">
-            <h4 className="text-xl font-semibold mb-2">Related Links</h4>
-            <ul className="list-disc list-inside">
-              <li>
+            <h4 className="text-xl font-semibold mb-2">
+              Featured Case Studies
+            </h4>
+            <ul className="list-none">
+              <li className="flex items-center mb-2">
+                <FiArrowRight className="text-orange-500 mr-2" />
                 <a href="#" className="text-blue-600">
-                  Link 1
+                  Case Study 1
                 </a>
               </li>
-              <li>
+              <li className="flex items-center mb-2">
+                <FiArrowRight className="text-orange-500 mr-2" />
                 <a href="#" className="text-blue-600">
-                  Link 2
+                  Case Study 2
                 </a>
               </li>
-              <li>
+              <li className="flex items-center mb-2">
+                <FiArrowRight className="text-orange-500 mr-2" />
                 <a href="#" className="text-blue-600">
-                  Link 3
+                  Case Study 3
                 </a>
               </li>
             </ul>
@@ -147,51 +170,12 @@ const Page = () => {
       </div>
 
       {/* Section 3: our-solutions */}
-      <div
-        id="our-solutions"
-        className="container mx-auto px-4 py-8 scroll-mt-16"
-      >
-        <h3 className="text-3xl font-bold mb-4">our-solutions</h3>
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-2/3">
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </p>
-          </div>
-          <div className="md:w-1/3 md:pl-8">
-            <h4 className="text-xl font-semibold mb-2">Related Links</h4>
-            <ul className="list-disc list-inside">
-              <li>
-                <a href="#" className="text-blue-600">
-                  Link 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-blue-600">
-                  Link 2
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-blue-600">
-                  Link 3
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div id="our-solutions" className=" mx-auto px-16 py-8 scroll-mt-16">
+        <VerticalThreeSidedCarosel />
       </div>
 
       {/* Section 3: our-impact */}
-      <div id="our-impact" className="container mx-auto px-4 py-8 scroll-mt-16">
+      <div id="our-impact" className=" mx-auto px-4 py-8 scroll-mt-16">
         <h3 className="text-3xl font-bold mb-4">our-impact</h3>
         <div className="flex flex-col md:flex-row">
           <div className="md:w-2/3">
@@ -232,10 +216,7 @@ const Page = () => {
       </div>
 
       {/* Section 3: our-insights */}
-      <div
-        id="our-insights"
-        className="container mx-auto px-4 py-8 scroll-mt-16"
-      >
+      <div id="our-insights" className=" mx-auto px-4 py-8 scroll-mt-16">
         <h3 className="text-3xl font-bold mb-4">our-insights</h3>
         <div className="flex flex-col md:flex-row">
           <div className="md:w-2/3">
@@ -276,10 +257,7 @@ const Page = () => {
       </div>
 
       {/* Section 3: our-experts */}
-      <div
-        id="our-experts"
-        className="container mx-auto px-4 py-8 scroll-mt-16"
-      >
+      <div id="our-experts" className=" mx-auto px-4 py-8 scroll-mt-16">
         <h3 className="text-3xl font-bold mb-4">our-experts</h3>
         <div className="flex flex-col md:flex-row">
           <div className="md:w-2/3">
