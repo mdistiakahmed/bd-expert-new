@@ -27,7 +27,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="px-10">
+      <div className="px-2 md:px-10">
         {/* Section 2: In-Page Navigation */}
 
         <div className="sticky top-0 bg-white text-gray-600 pt-4  border-b-2 border-gray-300  z-10 whitespace-nowrap ">
@@ -110,8 +110,11 @@ const Page = () => {
 
         {/* Section 3: Overview */}
 
-        <div id="overview" className="mx-auto px-4 py-8 scroll-mt-16">
-          <h3 className="text-3xl font-bold mb-4">Overview</h3>
+        <div
+          id="overview"
+          className="mx-auto px-4 py-8 scroll-mt-16 text-center md:text-left"
+        >
+          <h3 className="text-3xl font-bold mb-4 ">Overview</h3>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
@@ -120,7 +123,7 @@ const Page = () => {
                 sectors, to create new revenue streams and facilitate
                 collaborations while reducing risk and volatility.
               </h4>
-              <div className="w-16 h-1 bg-orange-500 mb-4"></div>
+              <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
               <p>
                 We identify growth opportunities and craft strategic plans. Our
                 services include market analysis, strategy formulation,
@@ -171,7 +174,7 @@ const Page = () => {
         </div>
 
         {/* Section 3: our-solutions */}
-        <div id="our-solutions" className=" mx-auto px-16 py-8 scroll-mt-16">
+        <div id="our-solutions" className=" mx-auto md:px-16 py-8 scroll-mt-16">
           <VerticalThreeSidedCarosel />
         </div>
 
