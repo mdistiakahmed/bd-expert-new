@@ -9,22 +9,23 @@ const sections = [
     number: 1,
     title: "Simplify your business",
     description:
-      "Take control of the complexity of your business with real-time insights...",
+      "Take control of the complexity of your business with real-time insights that help you make the right decisions, right now.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Transparent pricing",
-    description: "MarginEdge costs $330 per month, per location...",
+    title: "Transparent pricing. Really.",
+    description: `MarginEdge costs $330 per month, per location.
+MarginEdge + Freepour costs $480 per month, per location.
+Simple as that.`,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
     title: "Who the hell are we?",
-    description:
-      "Together we empower restaurants with a holistic software solution...",
+    description: `Together we empower restaurants with a holistic software solution, delivered with the same exceptional service that restaurants provide to their guests. MarginEdge is a software platform for restaurant people, by restaurant people.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
@@ -69,7 +70,7 @@ const VerticalThreeSidedCarousel = () => {
   return (
     <div className="flex">
       {/* Sticky Navigation */}
-      <div className="sticky top-44 h-screen w-1/5">
+      <div className="sticky top-44 h-screen w-1/12">
         <div className="flex flex-col items-start relative">
           {sections.map((section) => (
             <div
@@ -101,7 +102,7 @@ const VerticalThreeSidedCarousel = () => {
       </div>
 
       {/* Main Content Sections */}
-      <div className="w-4/5">
+      <div className="w-11/12">
         {sections.map((section) => (
           <div
             key={section.number}
@@ -112,15 +113,15 @@ const VerticalThreeSidedCarousel = () => {
             data-aos-duration="2000"
           >
             {/* Section Text */}
-            <div className="w-1/2 p-4">
-              <h2 className="text-3xl font-bold">
-                {section.number}. {section.title}
-              </h2>
-              <p className="text-lg">{section.description}</p>
+            <div className="w-1/2 pl-4">
+              <h2 className="text-6xl font-bold pb-4">{section.title}</h2>
+              <p className="text-lg leading-loose tracking-wide">
+                {section.description}
+              </p>
             </div>
 
             {/* Section Image */}
-            <div className="w-1/2 p-4">
+            <div className="w-1/2 ">
               <img
                 src={section.image}
                 alt={section.alt}
