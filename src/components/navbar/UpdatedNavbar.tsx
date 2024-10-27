@@ -96,7 +96,7 @@ const UpdatedNavbar = () => {
                         </button>
                         <h3 className="text-xl font-semibold">{menu.item}</h3>
                         <hr className="border-orange-400 my-4" />
-                        <div className="grid grid-cols-3 gap-10 p-10">
+                        <div className="grid grid-cols-3 gap-2 px-10 py-2 mx-10">
                           {menu.subMenu.map((sub, subIdx) => (
                             <div key={subIdx}>
                               <Link

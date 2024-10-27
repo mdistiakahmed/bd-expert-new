@@ -164,6 +164,15 @@ const HomeContent = () => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
+        <div className="hidden md:flex items-center justify-center my-5 absolute top-20 right-2 ">
+          <iframe
+            width="300"
+            height="154"
+            src="https://w2.countingdownto.com/5857761"
+            frameBorder="0"
+          ></iframe>
+        </div>
+
         {/* Navbar */}
         <UpdatedNavbar />
         {/* Hero Content */}
@@ -190,6 +199,15 @@ const HomeContent = () => {
             Learn More
           </a> */}
         </div>
+      </div>
+
+      <div className="flex items-center justify-center my-5">
+        <iframe
+          width="300"
+          height="154"
+          src="https://w2.countingdownto.com/5857761"
+          frameBorder="0"
+        ></iframe>
       </div>
 
       {/* Rest of the content (services, footer, etc.) */}
