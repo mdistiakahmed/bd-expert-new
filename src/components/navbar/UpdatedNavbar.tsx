@@ -44,6 +44,10 @@ const UpdatedNavbar = () => {
       ],
     },
     {
+      item: "Tax Calculator",
+      path: "/calculator",
+    },
+    {
       item: "Experts",
       path: "/experts",
     },
