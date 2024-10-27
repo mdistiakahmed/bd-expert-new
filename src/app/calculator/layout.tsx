@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "RatGeber",
     images: [
       {
-        url: "payment.svg",
+        url: "payment.webp",
         width: 1200,
         height: 630,
         alt: "hands payment",
