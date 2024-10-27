@@ -16,6 +16,7 @@ import Link from "next/link";
 import CustomCarosel from "@/components/carosel/CustomCarosel";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import UpdatedNavbar from "@/components/navbar/UpdatedNavbar";
+import CountdownTimer from "@/components/count-down/CountdownTimer";
 
 const HomeContent = () => {
   const slides = [
@@ -175,6 +176,7 @@ const HomeContent = () => {
 
         {/* Navbar */}
         <UpdatedNavbar />
+
         {/* Hero Content */}
         <div
           className={`relative z-10 flex flex-col items-center justify-center mt-5 md:mt-0 md:h-full text-center text-white ${isTextAnimating ? "hero-text-exit" : "hero-text-enter"}`}

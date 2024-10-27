@@ -35,6 +35,8 @@ const CalculatorPage = () => {
   const [calculatedTax, setCalculatedTax] = useState("0.00");
   const [calculatedVDS, setCalculatedVDS] = useState("0.00");
   const [netPayment, setNetPayment] = useState("0.00");
+  const [grossValue, setGrossValue] = useState("0.00");
+  const [baseValue, setBaseValue] = useState("0.00");
 
   const onSubmit = (data: any) => {
     const amount = parseFloat(data.amount);
@@ -44,27 +46,40 @@ const CalculatorPage = () => {
     let tdsAmount = 0;
     let vdsAmount = 0;
     let netPayment = 0;
+    let grossValue = 0;
+    let baseValue = 0;
 
     switch (data.particulars) {
       case "including_tax_vat":
+        grossValue = amount;
+        baseValue = amount / (1 + vdsRate);
         tdsAmount = (amount / (1 + vdsRate)) * taxRate;
         vdsAmount = (amount / (1 + vdsRate)) * vdsRate;
         netPayment = amount - tdsAmount - vdsAmount;
         break;
       case "including_tax_excluding_vat":
+        grossValue = amount * (1 + vdsRate);
+        baseValue = amount;
         tdsAmount = amount * taxRate;
-        vdsAmount = (amount / (1 + vdsRate)) * vdsRate;
-        netPayment = amount - tdsAmount - vdsAmount;
+        vdsAmount = amount * vdsRate;
+        netPayment = grossValue - tdsAmount - vdsAmount;
         break;
       case "excluding_tax_excluding_vat":
+        grossValue = (amount / (1 - taxRate)) * (1 + vdsRate);
+        baseValue = amount / (1 - taxRate);
+
         tdsAmount = (amount / (1 - taxRate)) * taxRate;
         vdsAmount = (amount / (1 - taxRate)) * vdsRate;
-        netPayment = amount - tdsAmount - vdsAmount;
+        netPayment = grossValue - tdsAmount - vdsAmount;
         break;
       case "excluding_tax_including_vat":
-        tdsAmount = (amount / (1 - taxRate)) * taxRate;
-        vdsAmount = amount * vdsRate;
-        netPayment = amount - tdsAmount - vdsAmount;
+        grossValue = (amount / (1 + vdsRate) / (1 - taxRate)) * (1 + vdsRate);
+
+        baseValue = amount / (1 + vdsRate) / (1 - taxRate);
+
+        tdsAmount = (amount / (1 + vdsRate) / (1 - taxRate)) * taxRate;
+        vdsAmount = (amount / (1 + vdsRate) / (1 - taxRate)) * vdsRate;
+        netPayment = grossValue - tdsAmount - vdsAmount;
         break;
       default:
         break;
@@ -73,6 +88,8 @@ const CalculatorPage = () => {
     setCalculatedTax(tdsAmount.toFixed(2));
     setCalculatedVDS(vdsAmount.toFixed(2));
     setNetPayment(netPayment.toFixed(2));
+    setBaseValue(baseValue.toFixed(2));
+    setGrossValue(grossValue.toFixed(2));
   };
 
   return (
@@ -207,9 +224,40 @@ const CalculatorPage = () => {
               <h2 className="text-gray-800 font-semibold text-lg mb-4">
                 Calculation Results
               </h2>
-              <p className="text-gray-700">TDS Amount: {calculatedTax} BDT</p>
-              <p className="text-gray-700">VDS Amount: {calculatedVDS} BDT</p>
-              <p className="text-gray-700">Net Payment: {netPayment} BDT</p>
+              <table className="w-full text-left">
+                <tbody>
+                  <tr className="border-b border-gray-300">
+                    <td className="py-2 font-semibold text-gray-700">
+                      Gross Value:
+                    </td>
+                    <td className="py-2 text-gray-700">{grossValue} BDT</td>
+                  </tr>
+                  <tr className="border-b border-gray-300">
+                    <td className="py-2 font-semibold text-gray-700">
+                      Base Value for TDS and VDS:
+                    </td>
+                    <td className="py-2 text-gray-700">{baseValue} BDT</td>
+                  </tr>
+                  <tr className="border-b border-gray-300">
+                    <td className="py-2 font-semibold text-gray-700">
+                      TDS Amount:
+                    </td>
+                    <td className="py-2 text-gray-700">{calculatedTax} BDT</td>
+                  </tr>
+                  <tr className="border-b border-gray-300">
+                    <td className="py-2 font-semibold text-gray-700">
+                      VDS Amount:
+                    </td>
+                    <td className="py-2 text-gray-700">{calculatedVDS} BDT</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 font-semibold text-gray-700">
+                      Net Payment:
+                    </td>
+                    <td className="py-2 text-gray-700">{netPayment} BDT</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
