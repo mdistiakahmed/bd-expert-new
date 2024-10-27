@@ -164,7 +164,7 @@ const HomeContent = () => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
-        <div className="hidden md:flex items-center justify-center my-5 absolute top-20 right-2 ">
+        <div className="hidden md:flex items-center justify-center my-5 absolute top-16 ">
           <iframe
             width="300"
             height="154"

@@ -12,8 +12,6 @@ const UpdatedNavbar = () => {
 
   const pathname = usePathname();
 
-  console.log(pathname);
-
   const toggleMenu = (menu: any) => {
     setActiveMenu(activeMenu === menu ? null : menu);
   };
