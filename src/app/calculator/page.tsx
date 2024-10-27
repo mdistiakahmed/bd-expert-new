@@ -25,7 +25,7 @@ const Header = () => {
   );
 };
 
-const page = () => {
+const CalculatorPage = () => {
   const [amount, setAmount] = useState<any>("");
   const [taxSection, setTaxSection] = useState("");
   const [calculatedTax, setCalculatedTax] = useState<any>(null);
@@ -51,7 +51,7 @@ const page = () => {
           <label className="block text-gray-700">Amount</label>
           <input
             type="number"
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-1 border border-gray-300 rounded"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
@@ -84,4 +84,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CalculatorPage;
