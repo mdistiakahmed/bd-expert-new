@@ -60,7 +60,7 @@ const PersonalInformation = ({ register, errors }: any) => {
               type={type}
               size="small"
               InputLabelProps={{ shrink: true }}
-              {...register(name, { required: true })}
+              {...register(name)}
             />
           </div>
         ))}

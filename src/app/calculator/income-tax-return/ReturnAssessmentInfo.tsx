@@ -15,10 +15,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
     <div className="grid gap-4">
       <FormControl fullWidth size="small">
         <InputLabel>Assessee Nature</InputLabel>
-        <Select
-          {...register("assesseeNature", { required: true })}
-          label="Assessee Nature"
-        >
+        <Select {...register("assesseeNature")} label="Assessee Nature">
           <MenuItem value="individual">Individual</MenuItem>
           <MenuItem value="company">Company</MenuItem>
         </Select>
@@ -26,10 +23,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
 
       <FormControl fullWidth size="small">
         <InputLabel>Taxpayer&apos;s Status</InputLabel>
-        <Select
-          {...register("taxpayerStatus", { required: true })}
-          label="Taxpayer's Status"
-        >
+        <Select {...register("taxpayerStatus")} label="Taxpayer's Status">
           <MenuItem value="resident">Resident</MenuItem>
           <MenuItem value="non-resident">Non-Resident</MenuItem>
         </Select>
@@ -37,10 +31,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
 
       <FormControl fullWidth size="small">
         <InputLabel>Employment Type</InputLabel>
-        <Select
-          {...register("employmentType", { required: true })}
-          label="Employment Type"
-        >
+        <Select {...register("employmentType")} label="Employment Type">
           <MenuItem value="salaried">Salaried</MenuItem>
           <MenuItem value="self-employed">Self-Employed</MenuItem>
         </Select>
@@ -48,10 +39,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
 
       <FormControl fullWidth size="small">
         <InputLabel>Income Area</InputLabel>
-        <Select
-          {...register("incomeArea", { required: true })}
-          label="Income Area"
-        >
+        <Select {...register("incomeArea")} label="Income Area">
           <MenuItem value="domestic">Domestic</MenuItem>
           <MenuItem value="foreign">Foreign</MenuItem>
         </Select>
@@ -63,7 +51,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
         type="date"
         size="small"
         InputLabelProps={{ shrink: true }}
-        {...register("statementAsOn", { required: true })}
+        {...register("statementAsOn")}
       />
 
       <TextField
@@ -72,7 +60,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
         type="date"
         size="small"
         InputLabelProps={{ shrink: true }}
-        {...register("taxDay", { required: true })}
+        {...register("taxDay")}
       />
     </div>
   </div>

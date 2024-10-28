@@ -23,7 +23,7 @@ const DocumentsAttached = ({ register, errors }: any) => (
           size="small"
           fullWidth
           label={label}
-          {...register(`document${index + 1}`, { required: true })}
+          {...register(`document${index + 1}`)}
         />
       ))}
     </div>
