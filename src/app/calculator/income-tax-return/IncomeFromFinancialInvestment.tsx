@@ -22,11 +22,11 @@ const IncomeFromFinancialInvestment = ({ register, errors }: any) => (
           label={label}
           type="number"
           size="small"
-          {...register(`investment${index + 1}`, { required: true })}
-          error={!!errors[`investment${index + 1}`]}
-          helperText={
-            errors[`investment${index + 1}`] ? "This field is required" : ""
-          }
+          {...register(`investment${index + 1}`)}
+          //   error={!!errors[`investment${index + 1}`]}
+          //   helperText={
+          //     errors[`investment${index + 1}`] ? "This field is required" : ""
+          //   }
         />
       ))}
     </div>
