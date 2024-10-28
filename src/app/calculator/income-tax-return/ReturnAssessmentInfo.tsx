@@ -25,7 +25,7 @@ const ReturnAssessmentInfo = ({ register, errors }: any) => (
       </FormControl>
 
       <FormControl fullWidth size="small">
-        <InputLabel>Taxpayer's Status</InputLabel>
+        <InputLabel>Taxpayer&apos;s Status</InputLabel>
         <Select
           {...register("taxpayerStatus", { required: true })}
           label="Taxpayer's Status"

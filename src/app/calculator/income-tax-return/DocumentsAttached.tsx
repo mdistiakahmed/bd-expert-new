@@ -19,6 +19,7 @@ const DocumentsAttached = ({ register, errors }: any) => (
         "Document 05",
       ].map((label, index) => (
         <TextField
+          key={index}
           size="small"
           fullWidth
           label={label}
