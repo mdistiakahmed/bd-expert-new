@@ -43,7 +43,13 @@ const UpdatedNavbar = () => {
     },
     {
       item: "Tax Calculator",
-      path: "/calculator",
+      subMenu: [
+        { name: "TDS/VDS Calculator", path: "/calculator" },
+        {
+          name: "Income Tax Return Template",
+          path: "/calculator/income-tax-return",
+        },
+      ],
     },
     {
       item: "Experts",
