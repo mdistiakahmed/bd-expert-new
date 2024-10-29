@@ -48,49 +48,49 @@ const HomeContent = () => {
       title: `Business Development & Advisory`,
       description: `We identify growth opportunities and craft strategic plans. Our services include market analysis, strategy formulation, operational improvements, and expert advisory to enhance business performance.`,
       image: `/images/business.jpg`,
-      url: ``,
+      url: `/services/business`,
     },
     {
       title: `Accounting & Internal Audit`,
       description: `We ensure accurate financial reporting and regulatory compliance with expert financial management, risk assessment, and internal control evaluations.`,
       image: `/images/acconting.jpg`,
-      url: ``,
+      url: `/services/accounting`,
     },
     {
       title: `Taxation`,
       description: `We offer tax planning, compliance, and legal counsel to navigate complex taxation and legal frameworks.`,
       image: `/images/tax.jpg`,
-      url: ``,
+      url: `/services/tax`,
     },
     {
       title: `License And Registrations`,
       description: `We handle the acquisition of licenses and registrations, streamlining administrative processes.`,
       image: `/images/license.jpg`,
-      url: ``,
+      url: `/services/license`,
     },
     {
       title: `Software Development and ITES`,
       description: `We provide custom software solutions and IT-enabled services (ITES)`,
       image: `/images/software.jpg`,
-      url: ``,
+      url: `/services/software`,
     },
     {
       title: `BPO Service`,
       description: `We connect businesses with freelancers for specialized projects.`,
       image: `/images/freelance.jpg`,
-      url: ``,
+      url: `/services/freelance`,
     },
     {
       title: `Legal Advice and Company Secretarial Work`,
       description: `We provide legal guidance and company secretarial services with governance requirements.`,
       image: `/images/legal.jpg`,
-      url: ``,
+      url: `/services/legal`,
     },
     {
       title: `Import Solutions`,
       description: `We manage supplier coordination, documentation, and import procedures to enhance efficiency and minimize costs.`,
       image: `/images/import.jpg`,
-      url: ``,
+      url: `/services/import`,
     },
   ];
 
@@ -225,6 +225,7 @@ const HomeContent = () => {
                 title={item.title}
                 description={item.description}
                 image={item.image}
+                url={item.url}
                 key={index}
               />
             ))}
@@ -237,6 +238,7 @@ const HomeContent = () => {
                 title={item.title}
                 description={item.description}
                 image={item.image}
+                url={item.url}
                 key={index}
               />
             ))}
@@ -249,6 +251,7 @@ const HomeContent = () => {
                 title={item.title}
                 description={item.description}
                 image={item.image}
+                url={item.url}
                 key={index}
               />
             ))}
@@ -334,7 +337,7 @@ const HomeContent = () => {
 
 export default HomeContent;
 
-const OurWorkItem = ({ title, description, image }: any) => {
+const OurWorkItem = ({ title, description, image, url }: any) => {
   return (
     <div className="flex flex-col items-center md:flex-row  p-6 border border-gray-500">
       <div className="w-[400px] p-2 flex items-center justify-center">
@@ -347,8 +350,8 @@ const OurWorkItem = ({ title, description, image }: any) => {
         <p className="text-gray-700 mb-2 text-center md:text-left text-sm">
           {description}
         </p>
-        <a
-          href="#"
+        <Link
+          href={url}
           className="text-blue-600 font-medium flex items-center justify-center md:justify-start"
         >
           <span>More</span>
@@ -366,7 +369,7 @@ const OurWorkItem = ({ title, description, image }: any) => {
               d="M17 8l4 4m0 0l-4 4m4-4H3"
             ></path>
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   );
