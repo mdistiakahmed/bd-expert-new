@@ -106,10 +106,10 @@ const CalculatorPage = () => {
           >
             <div className="text-center mb-6 flex flex-col items-center justify-center">
               <Image
-                src="/payment.svg"
+                src="/payment.JPG"
                 alt="payment"
-                height={300}
-                width={200}
+                height={200}
+                width={400}
               />
             </div>
 

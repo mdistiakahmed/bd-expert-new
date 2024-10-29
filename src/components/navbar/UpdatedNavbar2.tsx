@@ -9,6 +9,7 @@ const UpdatedNavbar2 = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null); // For desktop menu
   const [activeMobileMenu, setActiveMobileMenu] = useState(null); // For mobile sub-menu
+  const pathName = usePathname();
 
   const toggleMenu = (menu: any) => {
     setActiveMenu(activeMenu === menu ? null : menu);
@@ -43,6 +44,10 @@ const UpdatedNavbar2 = () => {
       ],
     },
     {
+      item: "Tax Calculator",
+      path: "/calculator",
+    },
+    {
       item: "Experts",
       path: "/experts",
     },
@@ -66,57 +71,66 @@ const UpdatedNavbar2 = () => {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 font-semibold">
-          {menuList.map((menu, idx) => (
-            <li key={idx} className="">
-              {menu.subMenu ? (
-                // Menu item with sub-menu
-                <>
-                  <div
-                    className="flex items-center cursor-pointer hover:text-gray-300"
-                    onClick={() => toggleMenu(menu.item)}
-                  >
-                    <a className={``}>{menu.item}</a>
-                    <FiChevronDown className={`ml-1 w-4 h-4 `} />
-                  </div>
-                  {activeMenu === menu.item && (
-                    <div className="absolute left-0 top-full w-screen bg-white text-black py-6 shadow-lg z-10">
-                      <div className="relative px-6">
-                        <button
-                          className="absolute top-2 right-10 text-black"
-                          onClick={() => setActiveMenu(null)}
-                        >
-                          <FiX className="w-6 h-6" />
-                        </button>
-                        <h3 className="text-xl font-semibold">{menu.item}</h3>
-                        <hr className="border-orange-400 my-4" />
-                        <div className="grid grid-cols-3 gap-2 px-10 py-2 mx-10">
-                          {menu.subMenu.map((sub, subIdx) => (
-                            <div key={subIdx}>
-                              <Link
-                                href={sub.path}
-                                className="block hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 py-2"
-                                onClick={() => setActiveMenu(null)}
-                              >
-                                {sub.name}
-                              </Link>
-                            </div>
-                          ))}
+          {menuList.map((menu, idx) => {
+            if (
+              menu?.item === "Tax Calculator" &&
+              !pathName.includes("calculator") &&
+              !pathName.includes("tax")
+            ) {
+              return null;
+            }
+            return (
+              <li key={idx} className="">
+                {menu.subMenu ? (
+                  // Menu item with sub-menu
+                  <>
+                    <div
+                      className="flex items-center cursor-pointer hover:text-gray-300"
+                      onClick={() => toggleMenu(menu.item)}
+                    >
+                      <a className={``}>{menu.item}</a>
+                      <FiChevronDown className={`ml-1 w-4 h-4 `} />
+                    </div>
+                    {activeMenu === menu.item && (
+                      <div className="absolute left-0 top-full w-screen bg-white text-black py-6 shadow-lg z-10">
+                        <div className="relative px-6">
+                          <button
+                            className="absolute top-2 right-10 text-black"
+                            onClick={() => setActiveMenu(null)}
+                          >
+                            <FiX className="w-6 h-6" />
+                          </button>
+                          <h3 className="text-xl font-semibold">{menu.item}</h3>
+                          <hr className="border-orange-400 my-4" />
+                          <div className="grid grid-cols-3 gap-2 px-10 py-2 mx-10">
+                            {menu.subMenu.map((sub, subIdx) => (
+                              <div key={subIdx}>
+                                <Link
+                                  href={sub.path}
+                                  className="block hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 py-2"
+                                  onClick={() => setActiveMenu(null)}
+                                >
+                                  {sub.name}
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </>
-              ) : (
-                // Menu item without sub-menu
-                <Link
-                  href={menu.path}
-                  className={`hover:text-gray-300 cursor-pointer `}
-                >
-                  {menu.item}
-                </Link>
-              )}
-            </li>
-          ))}
+                    )}
+                  </>
+                ) : (
+                  // Menu item without sub-menu
+                  <Link
+                    href={menu.path}
+                    className={`hover:text-gray-300 cursor-pointer `}
+                  >
+                    {menu.item}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* Mobile Menu Button */}
