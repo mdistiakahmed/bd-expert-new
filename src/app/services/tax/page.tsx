@@ -10,32 +10,31 @@ import { FiArrowRight } from "react-icons/fi";
 const sections = [
   {
     number: 1,
-    title: "Market Analysis and Opportunity Identification",
+    title: "Strategic Tax Planning and Optimization",
     description:
-      "We conduct rigorous market assessments, analyze consumer behavior, and identify emerging trends, enabling clients to seize untapped opportunities with confidence.",
+      "We create tailored tax strategies that maximize deductions, credits, and exemptions, improving the financial health of your business.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Customized Strategic Planning",
-    description: `Ratgeber develops actionable growth strategies aligned with your business goals. Our experts craft unique plans for expansion, new product introduction, market entry, and overall business scalability.
-`,
+    title: "Corporate and Personal Tax Filing",
+    description: `Ratgeber handles all aspects of tax filing for corporations and individuals, ensuring accuracy and compliance with local and international tax codes.`,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
-    title: "Operational Optimization",
-    description: `By analyzing workflows, processes, and resources, we help businesses streamline operations, enhance efficiency, and reduce costs, allowing for sustained growth.`,
+    title: "Litigation Support and Dispute Resolution",
+    description: `Our tax experts assist clients with audit defense, appeals, and tax dispute resolution, providing essential advocacy and representation when needed.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
   {
     number: 4,
-    title: "Executive Advisory",
+    title: "Compliance and Regulatory Updates",
     description:
-      "Our seasoned advisors provide ongoing, data-backed guidance on complex challenges, enabling leadership to make informed decisions on growth and transformation initiatives",
+      "We proactively monitor tax legislation changes, offering timely guidance and adjustments to keep clients compliant and ahead of regulatory shifts.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
@@ -53,11 +52,9 @@ const Page = () => {
       >
         <UpdatedNavbar2 />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start pl-10 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold">
-            Business Development & Advisory
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold">Taxation</h1>
           <p className="mt-4 text-lg md:text-xl">
-            Strategic Growth Solutions for Sustainable Success
+            Comprehensive Tax Planning, Compliance, and Advocacy
           </p>
         </div>
       </div>
@@ -68,9 +65,7 @@ const Page = () => {
         <div className="sticky top-0 bg-white text-gray-600 pt-4  border-b-2 border-gray-300  z-10 whitespace-nowrap ">
           <div className=" px-4">
             <div>
-              <h2 className="text-sm font-thin mb-1">
-                Business Development & Advisory
-              </h2>
+              <h2 className="text-sm font-thin mb-1">Taxation</h2>
 
               <Link
                 href={`https://www.ratgeberltd.com/contact-us`}
@@ -161,14 +156,12 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
-                At Ratgeber, we specialize in uncovering growth opportunities,
-                designing strategic blueprints, and enhancing operations to
-                empower businesses. Our Business Development and Advisory
-                services are grounded in comprehensive market intelligence,
-                data-driven strategies, and practical insights that pave the way
-                for competitive advantage. Our approach combines local market
-                expertise with global perspectives, ensuring clients can respond
-                agilely to evolving industry landscapes.
+                Navigating tax complexities requires a partner with both
+                technical expertise and a strategic approach. Ratgeber’s
+                Taxation services cover everything from tax planning and filing
+                to litigation support. We help businesses mitigate tax risks,
+                leverage tax incentives, and stay compliant, ensuring financial
+                operations remain optimized.
               </h4>
               <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
             </div>
@@ -264,18 +257,18 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Strategic growth is about aligning vision with actionable steps,
-                not just expanding market share. We’ve observed that businesses
-                thrive when they leverage a comprehensive approach that
-                integrates data-driven market insights with targeted operational
-                improvements. Our team’s focus on analyzing emerging market
-                trends and conducting competitive landscape assessments allows
-                us to uncover overlooked opportunities for expansion. By
-                fostering innovation and adaptability within each strategy, we
-                help our clients build resilience against market volatility.
-                Additionally, we implement robust KPIs and continuous
-                performance monitoring, ensuring strategies are not just
-                visionary but deliver measurable, sustainable growth.
+                Effective tax management goes beyond compliance; it can be a
+                strategic tool for financial optimization. With frequent
+                regulatory changes, businesses need a partner who anticipates
+                shifts and adapts strategies accordingly. Our approach
+                emphasizes proactive tax planning, helping clients leverage
+                credits, deductions, and incentives available within local and
+                international frameworks. We conduct detailed tax scenario
+                analyses, enabling businesses to make informed decisions on tax
+                structures and minimize liabilities. Moreover, our litigation
+                support and dispute resolution expertise ensure clients are
+                prepared to handle audits and inquiries effectively, giving them
+                a secure foundation for growth and stability.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
@@ -302,14 +295,14 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Our Business Development & Advisory team comprises seasoned
-                professionals with extensive backgrounds in strategic business
-                growth, market analysis, and operational improvements. They
-                bring deep knowledge from working with prominent industry
-                leaders and a strong understanding of regulatory environments.
-                This experience equips them to help clients uncover growth
-                opportunities, enhance operational efficiency, and implement
-                sustainable strategies tailored to each unique business.
+                Our Taxation experts are proficient in all aspects of tax
+                strategy, compliance, and litigation support. With years of
+                experience managing tax, VAT, and customs for multiple sectors,
+                they possess a comprehensive understanding of complex tax
+                regulations. Their skills in tax planning, compliance
+                monitoring, and dispute resolution help clients optimize their
+                tax obligations, minimize liabilities, and navigate changing tax
+                landscapes with confidence.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">

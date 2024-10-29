@@ -4,34 +4,7 @@ import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const sections = [
-  {
-    number: 1,
-    title: "Simplify your business",
-    description:
-      "Take control of the complexity of your business with real-time insights that help you make the right decisions, right now.",
-    image: "/images/business.jpg",
-    alt: "Restaurant food cost software on mobile phones",
-  },
-  {
-    number: 2,
-    title: "Transparent pricing. Really.",
-    description: `MarginEdge costs $330 per month, per location.
-MarginEdge + Freepour costs $480 per month, per location.
-Simple as that.`,
-    image: "/images/tax.jpg",
-    alt: "Transparent pricing",
-  },
-  {
-    number: 3,
-    title: "Who the hell are we?",
-    description: `Together we empower restaurants with a holistic software solution, delivered with the same exceptional service that restaurants provide to their guests. MarginEdge is a software platform for restaurant people, by restaurant people.`,
-    image: "/images/software.jpg",
-    alt: "Client restaurants and CEO Bo Davis",
-  },
-];
-
-const VerticalThreeSidedCarousel = () => {
+const VerticalThreeSidedCarousel = ({ sections }: any) => {
   const [activeSection, setActiveSection] = useState(1);
 
   useEffect(() => {
@@ -72,7 +45,7 @@ const VerticalThreeSidedCarousel = () => {
       {/* Sticky Navigation */}
       <div className="md:block sticky top-44 h-screen w-1/12">
         <div className="flex flex-col items-start relative">
-          {sections.map((section) => (
+          {sections.map((section: any) => (
             <div
               key={section.number}
               className="cursor-pointer p-4 flex items-center relative"
@@ -119,7 +92,7 @@ const VerticalThreeSidedCarousel = () => {
 
       {/* Main Content Sections */}
       <div className="md:w-11/12">
-        {sections.map((section) => (
+        {sections.map((section: any) => (
           <div
             key={section.number}
             id={`content-section-${section.number}`}

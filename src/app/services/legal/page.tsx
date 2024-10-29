@@ -10,32 +10,31 @@ import { FiArrowRight } from "react-icons/fi";
 const sections = [
   {
     number: 1,
-    title: "Market Analysis and Opportunity Identification",
+    title: "Corporate Documentation and Governance",
     description:
-      "We conduct rigorous market assessments, analyze consumer behavior, and identify emerging trends, enabling clients to seize untapped opportunities with confidence.",
+      "Our team prepares essential documents, ensuring they meet regulatory standards and support effective board governance.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Customized Strategic Planning",
-    description: `Ratgeber develops actionable growth strategies aligned with your business goals. Our experts craft unique plans for expansion, new product introduction, market entry, and overall business scalability.
-`,
+    title: "Board Management Services",
+    description: `We facilitate board meetings, track compliance, and assist in implementing best governance practices, aligning with industry standards.`,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
-    title: "Operational Optimization",
-    description: `By analyzing workflows, processes, and resources, we help businesses streamline operations, enhance efficiency, and reduce costs, allowing for sustained growth.`,
+    title: "Regulatory Compliance and Monitoring",
+    description: `Proactive compliance monitoring and regular reviews keep your business within legal frameworks, mitigating risks and liabilities.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
   {
     number: 4,
-    title: "Executive Advisory",
+    title: "Legal Advisory and Representation",
     description:
-      "Our seasoned advisors provide ongoing, data-backed guidance on complex challenges, enabling leadership to make informed decisions on growth and transformation initiatives",
+      "Our legal team provides expert advice on a wide range of issues, from contract negotiations to regulatory disputes, ensuring sound legal standing.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
@@ -54,10 +53,10 @@ const Page = () => {
         <UpdatedNavbar2 />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start pl-10 text-white">
           <h1 className="text-4xl md:text-6xl font-bold">
-            Business Development & Advisory
+            Legal Advice and Company Secretarial Work
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Strategic Growth Solutions for Sustainable Success
+            Ensuring Legal Compliance and Corporate Governance Excellence
           </p>
         </div>
       </div>
@@ -69,7 +68,7 @@ const Page = () => {
           <div className=" px-4">
             <div>
               <h2 className="text-sm font-thin mb-1">
-                Business Development & Advisory
+                Legal Advice and Company Secretarial Work
               </h2>
 
               <Link
@@ -161,14 +160,11 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
-                At Ratgeber, we specialize in uncovering growth opportunities,
-                designing strategic blueprints, and enhancing operations to
-                empower businesses. Our Business Development and Advisory
-                services are grounded in comprehensive market intelligence,
-                data-driven strategies, and practical insights that pave the way
-                for competitive advantage. Our approach combines local market
-                expertise with global perspectives, ensuring clients can respond
-                agilely to evolving industry landscapes.
+                Ratgeber’s Legal Advice and Company Secretarial services offer
+                clients peace of mind through comprehensive legal support and
+                governance solutions. We assist with regulatory compliance,
+                board management, and corporate documentation, providing
+                companies with a solid foundation for sustained growth.
               </h4>
               <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
             </div>
@@ -264,18 +260,18 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Strategic growth is about aligning vision with actionable steps,
-                not just expanding market share. We’ve observed that businesses
-                thrive when they leverage a comprehensive approach that
-                integrates data-driven market insights with targeted operational
-                improvements. Our team’s focus on analyzing emerging market
-                trends and conducting competitive landscape assessments allows
-                us to uncover overlooked opportunities for expansion. By
-                fostering innovation and adaptability within each strategy, we
-                help our clients build resilience against market volatility.
-                Additionally, we implement robust KPIs and continuous
-                performance monitoring, ensuring strategies are not just
-                visionary but deliver measurable, sustainable growth.
+                Corporate governance and legal compliance are essential
+                foundations for growth, particularly in today’s regulatory
+                environment. Our insight is that proactive compliance and
+                effective governance help companies not only avoid penalties but
+                also build a reputation of trust with stakeholders. We focus on
+                establishing robust governance frameworks that ensure board
+                management and corporate documentation are compliant and
+                current. This approach allows our clients to mitigate risk and
+                concentrate on strategic objectives, knowing that their legal
+                standing is secure. Through expert legal guidance, we help
+                businesses navigate complex regulations, maintain operational
+                integrity, and foster investor confidence.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
@@ -302,14 +298,14 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Our Business Development & Advisory team comprises seasoned
-                professionals with extensive backgrounds in strategic business
-                growth, market analysis, and operational improvements. They
-                bring deep knowledge from working with prominent industry
-                leaders and a strong understanding of regulatory environments.
-                This experience equips them to help clients uncover growth
-                opportunities, enhance operational efficiency, and implement
-                sustainable strategies tailored to each unique business.
+                Our Legal Advice and Company Secretarial team includes
+                specialists in corporate governance, legal compliance, and
+                regulatory frameworks. Their thorough understanding of legal and
+                administrative requirements helps clients maintain compliance,
+                manage corporate documentation, and uphold high standards of
+                governance. Their focus on proactive compliance enables
+                businesses to operate confidently, safeguarded by strong
+                regulatory adherence and governance practices.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">

@@ -10,32 +10,32 @@ import { FiArrowRight } from "react-icons/fi";
 const sections = [
   {
     number: 1,
-    title: "Market Analysis and Opportunity Identification",
+    title: "Supplier Relationship Management",
     description:
-      "We conduct rigorous market assessments, analyze consumer behavior, and identify emerging trends, enabling clients to seize untapped opportunities with confidence.",
+      "We build strong supplier networks, ensuring quality and reliability in sourcing.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Customized Strategic Planning",
-    description: `Ratgeber develops actionable growth strategies aligned with your business goals. Our experts craft unique plans for expansion, new product introduction, market entry, and overall business scalability.
+    title: "Documentation and Compliance Oversight",
+    description: `Our team manages all import-related documents, ensuring full compliance with customs and trade regulations.
 `,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
-    title: "Operational Optimization",
-    description: `By analyzing workflows, processes, and resources, we help businesses streamline operations, enhance efficiency, and reduce costs, allowing for sustained growth.`,
+    title: "Logistics Coordination and Customs Support",
+    description: `We arrange and optimize shipping, handle customs requirements, and provide tracking for a transparent and predictable import experience.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
   {
     number: 4,
-    title: "Executive Advisory",
+    title: "Continuous Import Process Management",
     description:
-      "Our seasoned advisors provide ongoing, data-backed guidance on complex challenges, enabling leadership to make informed decisions on growth and transformation initiatives",
+      "Ratgeber offers ongoing support for businesses with recurring import needs, ensuring uninterrupted supply chains and operational continuity.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
@@ -53,11 +53,9 @@ const Page = () => {
       >
         <UpdatedNavbar2 />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start pl-10 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold">
-            Business Development & Advisory
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold">Import Solutions</h1>
           <p className="mt-4 text-lg md:text-xl">
-            Strategic Growth Solutions for Sustainable Success
+            End-to-End Management of International Sourcing and Logistics
           </p>
         </div>
       </div>
@@ -68,9 +66,7 @@ const Page = () => {
         <div className="sticky top-0 bg-white text-gray-600 pt-4  border-b-2 border-gray-300  z-10 whitespace-nowrap ">
           <div className=" px-4">
             <div>
-              <h2 className="text-sm font-thin mb-1">
-                Business Development & Advisory
-              </h2>
+              <h2 className="text-sm font-thin mb-1">Import Solutions</h2>
 
               <Link
                 href={`https://www.ratgeberltd.com/contact-us`}
@@ -161,14 +157,11 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
-                At Ratgeber, we specialize in uncovering growth opportunities,
-                designing strategic blueprints, and enhancing operations to
-                empower businesses. Our Business Development and Advisory
-                services are grounded in comprehensive market intelligence,
-                data-driven strategies, and practical insights that pave the way
-                for competitive advantage. Our approach combines local market
-                expertise with global perspectives, ensuring clients can respond
-                agilely to evolving industry landscapes.
+                With Ratgeber’s Import Solutions, clients benefit from a
+                streamlined approach to importing goods. Our service covers
+                every aspect of the process, from supplier coordination to
+                logistics and customs clearance, making international trade more
+                efficient and less complex.
               </h4>
               <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
             </div>
@@ -264,18 +257,17 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Strategic growth is about aligning vision with actionable steps,
-                not just expanding market share. We’ve observed that businesses
-                thrive when they leverage a comprehensive approach that
-                integrates data-driven market insights with targeted operational
-                improvements. Our team’s focus on analyzing emerging market
-                trends and conducting competitive landscape assessments allows
-                us to uncover overlooked opportunities for expansion. By
-                fostering innovation and adaptability within each strategy, we
-                help our clients build resilience against market volatility.
-                Additionally, we implement robust KPIs and continuous
-                performance monitoring, ensuring strategies are not just
-                visionary but deliver measurable, sustainable growth.
+                Managing imports effectively requires a coordinated approach to
+                logistics, supplier management, and regulatory compliance. Our
+                insight reveals that businesses can significantly reduce delays
+                and costs by optimizing each step of the import process, from
+                supplier coordination to customs documentation. We prioritize
+                thorough documentation and meticulous compliance oversight to
+                prevent bottlenecks and expedite clearance. By managing these
+                logistics, we allow clients to maintain consistent supply
+                chains, reduce shipping costs, and ensure product availability,
+                which are critical factors for market competitiveness and
+                operational reliability.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
@@ -302,14 +294,14 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Our Business Development & Advisory team comprises seasoned
-                professionals with extensive backgrounds in strategic business
-                growth, market analysis, and operational improvements. They
-                bring deep knowledge from working with prominent industry
-                leaders and a strong understanding of regulatory environments.
-                This experience equips them to help clients uncover growth
-                opportunities, enhance operational efficiency, and implement
-                sustainable strategies tailored to each unique business.
+                The Import Solutions team is comprised of professionals
+                experienced in supplier coordination, logistics, and customs
+                compliance. They have a deep understanding of the complexities
+                of international trade and manage every aspect of the import
+                process, from documentation to customs clearance. This team’s
+                attention to detail ensures clients benefit from efficient,
+                timely, and cost-effective import operations that strengthen
+                supply chains and support business continuity.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">

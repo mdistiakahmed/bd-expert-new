@@ -10,32 +10,31 @@ import { FiArrowRight } from "react-icons/fi";
 const sections = [
   {
     number: 1,
-    title: "Market Analysis and Opportunity Identification",
+    title: "Financial Reporting and Analysis",
     description:
-      "We conduct rigorous market assessments, analyze consumer behavior, and identify emerging trends, enabling clients to seize untapped opportunities with confidence.",
+      " Ratgeber provides meticulous financial reporting services, enabling accurate and timely data for strategic decision-making. We ensure compliance with international accounting standards.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Customized Strategic Planning",
-    description: `Ratgeber develops actionable growth strategies aligned with your business goals. Our experts craft unique plans for expansion, new product introduction, market entry, and overall business scalability.
-`,
+    title: "Risk Management and Control Evaluations",
+    description: `Our audits focus on identifying and mitigating risks across operational and financial processes. This includes assessing internal controls and making actionable recommendations for risk reduction.`,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
-    title: "Operational Optimization",
-    description: `By analyzing workflows, processes, and resources, we help businesses streamline operations, enhance efficiency, and reduce costs, allowing for sustained growth.`,
+    title: "Compliance Management",
+    description: `With deep knowledge of regulatory landscapes, we help businesses maintain compliance with local and global financial regulations, ensuring audits and reports are accurate and timely.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
   {
     number: 4,
-    title: "Executive Advisory",
+    title: "Cost Optimization and Efficiency Audits",
     description:
-      "Our seasoned advisors provide ongoing, data-backed guidance on complex challenges, enabling leadership to make informed decisions on growth and transformation initiatives",
+      "We analyze spending patterns, revenue streams, and resource allocation to uncover cost-saving opportunities and boost overall financial efficiency.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
@@ -54,10 +53,10 @@ const Page = () => {
         <UpdatedNavbar2 />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start pl-10 text-white">
           <h1 className="text-4xl md:text-6xl font-bold">
-            Business Development & Advisory
+            Accounting & Internal Audit
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Strategic Growth Solutions for Sustainable Success
+            Precision, Compliance, and Control in Financial Management
           </p>
         </div>
       </div>
@@ -69,7 +68,7 @@ const Page = () => {
           <div className=" px-4">
             <div>
               <h2 className="text-sm font-thin mb-1">
-                Business Development & Advisory
+                Accounting & Internal Audit
               </h2>
 
               <Link
@@ -161,14 +160,13 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
-                At Ratgeber, we specialize in uncovering growth opportunities,
-                designing strategic blueprints, and enhancing operations to
-                empower businesses. Our Business Development and Advisory
-                services are grounded in comprehensive market intelligence,
-                data-driven strategies, and practical insights that pave the way
-                for competitive advantage. Our approach combines local market
-                expertise with global perspectives, ensuring clients can respond
-                agilely to evolving industry landscapes.
+                Ratgeber’s Accounting and Internal Audit services prioritize
+                accuracy, transparency, and control in financial reporting. Our
+                team of financial experts ensures that businesses not only meet
+                regulatory standards but also implement best practices in risk
+                management and compliance. We design robust financial frameworks
+                that safeguard assets and promote efficient resource
+                utilization.
               </h4>
               <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
             </div>
@@ -264,18 +262,19 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Strategic growth is about aligning vision with actionable steps,
-                not just expanding market share. We’ve observed that businesses
-                thrive when they leverage a comprehensive approach that
-                integrates data-driven market insights with targeted operational
-                improvements. Our team’s focus on analyzing emerging market
-                trends and conducting competitive landscape assessments allows
-                us to uncover overlooked opportunities for expansion. By
-                fostering innovation and adaptability within each strategy, we
-                help our clients build resilience against market volatility.
-                Additionally, we implement robust KPIs and continuous
-                performance monitoring, ensuring strategies are not just
-                visionary but deliver measurable, sustainable growth.
+                Financial stability and transparency start with proactive risk
+                management and streamlined financial reporting. Through our
+                experience, we have found that accurate reporting and strong
+                internal controls are essential in reducing financial exposure
+                and enhancing operational efficiency. We focus on conducting
+                thorough risk assessments to identify areas of vulnerability,
+                followed by the implementation of customized internal controls.
+                Our insight reveals that businesses benefit from a continuous
+                monitoring framework that provides real-time insights into
+                financial health. By doing so, we help clients improve resource
+                allocation, ensure compliance with regulatory standards, and
+                maintain investor confidence, which collectively strengthens
+                long-term financial sustainability.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
@@ -302,14 +301,15 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Our Business Development & Advisory team comprises seasoned
-                professionals with extensive backgrounds in strategic business
-                growth, market analysis, and operational improvements. They
-                bring deep knowledge from working with prominent industry
-                leaders and a strong understanding of regulatory environments.
-                This experience equips them to help clients uncover growth
-                opportunities, enhance operational efficiency, and implement
-                sustainable strategies tailored to each unique business.
+                The Accounting and Internal Audit team is led by highly
+                qualified chartered accountants and financial auditors with
+                extensive experience across diverse sectors. Their expertise in
+                financial reporting, risk management, and regulatory compliance
+                enables clients to achieve transparency and accuracy in their
+                financial operations. By combining analytical rigor with a
+                thorough understanding of international standards, the team
+                ensures clients maintain robust financial controls and risk
+                mitigation strategies.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">

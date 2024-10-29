@@ -27,16 +27,19 @@ const UpdatedNavbar2 = () => {
       item: "Services",
       subMenu: [
         { name: "Business Development & Advisory", path: "/services/business" },
-        { name: "Accounting & Internal Audit", path: "/services/business" },
-        { name: "Taxation", path: "/services/business" },
-        { name: "License And Registrations", path: "/services/business" },
-        { name: "Software Development and ITES", path: "/services/business" },
-        { name: "BPO Service", path: "/services/business" },
+        { name: "Accounting & Internal Audit", path: "/services/accounting" },
+        { name: "Taxation", path: "/services/tax" },
+        { name: "License And Registrations", path: "/services/license" },
+        { name: "Software Development and ITES", path: "/services/software" },
+        {
+          name: "Freelancing & Import Outsourcing Solutions",
+          path: "/services/freelance",
+        },
         {
           name: "Legal Advice and Company Secretarial Work",
-          path: "/services/business",
+          path: "/services/legal",
         },
-        { name: "Import Solutions", path: "/services/business" },
+        { name: "Import Solutions", path: "/services/import" },
       ],
     },
     {
@@ -92,6 +95,7 @@ const UpdatedNavbar2 = () => {
                               <Link
                                 href={sub.path}
                                 className="block hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500 py-2"
+                                onClick={() => setActiveMenu(null)}
                               >
                                 {sub.name}
                               </Link>

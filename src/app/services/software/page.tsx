@@ -10,32 +10,31 @@ import { FiArrowRight } from "react-icons/fi";
 const sections = [
   {
     number: 1,
-    title: "Market Analysis and Opportunity Identification",
+    title: "Custom Software Development",
     description:
-      "We conduct rigorous market assessments, analyze consumer behavior, and identify emerging trends, enabling clients to seize untapped opportunities with confidence.",
+      "From enterprise resource planning systems to customer-facing applications, we build solutions that fit your unique specifications and industry requirements.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
   {
     number: 2,
-    title: "Customized Strategic Planning",
-    description: `Ratgeber develops actionable growth strategies aligned with your business goals. Our experts craft unique plans for expansion, new product introduction, market entry, and overall business scalability.
-`,
+    title: "IT-Enabled Services (ITES)",
+    description: ` Our ITES offerings include data processing, customer support, and back-office functions, designed to enhance productivity and operational efficiency.`,
     image: "/images/tax.jpg",
     alt: "Transparent pricing",
   },
   {
     number: 3,
-    title: "Operational Optimization",
-    description: `By analyzing workflows, processes, and resources, we help businesses streamline operations, enhance efficiency, and reduce costs, allowing for sustained growth.`,
+    title: "Focus on AI, Security, and Emerging Technologies",
+    description: `We integrate cutting-edge technologies like artificial intelligence, machine learning, and cybersecurity protocols into our software, ensuring innovation and robust data protection.`,
     image: "/images/software.jpg",
     alt: "Client restaurants and CEO Bo Davis",
   },
   {
     number: 4,
-    title: "Executive Advisory",
+    title: "Comprehensive Implementation and Support",
     description:
-      "Our seasoned advisors provide ongoing, data-backed guidance on complex challenges, enabling leadership to make informed decisions on growth and transformation initiatives",
+      "Ratgeber manages the full software lifecycle, from design and development to deployment and ongoing support, ensuring seamless integration with your existing infrastructure.",
     image: "/images/business.jpg",
     alt: "Restaurant food cost software on mobile phones",
   },
@@ -54,10 +53,10 @@ const Page = () => {
         <UpdatedNavbar2 />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start pl-10 text-white">
           <h1 className="text-4xl md:text-6xl font-bold">
-            Business Development & Advisory
+            Software Development and ITES
           </h1>
           <p className="mt-4 text-lg md:text-xl">
-            Strategic Growth Solutions for Sustainable Success
+            Driving Innovation with Tailored Software and IT-Enabled Solutions
           </p>
         </div>
       </div>
@@ -69,7 +68,7 @@ const Page = () => {
           <div className=" px-4">
             <div>
               <h2 className="text-sm font-thin mb-1">
-                Business Development & Advisory
+                Software Development and ITES
               </h2>
 
               <Link
@@ -161,14 +160,13 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 flex flex-col gap-5">
               <h4 className="text-2xl font-semibold mb-2">
-                At Ratgeber, we specialize in uncovering growth opportunities,
-                designing strategic blueprints, and enhancing operations to
-                empower businesses. Our Business Development and Advisory
-                services are grounded in comprehensive market intelligence,
-                data-driven strategies, and practical insights that pave the way
-                for competitive advantage. Our approach combines local market
-                expertise with global perspectives, ensuring clients can respond
-                agilely to evolving industry landscapes.
+                Ratgeber’s Software Development and ITES (IT-Enabled Services)
+                offer a range of custom technology solutions to meet diverse
+                business needs. We leverage advanced methodologies, including
+                agile development and rigorous testing, to create software that
+                not only meets but exceeds client expectations. Our ITES support
+                services also enhance operational effectiveness, making
+                technology a key enabler for our clients’ success.
               </h4>
               <div className="w-16 h-1 bg-orange-500 mb-4 self-center md:self-start"></div>
             </div>
@@ -264,18 +262,18 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Strategic growth is about aligning vision with actionable steps,
-                not just expanding market share. We’ve observed that businesses
-                thrive when they leverage a comprehensive approach that
-                integrates data-driven market insights with targeted operational
-                improvements. Our team’s focus on analyzing emerging market
-                trends and conducting competitive landscape assessments allows
-                us to uncover overlooked opportunities for expansion. By
-                fostering innovation and adaptability within each strategy, we
-                help our clients build resilience against market volatility.
-                Additionally, we implement robust KPIs and continuous
-                performance monitoring, ensuring strategies are not just
-                visionary but deliver measurable, sustainable growth.
+                Custom software can be a key driver of productivity and
+                competitive advantage, but only when it aligns with a company’s
+                specific goals and challenges. Our insight is that successful
+                software solutions start with a deep understanding of business
+                objectives and an emphasis on adaptability. From AI integration
+                to cybersecurity protocols, we ensure that every tool we build
+                is secure, scalable, and tailored to meet each client’s unique
+                needs. Our IT-enabled services (ITES) provide additional
+                operational support, handling back-office processes and data
+                management, allowing clients to focus on high-impact
+                initiatives. With a focus on emerging technologies, we design
+                solutions that future-proof our clients’ operations.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
@@ -302,14 +300,14 @@ const Page = () => {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3">
               <p>
-                Our Business Development & Advisory team comprises seasoned
-                professionals with extensive backgrounds in strategic business
-                growth, market analysis, and operational improvements. They
-                bring deep knowledge from working with prominent industry
-                leaders and a strong understanding of regulatory environments.
-                This experience equips them to help clients uncover growth
-                opportunities, enhance operational efficiency, and implement
-                sustainable strategies tailored to each unique business.
+                Our Software Development and ITES team includes skilled software
+                developers and IT specialists with a focus on creating
+                innovative, secure, and user-centric solutions. With experience
+                in AI integration, cybersecurity, and custom software
+                development, they deliver technology that enhances productivity
+                and adapts to evolving business needs. This team’s dedication to
+                quality ensures that clients receive scalable, future-proof
+                software and IT-enabled services that support long-term growth.
               </p>
             </div>
             <div className="md:w-1/3 md:pl-8">
