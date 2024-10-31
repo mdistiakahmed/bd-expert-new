@@ -62,11 +62,11 @@ const CalculatorTestPage = () => {
 
   return (
     <>
-      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg mx-10">
+      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg mx-2 lg:mx-10">
         <h1 className="text-2xl text-center font-semibold">
           TDS VDS Calculator
         </h1>
-        <div className="lg:flex lg:justify-between ">
+        <div className="flex flex-col lg:flex-row lg:justify-between">
           {/* Form Section */}
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -83,10 +83,9 @@ const CalculatorTestPage = () => {
 
             <div className="grid grid-cols-1 gap-4">
               {/* Radio Buttons for Selection */}
-              {/* Radio Buttons for Selection */}
               <div>
                 <label className="block text-gray-700">Select Option</label>
-                <div className="flex gap-5 justify-between">
+                <div className="flex flex-col lg:flex-row lg:gap-5">
                   <label className="flex gap-2">
                     <input
                       type="radio"
@@ -117,12 +116,12 @@ const CalculatorTestPage = () => {
                       }
                       checked={selectedOption === "bothGrossValueAndCommission"}
                     />
-                    <p> Both Gross Value and Commission</p>
+                    <p>Both Gross Value and Commission</p>
                   </label>
                 </div>
               </div>
 
-              <div className="flex justify-around whitespace-nowrap">
+              <div className="flex flex-col lg:flex-row lg:justify-around whitespace-nowrap">
                 {/* Inclusive of Tax Dropdown */}
                 <div className="flex items-center justify-center gap-5">
                   <label className="block text-gray-700">
