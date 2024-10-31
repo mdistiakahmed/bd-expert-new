@@ -1,29 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import Image from "next/image";
-import UpdatedNavbar from "@/components/navbar/UpdatedNavbar";
-
-const Header = () => {
-  return (
-    <header className="bg-blue-500 text-white py-4 shadow-lg">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href={`/`} className="text-2xl font-bold">
-          RatGeber.
-        </Link>
-        <nav className="flex space-x-4">
-          <Link href="/personal-tax">
-            <p className="hover:underline">Personal Tax Calculator</p>
-          </Link>
-          <Link href="/tds-vds">
-            <p className="hover:underline">TDS and VDS Calculator</p>
-          </Link>
-        </nav>
-      </div>
-    </header>
-  );
-};
+import * as XLSX from "xlsx";
+import { FaFileAlt, FaDownload, FaTrashAlt } from "react-icons/fa";
+import Tooltip from "@mui/material/Tooltip";
 
 const CalculatorPage = () => {
   const {
@@ -37,6 +18,13 @@ const CalculatorPage = () => {
   const [netPayment, setNetPayment] = useState("0.00");
   const [grossValue, setGrossValue] = useState("0.00");
   const [baseValue, setBaseValue] = useState("0.00");
+  const [storedResults, setStoredResults] = useState<any>([]);
+  const [isExportButtonEnabled, setIsExportButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    const savedResults = JSON.parse(localStorage.getItem("taxResults") || "[]");
+    setStoredResults(savedResults);
+  }, []);
 
   const onSubmit = (data: any) => {
     const amount = parseFloat(data.amount);
@@ -90,15 +78,79 @@ const CalculatorPage = () => {
     setNetPayment(netPayment.toFixed(2));
     setBaseValue(baseValue.toFixed(2));
     setGrossValue(grossValue.toFixed(2));
+
+    setIsExportButtonEnabled(true);
+  };
+
+  const addResultForExport = () => {
+    const result = {
+      amount: watch("amount"),
+      particulars: watch("particulars"),
+      taxRate: watch("taxRate"),
+      vdsRate: watch("vdsRate"),
+      grossValue,
+      baseValue,
+      calculatedTax,
+      calculatedVDS,
+      netPayment,
+    };
+    const updatedResults = [...storedResults, result];
+    localStorage.setItem("taxResults", JSON.stringify(updatedResults));
+    setStoredResults(updatedResults);
+    setIsExportButtonEnabled(false);
+  };
+
+  const exportToExcel = (item: any) => {
+    const transformedData = {
+      Amount: item.amount,
+      Particulars: item.particulars,
+      "Tax Rate": item.taxRate,
+      "VDS Rate": item.vdsRate,
+      "Gross Value": item.grossValue,
+      "Base Value for TDS and VDS ": item.baseValue,
+      "TDS Amount": item.calculatedTax,
+      "VDS Amount": item.calculatedVDS,
+      "Net Payment": item.netPayment,
+    };
+    const worksheet = XLSX.utils.json_to_sheet([transformedData]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Tax Calculation");
+    XLSX.writeFile(workbook, "tax_calculation.xlsx");
+  };
+
+  const exportAllToExcel = () => {
+    const transformedData = storedResults.map((item: any) => ({
+      Amount: item.amount,
+      Particulars: item.particulars,
+      "Tax Rate": item.taxRate,
+      "VDS Rate": item.vdsRate,
+      "Gross Value": item.grossValue,
+      "Base Value for TDS and VDS ": item.baseValue,
+      "TDS Amount": item.calculatedTax,
+      "VDS Amount": item.calculatedVDS,
+      "Net Payment": item.netPayment,
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(transformedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "All Tax Calculations");
+    XLSX.writeFile(workbook, "all_tax_calculations.xlsx");
+  };
+
+  const removeResult = (index: any) => {
+    const updatedResults = storedResults.filter(
+      (_: any, i: any) => i !== index
+    );
+    localStorage.setItem("taxResults", JSON.stringify(updatedResults));
+    setStoredResults(updatedResults);
   };
 
   return (
     <>
-      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg mx-10">
+      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg md:mx-10">
         <h1 className="text-2xl text-center font-semibold">
           TDS VDS Calculator
         </h1>
-        <div className="lg:flex lg:justify-between ">
+        <div className="lg:flex lg:gap-10 ">
           {/* Form Section */}
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -108,8 +160,8 @@ const CalculatorPage = () => {
               <Image
                 src="/payment.JPG"
                 alt="payment"
-                height={200}
-                width={400}
+                height={100}
+                width={200}
               />
             </div>
 
@@ -216,48 +268,112 @@ const CalculatorPage = () => {
             >
               Calculate
             </button>
+            <button
+              onClick={addResultForExport}
+              disabled={!isExportButtonEnabled}
+              className={`w-full bg-green-500 text-white py-2 rounded mt-4 ${!isExportButtonEnabled ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              Add Result For Export
+            </button>
           </form>
 
-          {/* Results Section */}
-          <div className="mt-6 lg:mt-[20%] lg:ml-10 lg:w-1/3 lg:border-l lg:border-gray-300 lg:pl-6">
-            <div className="bg-gray-100 p-4 rounded">
-              <h2 className="text-gray-800 font-semibold text-lg mb-4">
-                Calculation Results
-              </h2>
-              <table className="w-full text-left">
-                <tbody>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 font-semibold text-gray-700">
-                      Gross Value:
-                    </td>
-                    <td className="py-2 text-gray-700">{grossValue} BDT</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 font-semibold text-gray-700">
-                      Base Value for TDS and VDS:
-                    </td>
-                    <td className="py-2 text-gray-700">{baseValue} BDT</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 font-semibold text-gray-700">
-                      TDS Amount:
-                    </td>
-                    <td className="py-2 text-gray-700">{calculatedTax} BDT</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 font-semibold text-gray-700">
-                      VDS Amount:
-                    </td>
-                    <td className="py-2 text-gray-700">{calculatedVDS} BDT</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 font-semibold text-gray-700">
-                      Net Payment:
-                    </td>
-                    <td className="py-2 text-gray-700">{netPayment} BDT</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div className="flex flex-col">
+            {/* Display stored results */}
+            <div className="mt-5 mb-6  md:ml-10 md:border-l md:border-gray-300 md:px-6 order-2 md:order-1 md:max-h-36 overflow-y-auto">
+              <div className="flex items-center justify-between p-2 border-b">
+                <h2 className="text-sm font-semibold ">Stored Results</h2>
+                <button
+                  onClick={exportAllToExcel}
+                  className={`bg-blue-500 text-white px-2 py-1 rounded  text-sm  ${storedResults.length === 0 ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={storedResults.length === 0}
+                >
+                  Export All as Excel
+                </button>
+              </div>
+              {storedResults.length > 0 && (
+                <div className="mt-2">
+                  {storedResults.map((result: any, index: any) => (
+                    <div
+                      key={index}
+                      className="relative flex items-center space-x-2 mb-4 text-xs"
+                    >
+                      <FaFileAlt className="text-2xl text-gray-400" />{" "}
+                      <div className="absolute top-1 right-0">
+                        <Tooltip title="Download" placement="top">
+                          <button
+                            onClick={() => exportToExcel(result)}
+                            className="text-green-500"
+                          >
+                            <FaDownload />
+                          </button>
+                        </Tooltip>
+                      </div>
+                      <div className="relative">
+                        <p>
+                          Result {index + 1} - Amount: {result.grossValue} BDT
+                        </p>
+                        <div className="absolute top-0 right-[-20px]">
+                          <Tooltip title="Remove" placement="top">
+                            <button
+                              onClick={() => removeResult(index)}
+                              className="text-red-500"
+                            >
+                              <FaTrashAlt />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Results Section */}
+            <div className="mt-6 md:mt-[20%] md:ml-10  md:border-l md:border-gray-300 md:pl-6 order-1 md:order-2">
+              <div className="bg-gray-100 pt-4 md:p-4 rounded">
+                <h2 className="text-gray-800 font-semibold text-lg mb-4">
+                  Calculation Results
+                </h2>
+                <table className="w-full text-left text-sm md:text-base">
+                  <tbody>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 font-semibold text-gray-700">
+                        Gross Value:
+                      </td>
+                      <td className="py-2 text-gray-700">{grossValue} BDT</td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 font-semibold text-gray-700">
+                        Base Value for TDS and VDS:
+                      </td>
+                      <td className="py-2 text-gray-700">{baseValue} BDT</td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 font-semibold text-gray-700">
+                        TDS Amount:
+                      </td>
+                      <td className="py-2 text-gray-700">
+                        {calculatedTax} BDT
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 font-semibold text-gray-700">
+                        VDS Amount:
+                      </td>
+                      <td className="py-2 text-gray-700">
+                        {calculatedVDS} BDT
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 font-semibold text-gray-700">
+                        Net Payment:
+                      </td>
+                      <td className="py-2 text-gray-700">{netPayment} BDT</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
