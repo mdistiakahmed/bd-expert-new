@@ -3,11 +3,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 
+// Constant map for Service Code, Tax Rate, and VDS Rate
+const SERVICE_CODE_MAP: any = {
+  custom: { taxRate: "", vdsRate: "" },
+  service1: { taxRate: 5, vdsRate: 2.4 },
+  service2: { taxRate: 10, vdsRate: 5 },
+  service3: { taxRate: 15, vdsRate: 7.5 },
+  // Add more service codes as needed
+};
+
 const CalculatorTestPage = () => {
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -19,50 +29,33 @@ const CalculatorTestPage = () => {
 
   const [selectedOption, setSelectedOption] = useState("onlyGrossValue");
 
-  const onSubmit = (data: any) => {
-    const amount = parseFloat(data.grossAmount || 0);
-    const commission = parseFloat(data.commissionAmount || 0);
-    const taxRate = parseFloat(data.taxRate) / 100;
-    const vdsRate = parseFloat(data.vdsRate) / 100;
+  const onSubmit = (data: any) => {};
 
-    let tdsAmount = 0;
-    let vdsAmount = 0;
-    let netPayment = 0;
-    let grossValue = 0;
-    let baseValue = 0;
+  // Handle Service Code selection
+  const handleServiceCodeChange = (event: any) => {
+    const selectedService = event.target.value;
+    const { taxRate, vdsRate } = SERVICE_CODE_MAP[selectedService] || {};
 
-    // Logic for calculations based on selected options
-    if (data.onlyGrossValue) {
-      grossValue = amount;
-      baseValue = amount; // Assuming base value is equal to gross value when only gross value is considered
-      tdsAmount = amount * taxRate;
-      vdsAmount = amount * vdsRate;
-      netPayment = grossValue - tdsAmount - vdsAmount;
-    } else if (data.onlyCommission) {
-      // Logic for only commission
-      grossValue = commission; // Adjust as needed
-      baseValue = commission; // Adjust as needed
-      tdsAmount = commission * taxRate; // Adjust as needed
-      vdsAmount = commission * vdsRate; // Adjust as needed
-      netPayment = grossValue - tdsAmount - vdsAmount; // Adjust as needed
-    } else if (data.bothGrossValueAndCommission) {
-      grossValue = amount + commission;
-      baseValue = amount + commission; // Adjust as needed
-      tdsAmount = (amount + commission) * taxRate; // Adjust as needed
-      vdsAmount = (amount + commission) * vdsRate; // Adjust as needed
-      netPayment = grossValue - tdsAmount - vdsAmount; // Adjust as needed
+    console.log(taxRate);
+    console.log(vdsRate);
+
+    if (selectedService === "custom") {
+      // Clear taxRate and vdsRate if custom is selected
+      setValue("taxRate", "");
+      setValue("vdsRate", "");
+    } else {
+      // Autofill taxRate and vdsRate
+      setValue("taxRate", taxRate);
+      setValue("vdsRate", vdsRate);
     }
-
-    setCalculatedTax(tdsAmount.toFixed(2));
-    setCalculatedVDS(vdsAmount.toFixed(2));
-    setNetPayment(netPayment.toFixed(2));
-    setBaseValue(baseValue.toFixed(2));
-    setGrossValue(grossValue.toFixed(2));
   };
 
   return (
     <>
       <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg mx-2 lg:mx-10">
+        <h2 className="text-xl text-white bg-red-600 text-center h-10">
+          Under Development
+        </h2>
         <h1 className="text-2xl text-center font-semibold">
           TDS VDS Calculator
         </h1>
@@ -79,6 +72,25 @@ const CalculatorTestPage = () => {
                 height={200}
                 width={400}
               />
+            </div>
+
+            {/* Service Code Dropdown */}
+            <div>
+              <label className="block text-gray-700">Service Code</label>
+              <select
+                className="w-full p-2 border border-gray-300 rounded"
+                {...register("serviceCode")}
+                onChange={handleServiceCodeChange}
+              >
+                <option value="custom">Custom</option>
+                {Object.keys(SERVICE_CODE_MAP)
+                  .filter((key) => key !== "custom")
+                  .map((code) => (
+                    <option key={code} value={code}>
+                      {code}
+                    </option>
+                  ))}
+              </select>
             </div>
 
             <div className="grid grid-cols-1 gap-4">
@@ -199,19 +211,8 @@ const CalculatorTestPage = () => {
                 >
                   <option value="">Select Tax Rate</option>
                   {/* Add options here */}
-                  <option value="0">0%</option>
-                  <option value="0.25">0.25%</option>
-                  <option value="0.65">0.65%</option>
-                  <option value="1">1%</option>
-                  <option value="1.5">1.5%</option>
-                  <option value="2">2%</option>
-                  <option value="3">3%</option>
-                  <option value="4">4%</option>
                   <option value="5">5%</option>
-                  <option value="7">7%</option>
-                  <option value="8">8%</option>
                   <option value="10">10%</option>
-                  <option value="12">12%</option>
                   <option value="15">15%</option>
                 </select>
                 {errors.taxRate && (

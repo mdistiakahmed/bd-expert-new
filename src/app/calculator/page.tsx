@@ -330,7 +330,7 @@ const CalculatorPage = () => {
             </div>
 
             {/* Results Section */}
-            <div className="mt-6 md:mt-[20%] md:ml-10  md:border-l md:border-gray-300 md:pl-6 order-1 md:order-2">
+            <div className="mt-6 md:mt-[20%] md:ml-10  md:border-l md:border-gray-300 md:pl-6 order-1 md:order-2 ">
               <div className="bg-gray-100 pt-4 md:p-4 rounded">
                 <h2 className="text-gray-800 font-semibold text-lg mb-4">
                   Calculation Results
