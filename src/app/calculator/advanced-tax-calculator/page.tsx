@@ -29,15 +29,88 @@ const CalculatorTestPage = () => {
 
   const [selectedOption, setSelectedOption] = useState("onlyGrossValue");
 
-  const onSubmit = (data: any) => {};
+  // Result
+  const [amount, setAmount] = useState<any>("0.00");
+  const [baseValueForTDS, setBaseValueForTDS] = useState<any>("0.00");
+  const [tdsAmount, setTdsAmount] = useState<any>("0.00");
+  const [vdsAmount, setVdsAmount] = useState<any>("0.00");
+  const [resultGrossValue, setResultGrossValue] = useState<any>("0.00");
+  const [resultNetPayment, setResultNetPayment] = useState<any>("0.00");
+
+  const calculateBaseValueForTDS = (
+    inclusiveTax: any,
+    inclusiveVAT: any,
+    amount: any,
+    tdsRate: any,
+    vdsRate: any
+  ) => {
+    tdsRate /= 100;
+    vdsRate /= 100;
+
+    if (inclusiveTax === "true" && inclusiveVAT === "true") {
+      return (amount / (1 + vdsRate)).toFixed(2);
+    } else if (inclusiveTax === "true" && inclusiveVAT === "false") {
+      return amount;
+    } else if (inclusiveTax === "false" && inclusiveVAT === "false") {
+      return (amount / (1 - tdsRate)).toFixed(2);
+    } else if (inclusiveTax === "false" && inclusiveVAT === "true") {
+      console.log("i am here....");
+      return (amount / ((1 + vdsRate) * (1 - tdsRate))).toFixed(2);
+    }
+    return "0.00";
+  };
+
+  const calculateAmount = (data: any) => {
+    let calculatedAmount = "0.00";
+    if (selectedOption === "onlyGrossValue") {
+      calculatedAmount = data.grossAmount || "0.00";
+    } else if (selectedOption === "onlyCommission") {
+      calculatedAmount = data.commissionAmount || "0.00";
+    }
+    setAmount(calculatedAmount);
+    return calculatedAmount;
+  };
+
+  const onSubmit = (data: any) => {
+    const inclusiveTax = data.inclusiveOfTax;
+    const inclusiveVAT = data.inclusiveOfVAT;
+    const tdsRate = parseFloat(data.taxRate);
+    const vdsRate = parseFloat(data.vdsRate);
+
+    const calculatedAmount = calculateAmount(data);
+    const baseValue = calculateBaseValueForTDS(
+      inclusiveTax,
+      inclusiveVAT,
+      calculatedAmount,
+      tdsRate,
+      vdsRate
+    );
+
+    const xtdsAmount = (baseValue * (tdsRate / 100)).toFixed(2);
+    const xvdsAmount = (baseValue * (vdsRate / 100)).toFixed(2);
+
+    console.log("base" + baseValue);
+    console.log("vds" + xtdsAmount);
+    const xResultGrossValue = (
+      parseFloat(baseValue) + parseFloat(xvdsAmount)
+    ).toFixed(2);
+    const xResultNetPayment = (
+      ((xResultGrossValue as any) -
+        (xtdsAmount as any) -
+        (xvdsAmount as any)) as any
+    ).toFixed(2);
+
+    setBaseValueForTDS(baseValue);
+    setTdsAmount(xtdsAmount);
+    setVdsAmount(xvdsAmount);
+    setResultGrossValue(xResultGrossValue);
+    setResultNetPayment(xResultNetPayment);
+  };
 
   // Handle Service Code selection
   const handleServiceCodeChange = (event: any) => {
     const selectedService = event.target.value;
     const { taxRate, vdsRate } = SERVICE_CODE_MAP[selectedService] || {};
-
-    console.log(taxRate);
-    console.log(vdsRate);
 
     if (selectedService === "custom") {
       // Clear taxRate and vdsRate if custom is selected
@@ -143,8 +216,8 @@ const CalculatorTestPage = () => {
                     className={`w-full p-2 border border-gray-300 rounded`}
                     {...register("inclusiveOfTax")}
                   >
-                    <option value="false">False</option>
-                    <option value="true">True</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                 </div>
 
@@ -157,8 +230,8 @@ const CalculatorTestPage = () => {
                     className={`w-full p-2 border border-gray-300 rounded`}
                     {...register("inclusiveOfVAT")}
                   >
-                    <option value="false">False</option>
-                    <option value="true">True</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                   </select>
                 </div>
               </div>
@@ -211,6 +284,8 @@ const CalculatorTestPage = () => {
                 >
                   <option value="">Select Tax Rate</option>
                   {/* Add options here */}
+                  <option value="0">0%</option>
+                  <option value="2">2%</option>
                   <option value="5">5%</option>
                   <option value="10">10%</option>
                   <option value="15">15%</option>
@@ -258,11 +333,17 @@ const CalculatorTestPage = () => {
           <div className="lg:w-1/2 mt-10 lg:mt-0 space-y-4">
             <h2 className="text-xl font-semibold">Results</h2>
             <div className="border border-gray-300 p-4 rounded">
-              <p>Calculated Tax (BDT): {calculatedTax}</p>
-              <p>Calculated VDS (BDT): {calculatedVDS}</p>
-              <p>Net Payment (BDT): {netPayment}</p>
-              <p>Gross Value (BDT): {grossValue}</p>
-              <p>Base Value (BDT): {baseValue}</p>
+              {selectedOption !== "bothGrossValueAndCommission" && (
+                <p>Amount (BDT): {amount}</p>
+              )}
+              <p>Base Value for TDS (BDT): {baseValueForTDS}</p>
+              {selectedOption !== "bothGrossValueAndCommission" && (
+                <p>Base Value for VDS (BDT): {baseValueForTDS}</p>
+              )}
+              <p>TDS Amount (BDT): {tdsAmount}</p>
+              <p>VDS Amount (BDT): {vdsAmount}</p>
+              <p>Gross Value (BDT): {resultGrossValue}</p>
+              <p>Net Payment (BDT): {resultNetPayment}</p>
             </div>
           </div>
         </div>
