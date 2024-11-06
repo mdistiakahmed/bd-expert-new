@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import * as XLSX from "xlsx";
+import { FaFileAlt, FaDownload, FaTrashAlt } from "react-icons/fa";
+import Tooltip from "@mui/material/Tooltip";
 
 // Constant map for Service Code, Tax Rate, and VDS Rate
 const SERVICE_CODE_MAP: any = {
@@ -12,6 +15,59 @@ const SERVICE_CODE_MAP: any = {
   // Add more service codes as needed
 };
 
+const serviceCodeTable = [
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+
+  {
+    code: "S007-01-01 ad agency",
+    onlyGrossValueTdsRate: 0.65,
+    onlyCommissionTdsRate: 10,
+    tdsRate: 0.25,
+    vdsRate: 15,
+  },
+];
+
 const CalculatorTestPage = () => {
   const {
     register,
@@ -20,12 +76,6 @@ const CalculatorTestPage = () => {
     setValue,
     formState: { errors },
   } = useForm();
-
-  const [calculatedTax, setCalculatedTax] = useState("0.00");
-  const [calculatedVDS, setCalculatedVDS] = useState("0.00");
-  const [netPayment, setNetPayment] = useState("0.00");
-  const [grossValue, setGrossValue] = useState("0.00");
-  const [baseValue, setBaseValue] = useState("0.00");
 
   const [selectedOption, setSelectedOption] = useState("onlyGrossValue");
 
@@ -36,6 +86,10 @@ const CalculatorTestPage = () => {
   const [vdsAmount, setVdsAmount] = useState<any>("0.00");
   const [resultGrossValue, setResultGrossValue] = useState<any>("0.00");
   const [resultNetPayment, setResultNetPayment] = useState<any>("0.00");
+
+  // Save result
+  const [storedResults, setStoredResults] = useState<any>([]);
+  const [isExportButtonEnabled, setIsExportButtonEnabled] = useState(false);
 
   const calculateBaseValueForTDS = (
     inclusiveTax: any,
@@ -89,8 +143,6 @@ const CalculatorTestPage = () => {
     const xtdsAmount = (baseValue * (tdsRate / 100)).toFixed(2);
     const xvdsAmount = (baseValue * (vdsRate / 100)).toFixed(2);
 
-    console.log("base" + baseValue);
-    console.log("vds" + xtdsAmount);
     const xResultGrossValue = (
       parseFloat(baseValue) + parseFloat(xvdsAmount)
     ).toFixed(2);
@@ -105,6 +157,8 @@ const CalculatorTestPage = () => {
     setVdsAmount(xvdsAmount);
     setResultGrossValue(xResultGrossValue);
     setResultNetPayment(xResultNetPayment);
+
+    setIsExportButtonEnabled(true);
   };
 
   // Handle Service Code selection
@@ -123,16 +177,81 @@ const CalculatorTestPage = () => {
     }
   };
 
+  const addResultForExport = () => {
+    const result = {
+      inclusiveOfTax: watch("inclusiveOfTax"),
+      inclusiveOfVAT: watch("inclusiveOfVAT"),
+      grossAmount: watch("grossAmount"),
+      taxRate: watch("taxRate"),
+      vdsRate: watch("vdsRate"),
+      baseValueForTDS,
+      tdsAmount,
+      vdsAmount,
+      resultGrossValue,
+      resultNetPayment,
+    };
+    const updatedResults = [...storedResults, result];
+    localStorage.setItem("advancedTaxResults", JSON.stringify(updatedResults));
+    setStoredResults(updatedResults);
+    setIsExportButtonEnabled(false);
+  };
+
+  const exportToExcel = (item: any) => {
+    const transformedData = {
+      inclusiveOfTax: item.inclusiveOfTax,
+      inclusiveOfVAT: item.inclusiveOfVAT,
+      grossAmount: item.grossAmount,
+      taxRate: item.taxRate,
+      vdsRate: item.vdsRate,
+      baseValueForTDS: item.baseValueForTDS,
+      tdsAmount: item.tdsAmount,
+      vdsAmount: item.vdsAmount,
+      resultGrossValue: item.resultGrossValue,
+      resultNetPayment: item.resultNetPayment,
+    };
+    const worksheet = XLSX.utils.json_to_sheet([transformedData]);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Tax Calculation");
+    XLSX.writeFile(workbook, "tax_calculation.xlsx");
+  };
+
+  const exportAllToExcel = () => {
+    const transformedData = storedResults.map((item: any) => ({
+      inclusiveOfTax: item.inclusiveOfTax,
+      inclusiveOfVAT: item.inclusiveOfVAT,
+      grossAmount: item.grossAmount,
+      taxRate: item.taxRate,
+      vdsRate: item.vdsRate,
+      baseValueForTDS: item.baseValueForTDS,
+      tdsAmount: item.tdsAmount,
+      vdsAmount: item.vdsAmount,
+      resultGrossValue: item.resultGrossValue,
+      resultNetPayment: item.resultNetPayment,
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(transformedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "All Tax Calculations");
+    XLSX.writeFile(workbook, "all_tax_calculations.xlsx");
+  };
+
+  const removeResult = (index: any) => {
+    const updatedResults = storedResults.filter(
+      (_: any, i: any) => i !== index
+    );
+    localStorage.setItem("advancedTaxResults", JSON.stringify(updatedResults));
+    setStoredResults(updatedResults);
+  };
+
   return (
     <>
-      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg mx-2 lg:mx-10">
+      <div className="mt-2 p-6 bg-gray-100 shadow-lg rounded-lg md:mx-10">
         <h2 className="text-xl text-white bg-red-600 text-center h-10">
           Under Development
         </h2>
-        <h1 className="text-2xl text-center font-semibold">
-          TDS VDS Calculator
+        <h1 className="text-2xl text-center font-semibold py-2">
+          Advanced TDS VDS Calculator
         </h1>
-        <div className="flex flex-col lg:flex-row lg:justify-between">
+        <div className="lg:flex lg:gap-10 ">
           {/* Form Section */}
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -142,31 +261,31 @@ const CalculatorTestPage = () => {
               <Image
                 src="/payment.JPG"
                 alt="payment"
-                height={200}
-                width={400}
+                height={100}
+                width={200}
               />
             </div>
 
             {/* Service Code Dropdown */}
-            <div>
-              <label className="block text-gray-700">Service Code</label>
-              <select
-                className="w-full p-2 border border-gray-300 rounded"
-                {...register("serviceCode")}
-                onChange={handleServiceCodeChange}
-              >
-                <option value="custom">Custom</option>
-                {Object.keys(SERVICE_CODE_MAP)
-                  .filter((key) => key !== "custom")
-                  .map((code) => (
-                    <option key={code} value={code}>
-                      {code}
-                    </option>
-                  ))}
-              </select>
-            </div>
 
             <div className="grid grid-cols-1 gap-4">
+              <div>
+                <label className="block text-gray-700">Service Code</label>
+                <select
+                  className="w-full p-2 border border-gray-300 rounded"
+                  {...register("serviceCode")}
+                  onChange={handleServiceCodeChange}
+                >
+                  <option value="custom">Custom</option>
+                  {Object.keys(SERVICE_CODE_MAP)
+                    .filter((key) => key !== "custom")
+                    .map((code) => (
+                      <option key={code} value={code}>
+                        {code}
+                      </option>
+                    ))}
+                </select>
+              </div>
               {/* Radio Buttons for Selection */}
               <div>
                 <label className="block text-gray-700">Select Option</label>
@@ -318,32 +437,93 @@ const CalculatorTestPage = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-center mb-4">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                Calculate
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300 mt-4"
+            >
+              Calculate
+            </button>
+            <button
+              onClick={addResultForExport}
+              disabled={!isExportButtonEnabled}
+              className={`w-full bg-green-500 text-white py-2 rounded mt-4 ${!isExportButtonEnabled ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              Add Result For Export
+            </button>
           </form>
 
-          {/* Results Section */}
-          <div className="lg:w-1/2 mt-10 lg:mt-0 space-y-4">
-            <h2 className="text-xl font-semibold">Results</h2>
-            <div className="border border-gray-300 p-4 rounded">
-              {selectedOption !== "bothGrossValueAndCommission" && (
-                <p>Amount (BDT): {amount}</p>
+          <div className="flex flex-col">
+            {/* Display stored results */}
+            <div className="mt-5 mb-6  md:ml-10 md:border-l md:border-gray-300 md:px-6 order-2 md:order-1 md:max-h-36 overflow-y-auto">
+              <div className="flex items-center justify-between p-2 border-b">
+                <h2 className="text-sm font-semibold ">Stored Results</h2>
+                <button
+                  onClick={exportAllToExcel}
+                  className={`bg-blue-500 text-white px-2 py-1 rounded  text-sm  ${storedResults.length === 0 ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={storedResults.length === 0}
+                >
+                  Export All as Excel
+                </button>
+              </div>
+              {storedResults.length > 0 && (
+                <div className="mt-2">
+                  {storedResults.map((result: any, index: any) => (
+                    <div
+                      key={index}
+                      className="relative flex items-center space-x-2 mb-4 text-xs"
+                    >
+                      <FaFileAlt className="text-2xl text-gray-400" />{" "}
+                      <div className="absolute top-1 right-0">
+                        <Tooltip title="Download" placement="top">
+                          <button
+                            onClick={() => exportToExcel(result)}
+                            className="text-green-500"
+                          >
+                            <FaDownload />
+                          </button>
+                        </Tooltip>
+                      </div>
+                      <div className="relative">
+                        <p>
+                          Result {index + 1} - Amount: {result.grossValue} BDT
+                        </p>
+                        <div className="absolute top-0 right-[-20px]">
+                          <Tooltip title="Remove" placement="top">
+                            <button
+                              onClick={() => removeResult(index)}
+                              className="text-red-500"
+                            >
+                              <FaTrashAlt />
+                            </button>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
-              <p>Base Value for TDS (BDT): {baseValueForTDS}</p>
-              {selectedOption !== "bothGrossValueAndCommission" && (
-                <p>Base Value for VDS (BDT): {baseValueForTDS}</p>
-              )}
-              <p>TDS Amount (BDT): {tdsAmount}</p>
-              <p>VDS Amount (BDT): {vdsAmount}</p>
-              <p>Gross Value (BDT): {resultGrossValue}</p>
-              <p>Net Payment (BDT): {resultNetPayment}</p>
+            </div>
+
+            {/* Results Section */}
+            <div className="mt-6 md:mt-[20%] md:ml-10  md:border-l md:border-gray-300 md:pl-6 order-1 md:order-2 ">
+              <div className="bg-gray-100 pt-4 md:p-4 rounded">
+                <h2 className="text-gray-800 font-semibold text-lg mb-4">
+                  Calculation Results
+                </h2>
+                <div className="border border-gray-300 p-4 rounded">
+                  {selectedOption !== "bothGrossValueAndCommission" && (
+                    <p>Amount (BDT): {amount}</p>
+                  )}
+                  <p>Base Value for TDS (BDT): {baseValueForTDS}</p>
+                  {selectedOption !== "bothGrossValueAndCommission" && (
+                    <p>Base Value for VDS (BDT): {baseValueForTDS}</p>
+                  )}
+                  <p>TDS Amount (BDT): {tdsAmount}</p>
+                  <p>VDS Amount (BDT): {vdsAmount}</p>
+                  <p>Gross Value (BDT): {resultGrossValue}</p>
+                  <p>Net Payment (BDT): {resultNetPayment}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

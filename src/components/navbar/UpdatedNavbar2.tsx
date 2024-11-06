@@ -46,7 +46,7 @@ const UpdatedNavbar2 = () => {
     {
       item: "Tax Calculator",
       subMenu: [
-        { name: "Basic Tax Calculator", path: "/calculator" },
+        { name: "Standard Tax Calculator", path: "/calculator" },
         {
           name: "Advanced Tax Calculator",
           path: "/calculator/advanced-tax-calculator",
