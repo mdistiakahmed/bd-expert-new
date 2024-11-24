@@ -52,6 +52,10 @@ const UpdatedNavbar = () => {
           name: "Advanced Tax Calculator",
           path: "/calculator/advanced-tax-calculator",
         },
+        {
+          name: "Income Tax Return Calculator 2024",
+          path: "/calculator/income-tax-calculator-2024-2025",
+        },
       ],
     },
 
