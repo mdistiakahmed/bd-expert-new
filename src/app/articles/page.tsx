@@ -52,7 +52,7 @@ const ArticleHomePage = async () => {
             ([category, articles]: [string, any[]]) => (
               <div key={category}>
                 <h2 className="py-5 text-2xl">
-                  {category == "undefined" ? "----" : category}
+                  {category == "undefined" ? "Random Articles" : category}
                 </h2>
                 <div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
