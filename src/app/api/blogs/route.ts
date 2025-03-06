@@ -6,8 +6,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     *[_type == "post"] {
       title,
       slug,
-      heroImage
+      heroImage,
+      serial,
+      "categories": categories-> {
+      title
     }
+    } | order(serial asc)
   `;
 
   const data = await client.fetch(query, undefined, { cache: "no-cache" });

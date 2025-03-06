@@ -52,6 +52,18 @@ export const post = {
     },
 
     {
+      name: "categories",
+      type: "reference",
+      to: { type: "categories" },
+      title: "Categories",
+    },
+
+    {
+      name: "serial",
+      type: "number",
+    },
+
+    {
       name: "body",
       title: "Body",
       type: "array",

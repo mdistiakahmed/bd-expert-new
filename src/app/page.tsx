@@ -142,7 +142,6 @@ const HomeContent = () => {
         const response = await fetchRecent4Blogs();
         setBlogs(response.data); // Assuming the API returns a `data` field
 
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching recent blogs:", error);
       }
